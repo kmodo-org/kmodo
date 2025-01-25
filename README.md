@@ -80,14 +80,13 @@ Kmodo is licensed under the [MIT License](LICENSE).
 
 ## Join the Community
 
-- [GitHub](#https://github.com/kmodo-org/)  
 - [LinkedIn](#soon..)  
 
 ---
 
 ## Contact
 
-For inquiries or partnerships, please email us at [info@kmodo.com](mailto:admin@kmodo.org).  
+For inquiries or partnerships, please email us at [admin@kmodo.org](mailto:admin@kmodo.org).  
 
 ---
 
