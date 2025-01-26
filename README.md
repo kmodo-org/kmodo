@@ -59,11 +59,12 @@ Kmodo leverages modern technologies for performance, scalability, and user exper
 
 - **Short-Term Goals**:  
   - Launch hackathon filters and team collaboration features.  
-  - Implement QR code-based check-ins and team matching.  
+  - Implement QR code-based check-ins and team matching.
 
 - **Mid-Term Goals**:  
   - Develop ranking subsystems for individuals and organizations.  
   - Enable recurring event setup and implement donation systems.  
+  - Add a communication system between organizers, sponsors, and hackers.
 
 - **Long-Term Goals**:  
   - Introduce advanced analytics for sponsors and organizers.  
