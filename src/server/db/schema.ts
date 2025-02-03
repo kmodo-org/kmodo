@@ -189,3 +189,33 @@ export const organizersRelations = relations(organizers, ({ one }) => ({
   hacker: one(hackers, { fields: [organizers.hacker_id], references: [hackers.user_Id] }),
 }));
 
+export const sponsors = createTable(
+  "sponsor",
+  {
+    id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+    user_Id: varchar("user_id", { length: 255 })
+      .notNull()
+      .references(() => users.id), 
+    company: varchar("company", { length: 255 })
+      .notNull(), 
+    companyemail: varchar("companyemail", { length: 255 })
+      .notNull()
+      .unique(), 
+    phone: varchar("phone", { length: 15 }), 
+    // side note im gonna make a separate table for the company and have a foreign key here but not rn prob later
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+  },
+  (sponsor) => ({
+    user_IdIdx: index("sponsor_user_id_idx").on(sponsor.user_Id), 
+    companyemailIdx: index("sponsor_companyemail_idx").on(sponsor.companyemail), 
+  })
+);
+
+
+export const sponsorsRelations = relations(sponsors, ({ one }) => ({
+  user: one(users, { fields: [sponsors.user_Id], references: [users.id] }),
+}));
+
+
