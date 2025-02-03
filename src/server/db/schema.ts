@@ -164,30 +164,26 @@ export const hackers = createTable(
   })
 );
 
-export const hackersRelations = relations(hackers, ({ one }) => ({
-  user: one(users, { fields: [hackers.user_Id], references: [users.id] }),
-}));
-
 export const organizers = createTable(
   "organizer",
   {
-    id: integer("id").primaryKey().generatedByDefaultAsIdentity(), 
-    hacker_id: varchar("hacker_id", { length: 255 })
+    id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+    hacker_id: integer("hacker_id") 
       .notNull()
-      .references(() => hackers.user_Id), 
-    event: varchar("event", { length: 255 }), 
+      .references(() => hackers.id), 
+    event_id: integer("event_id")
+      .notNull()
+      .references(() => events.id), 
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(), 
+      .notNull(),
   },
   (organizer) => ({
     hackerIdIdx: index("organizer_hacker_id_idx").on(organizer.hacker_id),
+    eventIdIdx: index("organizer_event_id_idx").on(organizer.event_id),
   })
 );
 
-export const organizersRelations = relations(organizers, ({ one }) => ({
-  hacker: one(hackers, { fields: [organizers.hacker_id], references: [hackers.user_Id] }),
-}));
 
 export const sponsors = createTable(
   "sponsor",
@@ -219,3 +215,59 @@ export const sponsorsRelations = relations(sponsors, ({ one }) => ({
 }));
 
 
+export const events = createTable(
+  "event",
+  {
+    id: integer("id").primaryKey().generatedByDefaultAsIdentity(),  
+    name: varchar("event", { length: 255 })
+      .notNull(), 
+    date: date("date")
+      .notNull(),
+    location: varchar("location", { length: 255 })
+      .notNull(),
+    starttime: timestamp("starttime", { withTimezone: true })
+      .notNull(),
+    endtime: timestamp("endtime", { withTimezone: true })
+      .notNull(),
+    school: varchar("school", { length: 255 })
+      .notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(), 
+  },
+  (event) => ({
+    eventIdx: index("event_idx").on(event.name),
+  })
+);
+
+export const eventOrganizers = createTable(
+  "event_organizer",
+  {
+    event_id: integer("event_id")
+      .notNull()
+      .references(() => events.id, { onDelete: "cascade" }), 
+    organizer_id: integer("organizer_id")
+      .notNull()
+      .references(() => organizers.id, { onDelete: "cascade" }),
+  },
+  (eventOrganizer) => ({
+    compoundKey: primaryKey({
+      columns: [eventOrganizer.event_id, eventOrganizer.organizer_id],
+    }),
+  })
+);
+
+export const eventsRelations = relations(events, ({ many }) => ({
+  organizers: many(eventOrganizers),
+}));
+
+export const eventOrganizersRelations = relations(eventOrganizers, ({ one }) => ({
+  event: one(events, {
+    fields: [eventOrganizers.event_id],
+    references: [events.id],
+  }),
+  organizer: one(organizers, {
+    fields: [eventOrganizers.organizer_id],
+    references: [organizers.id],
+  }),
+}));
