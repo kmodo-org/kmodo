@@ -1,62 +1,37 @@
 import { db } from "~/server/db";
-import { hackers } from "~/server/db/schema";
-import { eq } from "drizzle-orm";
+import { hackers, InsertHackerSchema} from "~/server/db/schema";
+import { eq, InferSelectModel } from "drizzle-orm";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 
-const createHackerInput = z.object({
-  firstname: z.string(),
-  middlename: z.string().optional(),
-  lastname: z.string(),
-  birthdate: z.date(), 
-  eduemail: z.string().email(),
-  graduation: z.date(), 
-  university: z.string(),
-  phone: z.string(),
-  address: z.string().optional(),
-  gender: z.string().optional(),
-  race: z.string().optional(),
-  github: z.string().url().optional(),
-  linkedin: z.string().url().optional(),
-  personalwebsite: z.string().url().optional(),
-});
-
 export const hackerRouter = createTRPCRouter({
-  getHacker: protectedProcedure.query(async ({ ctx }) => {
-    const userId = ctx.session.user.id;
-
-    try {
+    
+    getHacker: protectedProcedure.query(async ({ ctx }) => {
+      const userId = ctx.session.user.id;
+  
       const hackerProfile = await db
         .select()
         .from(hackers)
         .where(eq(hackers.user_Id, userId))
         .then((res) => res[0]);
+  
+      return !!hackerProfile; 
+    }),
+  
+    createHacker: protectedProcedure
+    .input(InsertHackerSchema.omit({ id: true }))
+    .mutation(async ({ ctx, input }) => {
 
-      if (!hackerProfile) {
-        return { success: false, message: "Hacker profile not found" };
-      }
+      const userId = ctx.session.user.id;
 
-      return { success: true, hackerProfile }; 
-    } catch (error) {
-      return { success: false, message: "Error fetching hacker profile" };
-    }
-  }),
-
-  createHacker: protectedProcedure
-  .input(createHackerInput)
-  .mutation(async ({ ctx, input }) => {
-    const userId = ctx.session.user.id;
-
-    try {
       await db.insert(hackers).values({
-        user_id: userId,  
+        user_Id: userId,
         firstname: input.firstname,
-        middlename: input.middlename,
         lastname: input.lastname,
         birthdate: input.birthdate, 
+        graduation: input.graduation,
         eduemail: input.eduemail,
-        graduation: input.graduation, 
         university: input.university,
         phone: input.phone,
         address: input.address,
@@ -68,10 +43,5 @@ export const hackerRouter = createTRPCRouter({
       });
 
       return { success: true };
-    } catch (error) {
-      return { success: false, message: "Error creating hacker profile" };
-    }
-  }),
-
-
-});
+    }),
+  });

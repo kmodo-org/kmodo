@@ -1,12 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { LatestPost } from "~/components/post";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import { Button } from "../components/ui/button"; 
 
 export default async function Home() {
-  //const hello = await api.post.hello({ text: "WIP" });
   const session = await auth();
 
   if (session?.user) {
@@ -43,7 +41,6 @@ export default async function Home() {
             </div>
           </div>
 
-          {session?.user && <LatestPost />}
         </div>
       </main>
     </HydrateClient>

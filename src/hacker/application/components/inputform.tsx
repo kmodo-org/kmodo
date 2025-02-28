@@ -16,7 +16,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
-import { TRPCClientError } from "@trpc/client";
+import { TRPCClientError, TRPCClientErrorLike } from "@trpc/client";
 
 const hackerFormSchema = z.object({
   firstname: z.string().min(1, { message: "First name is required." }),
@@ -70,18 +70,14 @@ export function InputForm() {
     onSuccess: () => {
       router.push("/dashboard"); 
     },
-    onError: (error: TRPCClientError<any>) => {
+    onError: (error: TRPCClientErrorLike<any>) => {
       alert("Failed to create hacker profile. Please try again.");
     },
   });
 
   const onSubmit = async (values: z.infer<typeof hackerFormSchema>) => { 
     try {
-      await createHacker.mutateAsync({
-        ...values,
-        birthdate: new Date(values.birthdate),
-        graduation: new Date(values.graduation),
-      });
+      await createHacker.mutateAsync(values);
     } catch (error) {
       console.error("An error occurred:", error);
     }
