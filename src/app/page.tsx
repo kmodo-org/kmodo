@@ -5,7 +5,7 @@ import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import { Button } from "../components/ui/button"; 
 
-export default async function Home() {
+export default async function indevelopment() {
   //const hello = await api.post.hello({ text: "WIP" });
   const session = await auth();
 
