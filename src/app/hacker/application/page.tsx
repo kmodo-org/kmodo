@@ -3,10 +3,6 @@ import { api } from "~/trpc/server";
 import { redirect } from "next/navigation";
 import { InputForm } from "./components/inputform";
 
-
-
-
-
 export default async function MemberApplicationPage() {
     const session = await auth();
 

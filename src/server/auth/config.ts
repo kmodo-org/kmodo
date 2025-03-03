@@ -9,6 +9,7 @@ import {
   users,
   hackers,
 } from "~/server/db/schema";
+import { auth } from ".";
 
 /**
  * Module augmentation for next-auth types. Allows us to add custom properties to the session
@@ -74,39 +75,5 @@ export const authConfig = {
         id: user.id,
       },
     }),
-
-      async signIn({ user }: { user: any }) { // callback whcihchecks if user exists in the database and adds them if they don't
-    
-        const existingUser = await db
-          .select()
-          .from(users)
-          .where(eq(users.id, user.id))
-          .then((res) => res[0]);
-    
-        if (!existingUser) {
-          await db.insert(users).values({
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            image: user.image, // Match the schema field
-          });
-        }
-    
-        return true;
-      },
-    
-      async redirect({ url, baseUrl }) { // callback to redirect user to the application form if they haven't filled it out yet
-        const hackerProfile = await db
-          .select()
-          .from(hackers)
-          .where(eq(hackers.user_Id, users.id)) 
-          .then((res) => res[0]);
-  
-        if (url === baseUrl && !hackerProfile) { // if profile doesn't exist, redirect to application form
-          return `${baseUrl}/hacker/application`; // Redirect to the application form
-        }
-  
-        return `${baseUrl}/dashboard`; // If profile exists, go to dashboard
-      },
     },
   } satisfies NextAuthConfig;
