@@ -3,9 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "~/app/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/app/components/ui/form";
-import { Input } from "~/app/components/ui/input";
+import { Button } from "~/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { TRPCClientErrorLike } from "@trpc/client";
@@ -53,10 +53,7 @@ export function InputForm() {
   const createHacker = api.hacker.createHacker.useMutation({
     onSuccess: () => {
       router.push("/dashboard");
-    },
-    onError: (error: TRPCClientErrorLike<any>) => {
-      alert(`Failed to create hacker profile: ${error.message}`);
-    },
+    }
   });
 
   const onSubmit = async (values: z.infer<typeof hackerFormSchema>) => { 

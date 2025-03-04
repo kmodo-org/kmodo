@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { auth, signIn } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
-import { Button } from "./components/ui/button"; 
+import { Button } from "~/components/ui/button";
 
 export default async function Home() {
   const session = await auth();
@@ -48,8 +48,14 @@ export default async function Home() {
                   </Button>
                 </form>
               ) : (
+                
                 <Link href="/dashboard">
-                  <Button size="lg">Go to Dashboard</Button>
+                  <Button 
+                  size="lg" 
+                  className="rounded-full text-[#59BC89] text-md bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+                  >
+                    
+                    Go to Dashboard</Button>
                 </Link>
               )}
             </div>
