@@ -1,8 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
-import { LatestPost } from "~/components/post";
 import { auth } from "~/server/auth";
-import { api, HydrateClient } from "~/trpc/server";
 import { Button } from "src/components/ui/button";
 import { Card, CardContent } from "src/components/ui/card";
 
@@ -14,9 +11,7 @@ import {
     CarouselPrevious,
   } from "src/components/ui/carousel"
 
-export default async function Home() {
-    const session = await auth();
-  
+export default async function Home() {  
     return (
         
         <div className="flex min-h-screen flex-col">

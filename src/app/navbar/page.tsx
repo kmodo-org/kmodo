@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-
+import Image from "next/image";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/solid";
 import { Button } from "src/components/ui/button";
 
@@ -23,15 +23,13 @@ const routes: { title: string; href: string }[] = [
       <div className="flex items-center justify-between h-32 w-full bg-gradient-to-t from-transparent to-black pr-14 pl-8 absolute">   
         <div className="flex w-full justify-between m-6">
           <div className="flex justify-start items-center space-x-4 ">
-          {/* <div className="flex items-center space-x-4 bg-blue-400"> */}
             <Link href={"/"} className="shrink-0">
-              <img className="h-14" src="/kmodo.png"></img>
+              <Image className="h-14" src="/kmodo.png" alt="Kmodo Logo" width={56} height={56} />
             </Link>
             <Link href={"/"} className="shrink-0">
-              <img className="h-10" src="/kmodotext.png"></img>
+              <Image className="h-10" src="/kmodotext.png" alt="Kmodo Text" width={40} height={40} />
             </Link>
           </div>
-          {/* <div className="flex items-center w-fullgap-1 px-4 sm:flex object-right bg-slate-400"> */}
           <div className="flex justify-end justify-items-end">
             {routes.map((route, index) => (
               <Link

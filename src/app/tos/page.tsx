@@ -14,14 +14,14 @@ export default function Tos() {
         </CardHeader>
         <CardContent className="prose prose-sm sm:prose-base lg:prose-lg">
           <p>
-            Kmodo Org., a private organization in Orlando, FL (referred to as “kmodo,” “Kmodo,” “us,” or “we”) owns and operates
+            Kmodo Org., a private organization in Orlando, FL (referred to as &ldquo;kmodo,&rdquo; &ldquo;Kmodo,&rdquo; &ldquo;us,&rdquo; or &ldquo;we&rdquo;) owns and operates
             this website and any other web services or products offered by us now or in the future. By accessing, using, downloading,
             or viewing this website through any of the URLs including [kmodo.org], or any of its services or content (defined below)
-            (collectively, the “Site”), you hereby consent and agree to these terms and conditions (“Terms of Use”). The Terms of Use and
-            Privacy Policy (collectively, the “Terms”) govern your use of the Site, use and access of other free materials and
-            resources provided by the Site, and any other services or products we make available on this Site (collectively, the “Services”).
+            (collectively, the &ldquo;Site&rdquo;), you hereby consent and agree to these terms and conditions (&ldquo;Terms of Use&rdquo;). The Terms of Use and
+            Privacy Policy (collectively, the &ldquo;Terms&rdquo;) govern your use of the Site, use and access of other free materials and
+            resources provided by the Site, and any other services or products we make available on this Site (collectively, the &ldquo;Services&rdquo;).
             These Terms constitute a legally binding agreement made by and between Kmodo and the user of this Site (personally and,
-            if applicable, on behalf of the entity for whom you are using the Site; collectively, “you”).
+            if applicable, on behalf of the entity for whom you are using the Site; collectively, &ldquo;you&rdquo;).
           </p>
           <p className="mt-4">
             BY ACCESSING OR USING ANY PART OF THE SITE OR SERVICES, YOU AGREE THAT YOU HAVE READ, UNDERSTOOD, AND AGREED TO BE BOUND BY
@@ -59,13 +59,13 @@ export default function Tos() {
           <p>
             We are the owner or the licensee of all intellectual property rights in our Services, including all source code, databases,
             functionality, software, website designs, audio, video, text, photographs, and graphics in the Services (collectively, the
-            "Content"), as well as the trademarks, service marks, and logos contained therein (the "Marks"). Our Content and Marks are
+            &ldquo;Content&rdquo;), as well as the trademarks, service marks, and logos contained therein (the &ldquo;Marks&rdquo;). Our Content and Marks are
             protected by copyright and trademark laws (and various other intellectual property rights and unfair competition laws) and treaties
-            in the United States and around the world. The Content and Marks are provided in or through the Services "AS IS" for your
+            in the United States and around the world. The Content and Marks are provided in or through the Services &ldquo;AS IS&rdquo; for your
             personal, non-commercial use or internal business purpose only.
           </p>
           <p className="mt-4">
-            Subject to your compliance with these Legal Terms, including the "PROHIBITED ACTIVITIES" section below, we grant you a non-exclusive,
+            Subject to your compliance with these Legal Terms, including the &ldquo;PROHIBITED ACTIVITIES&rdquo; section below, we grant you a non-exclusive,
             non-transferable, revocable license to:
           </p>
           <ul>
@@ -90,13 +90,13 @@ export default function Tos() {
             Property Rights will constitute a material breach of our Legal Terms and your right to use our Services will terminate immediately.
           </p>
           <p>
-            <strong>Your submissions and contributions:</strong> Please review this section and the "PROHIBITED ACTIVITIES" section carefully
+            <strong>Your submissions and contributions:</strong> Please review this section and the &ldquo;PROHIBITED ACTIVITIES&rdquo; section carefully
             prior to using our Services to understand (a) the rights you give us and (b) the obligations you have when you post or upload any
             content through the Services.
           </p>
           <p>
             <strong>Submissions:</strong> By directly sending us any question, comment, suggestion, idea, feedback, or other information about
-            the Services ("Submissions"), you agree to assign to us all intellectual property rights in such Submission. You agree that we
+            the Services (&ldquo;Submissions&rdquo;), you agree to assign to us all intellectual property rights in such Submission. You agree that we
             shall own this Submission and be entitled to its unrestricted use and dissemination for any lawful purpose, commercial or
             otherwise, without acknowledgment or compensation to you.
           </p>
@@ -104,7 +104,7 @@ export default function Tos() {
             <strong>Contributions:</strong> The Services may invite you to chat, contribute to, or participate in blogs, message boards, online
             forums, and other functionality during which you may create, submit, post, display, transmit, publish, distribute, or broadcast
             content and materials to us or through the Services, including but not limited to text, writings, video, audio, photographs,
-            music, graphics, comments, reviews, rating suggestions, personal information, or other material ("Contributions"). Any Submission
+            music, graphics, comments, reviews, rating suggestions, personal information, or other material (&ldquo;Contributions&rdquo;). Any Submission
             that is publicly posted shall also be treated as a Contribution.
           </p>
           <p>
@@ -132,8 +132,8 @@ export default function Tos() {
           </p>
           <p>
             <strong>Copyright infringement:</strong> We respect the intellectual property rights of others. If you believe that any material
-            available on or through the Services infringes upon any copyright you own or control, please immediately refer to the "COPYRIGHT
-            INFRINGEMENTS" section below.
+            available on or through the Services infringes upon any copyright you own or control, please immediately refer to the &ldquo;COPYRIGHT
+            INFRINGEMENTS&rdquo; section below.
           </p>
 
           {/* Section 3 */}

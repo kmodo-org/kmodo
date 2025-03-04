@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { HydrateClient } from "~/trpc/server";
