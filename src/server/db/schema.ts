@@ -157,6 +157,7 @@ export const hackers = createTable(
     createdAt: timestamp("created_at", { withTimezone: true }) // when the hacker was created (optional)
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
+    tosAccepted: integer("tos_accepted").notNull().default(0), // tos accepted 
   },
   (hacker) => ({
     user_IdIdx: index("hacker_user_id_idx").on(hacker.user_Id), // index on the user id
