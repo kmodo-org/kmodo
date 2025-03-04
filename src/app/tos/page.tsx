@@ -122,7 +122,7 @@ export default function Tos() {
           </p>
           <p>
             You are solely responsible for your Submissions and/or Contributions and you expressly agree to reimburse us for any and all losses
-            that we may suffer because of your breach of this section, any third party's intellectual property rights, or applicable law.
+            that we may suffer because of your breach of this section, any third party&aspos;s intellectual property rights, or applicable law.
           </p>
           <p>
             We may remove or edit your Content: Although we have no obligation to monitor any Contributions, we shall have the right to remove

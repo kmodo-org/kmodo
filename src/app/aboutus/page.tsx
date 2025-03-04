@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { auth } from "~/server/auth";
 import { Button } from "src/components/ui/button";
 import { Card, CardContent } from "src/components/ui/card";
 
