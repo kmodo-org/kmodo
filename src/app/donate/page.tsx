@@ -1,1 +1,3 @@
-<div>my fat nuts</div>
+export default function DonatePage() {
+    return <div>my fat nuts</div>;
+  }
