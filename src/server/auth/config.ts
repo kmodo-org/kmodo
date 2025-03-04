@@ -1,4 +1,5 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { eq } from "drizzle-orm";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import { db } from "~/server/db";
@@ -6,7 +7,9 @@ import {
   accounts,
   sessions,
   users,
+  hackers,
 } from "~/server/db/schema";
+import { auth } from ".";
 
 /**
  * Module augmentation for next-auth types. Allows us to add custom properties to the session
@@ -65,12 +68,12 @@ export const authConfig = {
     sessionsTable: sessions,
   }),
   callbacks: {
-    session: ({ session, user }) => ({
+    session: ({ session, user }) => ({ // default callback where user id is added to the session
       ...session,
       user: {
         ...session.user,
         id: user.id,
       },
     }),
-  },
-} satisfies NextAuthConfig;
+    },
+  } satisfies NextAuthConfig;

@@ -1,17 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
-import { LatestPost } from "~/components/post";
-import { auth } from "~/server/auth";
+import { auth, signIn } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
-import { Button } from "../components/ui/button"; 
+import { Button } from "~/components/ui/button";
 
-export default async function indevelopment() {
-  //const hello = await api.post.hello({ text: "WIP" });
+export default async function Home() {
   const session = await auth();
+  const isHacker = await api.hacker.getHacker();
 
   if (session?.user) {
     void api.post.getLatest.prefetch();
   }
+
+  
 
   return (
     <HydrateClient>
@@ -22,28 +23,44 @@ export default async function indevelopment() {
             <span className="text-[#59BC89]">kmodo</span> 
           </h1>
           
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl">
+          <div className="flex flex-col items-center gap-2 ">
+            <p className="text-2xl pb-5 text-white">
               Currently under development.
             </p>
 
             <div className="flex flex-col items-center justify-center gap-4">
               
-              <p className="text-center text-2xl text-white">
+              {/* <p className="text-center text-2xl text-white">
                 {session && <span>Logged in as {session.user?.name}</span>}
-              </p>
+              </p>  */}
 
-              <Button asChild className="rounded-full text-[#59BC89] bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20">
-                <Link
-                  href={session ? "/api/auth/signout" : "/api/auth/signin"}>
-                  {session ? "Sign out" : "Sign in"}
-                </Link>
+              {!isHacker ? (
+                <form>
+                  <Button
+                    size="lg"
+                    className="rounded-full text-[#59BC89] text-md bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+                    formAction={async () => {
+                      "use server";
+                      await signIn("GitHub", { redirectTo: "/hacker/application" });
+                    }}
+                  >
+                    Sign in with GitHub!
+                  </Button>
+                </form>
+              ) : (
                 
-                </Button>
+                <Link href="/dashboard">
+                  <Button 
+                  size="lg" 
+                  className="rounded-full text-[#59BC89] text-md bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+                  >
+                    
+                    Go to Dashboard</Button>
+                </Link>
+              )}
             </div>
           </div>
 
-          {session?.user && <LatestPost />}
         </div>
       </main>
     </HydrateClient>

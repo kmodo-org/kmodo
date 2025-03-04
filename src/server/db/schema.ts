@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { InferSelectModel, relations, sql } from "drizzle-orm";
 import {
   index,
   integer,
@@ -10,6 +10,7 @@ import {
   date,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
+import { createInsertSchema } from "drizzle-zod";
 
 export const createTable = pgTableCreator((name) => `kmodo_${name}`);
 
@@ -163,6 +164,9 @@ export const hackers = createTable(
     eduemailIdx: index("hacker_eduemail_idx").on(hacker.eduemail), // index on the edu email
   })
 );
+
+export type InsertHacker = InferSelectModel<typeof hackers>;
+export const InsertHackerSchema = createInsertSchema(hackers);
 
 export const organizers = createTable(
   "organizer",
