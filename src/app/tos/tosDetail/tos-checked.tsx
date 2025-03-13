@@ -7,7 +7,7 @@ const TosChecked = () => {
     const [checked, setChecked] = useState(false);
 
     return (
-        <div className="items-top flex space-x-2 mt-8 container mx-auto p-8 bg-white">
+        <div className="items-top flex space-x-2 mt-8 container mx-auto p-8">
             <Checkbox
                 id="terms1"
                 checked={checked}

@@ -68,4 +68,20 @@
     @apply bg-background text-foreground;
     background: var(--background); /* Ensure background is applied */
   }
+  .tos-card {
+    @apply bg-card text-card-foreground;
+  }
+  .tos-header {
+    @apply bg-card text-card-foreground px-6 py-4;
+  }
+  .tos-title {
+    @apply text-3xl font-bold;
+  }
+  .tos-scroll {
+    @apply hover:underline text-[#59BC89];
+  }
+
+}
+.dialog-trigger {
+  @apply px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 transition-colors;
 }
