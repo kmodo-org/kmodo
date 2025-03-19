@@ -1,0 +1,51 @@
+import { db } from "~/server/db";
+import { hackers, InsertHackerSchema} from "~/server/db/schema";
+import { eq, InferSelectModel } from "drizzle-orm";
+import { z } from "zod";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+
+
+export const hackerRouter = createTRPCRouter({
+    
+  getHacker: publicProcedure.query(async ({ ctx }) => {  // Changed to public procedure
+    const userId = ctx.session?.user?.id; 
+
+    if (!userId) {
+      throw new Error("User ID not found"); 
+    }
+
+    const hackerProfile = await db
+      .select()
+      .from(hackers)
+      .where(eq(hackers.user_Id, userId))
+      .then((res) => res[0]);
+
+    return !!hackerProfile; 
+  }),
+
+  createHacker: protectedProcedure
+  .input(InsertHackerSchema.omit({ id: true }))
+  .mutation(async ({ ctx, input }) => {
+
+    const userId = ctx.session.user.id;
+
+    await db.insert(hackers).values({
+      user_Id: userId,
+      firstname: input.firstname,
+      lastname: input.lastname,
+      birthdate: input.birthdate, 
+      graduation: input.graduation,
+      eduemail: input.eduemail,
+      university: input.university,
+      phone: input.phone,
+      address: input.address,
+      gender: input.gender,
+      race: input.race,
+      github: input.github,
+      linkedin: input.linkedin,
+      personalwebsite: input.personalwebsite,
+    });
+
+    return { success: true };
+  }),
+});

@@ -1,7 +1,13 @@
 import { redirect } from "next/navigation";
 import { auth } from "~/server/auth";
 import Image from "next/image";
-import { Card, CardHeader, CardTitle, CardDescription } from "~/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "~/components/ui/card";
 import { api } from "~/trpc/server";
 import TosSections from "./tosDetail/tos-sections";
 
@@ -19,12 +25,7 @@ export default async function Tos() {
     <div className="min-h-screen flex flex-col text-white pt-2">
       <header className="p-4 flex items-center justify-center">
         <div className="flex justify-center items-center">
-          <Image
-            src="/kmodoL.svg"
-            alt="Kmodo Logo"
-            width={512}
-            height={256}
-          />
+          <Image src="/kmodoL.svg" alt="Kmodo Logo" width={512} height={256} />
         </div>
       </header>
       <h1 className="text-3xl md:text-7xl font-bold text-center">
@@ -45,11 +46,14 @@ export default async function Tos() {
             </CardTitle>
             <CardDescription>
               <div className="mt-2 sm:mt-4 text-base sm:text-lg text-white">
-                By accessing or using our services, you agree to the following terms.
+                By accessing or using our services, you agree to the following
+                terms.
               </div>
             </CardDescription>
           </CardHeader>
-          <TosSections />
+          <CardContent>
+            <TosSections />
+          </CardContent>
         </Card>
       </main>
 
@@ -61,7 +65,7 @@ export default async function Tos() {
             <a href="/tos" className="hover:text-white">
               Terms of Service
             </a>
-            <a href="mailto:admin@kmodo.orhg" className="hover:text-white">
+            <a href="mailto:admin@kmodo.org" className="hover:text-white">
               Contact
             </a>
           </div>
