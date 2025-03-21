@@ -6,14 +6,9 @@ import { Button } from "~/components/ui/button";
 
 export default async function Home() {
   const session = await auth();
-  const isHacker = await api.hacker.getHacker();
-
   if (session?.user) {
     void api.post.getLatest.prefetch();
   }
-
-  
-
   return (
     <HydrateClient>
       <main className="flex min-h-screen flex-col items-center justify-center bg-background">
@@ -22,45 +17,29 @@ export default async function Home() {
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             <span className="text-[#59BC89]">kmodo</span> 
           </h1>
-          
           <div className="flex flex-col items-center gap-2 ">
             <p className="text-2xl pb-5 text-white">
               Currently under development.
             </p>
-
             <div className="flex flex-col items-center justify-center gap-4">
-              
-              {/* <p className="text-center text-2xl text-white">
-                {session && <span>Logged in as {session.user?.name}</span>}
-              </p>  */}
-
-              {!isHacker ? (
-                <form>
-                  <Button
-                    size="lg"
-                    className="rounded-full text-[#59BC89] text-md bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-                    formAction={async () => {
-                      "use server";
-                      await signIn("GitHub", { redirectTo: "/hacker/application" });
-                    }}
-                  >
-                    Sign in with GitHub!
-                  </Button>
-                </form>
+            {session?.user ? (
+              <Link href="/dashboard">
+                <Button size="lg" className="rounded-full text-[#59BC89] text-md bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20">
+                  Go to Dashboard
+                </Button>
+              </Link>
               ) : (
-                
-                <Link href="/dashboard">
-                  <Button 
-                  size="lg" 
+              <form action="/api/auth/signin">
+                <Button
+                  size="lg"
                   className="rounded-full text-[#59BC89] text-md bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-                  >
-                    
-                    Go to Dashboard</Button>
-                </Link>
+                >
+                  Sign in with GitHub!
+                </Button>
+              </form>
               )}
             </div>
           </div>
-
         </div>
       </main>
     </HydrateClient>
