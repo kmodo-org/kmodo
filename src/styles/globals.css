@@ -1,15 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
+  /* Global :root variables for colors */
   :root {
     --background: linear-gradient(0, hsl(240, 33%, 6%), hsl(240, 22%, 25%)); /* bg color */
-    --foreground: 	hsl(0, 0%, 100%); /* text color */
+    --foreground: hsl(0, 0%, 100%); /* text color */
     --card: var(--background); /* card bg color */
     --card-foreground: var(--foreground); /* card text color */
 
-    /* other colors not assigned yet */
-    /* assign with comments pls :3 */
+    /* Other colors not assigned yet */
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
     --primary: 0 0% 9%;
@@ -31,8 +32,10 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
 
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
+
+  /* Dark mode overrides */
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -57,16 +60,39 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
-}
-@layer base {
+
+  /* Global base styles */
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
     background: var(--background); /* Ensure background is applied */
+  }
+
+  /* Specific class styles */
+  .tos-card {
+    @apply bg-card text-card-foreground;
+  }
+
+  .tos-header {
+    @apply bg-card text-card-foreground px-6 py-4;
+  }
+
+  .tos-title {
+    @apply text-3xl font-bold;
+  }
+
+  .tos-scroll {
+    @apply hover:underline text-[#59BC89];
+  }
+
+  /* Specific styles for dialog trigger button */
+  .dialog-trigger {
+    @apply px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 transition-colors;
   }
 }
 
