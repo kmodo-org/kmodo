@@ -14,7 +14,7 @@ export default async function Home() {
       
       <main className="flex min-h-screen flex-col items-center justify-center bg-background">
         <div className="container flex flex-col items-center justify-center gap-6 px-4 py-16">
-          <Image className="md:w-200 md:h-200" src="/kmodo.png" width={300} height={300} alt="kmodo" />
+          <Image className="md:w-200 md:h-200" src="/images/kmodo.png" width={300} height={300} alt="kmodo" />
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             <span className="text-[#59BC89]">kmodo</span> 
           </h1>
