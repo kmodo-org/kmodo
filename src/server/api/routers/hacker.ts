@@ -32,6 +32,7 @@ export const hackerRouter = createTRPCRouter({
     await db.insert(hackers).values({
       user_Id: userId,
       firstname: input.firstname,
+      middlename: input.middlename,
       lastname: input.lastname,
       birthdate: input.birthdate, 
       graduation: input.graduation,
@@ -44,6 +45,7 @@ export const hackerRouter = createTRPCRouter({
       github: input.github,
       linkedin: input.linkedin,
       personalwebsite: input.personalwebsite,
+      tosAccepted: input.tosAccepted
     });
 
     return { success: true };
