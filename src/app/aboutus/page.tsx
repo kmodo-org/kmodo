@@ -39,16 +39,16 @@ import {
   ]
 
 export default async function AboutUs() {  
-    const session = await auth();
-    const userId = session?.user?.id;
+    // const session = await auth();
+    // const userId = session?.user?.id;
     
-    if (!userId || !allowedUserIds.has(userId)) {
-        redirect("/");
-    }
+    // if (!userId || !allowedUserIds.has(userId)) {
+    //     redirect("/");
+    // }
 
-    if (session?.user) {
-        void api.post.getLatest.prefetch();
-    }
+    // if (session?.user) {
+    //     void api.post.getLatest.prefetch();
+    // }
 
     // border-red-400 border w-full
 

@@ -9,8 +9,8 @@ import { Button } from "src/components/ui/button";
 const routes: { title: string; href: string }[] = [
     { title: "ABOUT US", href: "/aboutus" }, // boom
     { title: "EVENTS", href: "/events" }, // boom
-    { title: "RESOURCES", href: "/resources" }, // boom
-    { title: "DONATE", href: "/donate" }, // boom
+    { title: "RESOURCES", href: "/resources" } // boom
+    // { title: "DONATE", href: "/donate" }, // boom
 ]; 
 
   const Navbar: React.FC = () => {

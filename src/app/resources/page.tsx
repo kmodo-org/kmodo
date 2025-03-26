@@ -82,21 +82,23 @@ export default function ResourcesPage() {
 
   return (
       <div className="flex min-h-screen flex-col">
-        <div className="">
+          <div className="my-5"></div>
+        <div className="md:justify-items-start justify-items-center ">
           
-            <Image className="translate-x-1/4 rounded-2xl object-contain w-7/12 h-auto" src="/images/resources.JPG" width={1000} height={10000} alt=""></Image>
+            <Image className="w-11/12 m-5 md:m-0 md:translate-x-1/4 rounded-2xl object-contain md:w-8/12 sm:h-auto" src="/images/resources.JPG" width={1000} height={10000} alt=""></Image>
 
-          <div className="flex translate-x-3/4 -translate-y-96 bg-white h-fit w-1/2 flex-col items-start justify-start p-8 rounded-2xl">
-            <div className="text-[#59BC89] font-['Exo'] font-extrabold text-6xl">HACKATHON RESOURCES</div>
-            <div className="text-[#59BC89] font-['Open Sans'] text-xl">
+          <div className="flex md:translate-x-3/4 lg:-translate-y-96 md:-translate-y-80 bg-white h-fit md:w-1/2 flex-col items-start justify-start md:p-8 p-4 ml-5 mr-5 rounded-2xl w-11/12 md:m-0">
+
+            <div className="text-[#59BC89] font-['Exo'] font-extrabold xl:text-6xl lg:text-5xl md:text-3xl sm:text-3xl text-3xl">HACKATHON RESOURCES</div>
+            <div className="text-[#59BC89] font-['Open Sans'] lg:text-xl md:text-lg sm:text-base text-base">
               With over 3 resources outsourced from industry professionals and hacking experts, KMODO is the most comprehensive hackathon guide out there.
             </div>
           </div>
         </div>
 
-        <div className="m-20 flex flex-col items-center w-full">
-          <div className="flex flex-row space-x-5 w-5/6 justify-center">
-            <input className="rounded-lg h-11 w-1/2" type="text" placeholder="Ex: idea brainstorming" onChange={display} value={input}></input>
+        <div className="md:my-0 my-20 flex flex-col items-center w-full">
+          <div className="flex flex-row space-x-5 w-full justify-center">
+            <input className="rounded-lg h-11 w-1/2 sm:w-1/2 md:w-1/2" type="text" placeholder="Ex: idea brainstorming" onChange={display} value={input}></input>
             <button className="p-2 text-white bg-[#4264AC] hover:bg-[#4264AC]/70 transition w-fit h-fit rounded-lg lg:text-lg md:text-base sm:text-sm text-sm" onClick={() => update(input)}>SEARCH</button>
             <button className="p-2 text-white bg-[#4264AC] hover:bg-[#4264AC]/70 transition w-fit h-fit rounded-lg lg:text-lg md:text-base sm:text-sm text-sm" onClick={clear}>CLEAR</button>
 
@@ -112,6 +114,9 @@ export default function ResourcesPage() {
               );
             })}
           </div>
+
+          <div className="my-44"></div>
+
         </div>
       </div>
   );
