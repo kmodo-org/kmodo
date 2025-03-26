@@ -48,4 +48,20 @@ export const hackerRouter = createTRPCRouter({
 
     return { success: true };
   }),
+
+  hasSubmittedForm: protectedProcedure.query(async ({ ctx }) => {
+    try {
+      const userId = ctx.session.user.id;
+      const submission = await db
+        .select({ user_Id: hackers.user_Id })
+        .from(hackers)
+        .where(eq(hackers.user_Id, userId))
+        .then(res => res[0]);
+        
+      return !!submission;
+    } catch (error) {
+      console.error("Error checking form submission:", error);
+      return false;
+    }
+  }),
 });

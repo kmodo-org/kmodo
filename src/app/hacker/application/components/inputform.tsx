@@ -12,19 +12,19 @@ import { TRPCClientErrorLike } from "@trpc/client";
 
 const hackerFormSchema = z.object({
   firstname: z.string().min(1, { message: "First name is required." }),
-  middlename: z.string().optional(),
+  middlename: z.string().optional().or(z.literal("")),
   lastname: z.string().min(1, { message: "Last name is required." }),
   birthdate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Birthdate must be YYYY-MM-DD." }),
   eduemail: z.string().email({ message: "Invalid email address." }),
   graduation: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Graduation date must be YYYY-MM-DD." }),
   university: z.string().min(1, { message: "University is required." }),
   phone: z.string().regex(/^\+?\d{10,15}$/, { message: "Invalid phone number format." }),
-  address: z.string().optional(),
-  gender: z.string().optional(),
-  race: z.string().optional(),
-  github: z.string().url({ message: "Invalid URL." }).optional(),
-  linkedin: z.string().url({ message: "Invalid URL." }).optional(),
-  personalwebsite: z.string().url({ message: "Invalid URL." }).optional(),
+  address: z.string().optional().or(z.literal("")),
+  gender: z.string().optional().or(z.literal("")),
+  race: z.string().optional().or(z.literal("")),
+  github: z.string().url({ message: "Invalid URL." }).optional().or(z.literal("")),
+  linkedin: z.string().url({ message: "Invalid URL." }).optional().or(z.literal("")),
+  personalwebsite: z.string().url({ message: "Invalid URL." }).optional().or(z.literal("")),
 });
 
 export function InputForm() {
@@ -34,20 +34,20 @@ export function InputForm() {
     resolver: zodResolver(hackerFormSchema),
     defaultValues: {
       firstname: "",
-      middlename: "",
+      middlename: undefined,
       lastname: "",
       birthdate: "",
       eduemail: "",
       graduation: "",
       university: "",
       phone: "",
-      address: "",
-      gender: "",
-      race: "",
-      github: "",
-      linkedin: "",
-      personalwebsite: "",
-    },
+      address: undefined,
+      gender: undefined,
+      race: undefined,
+      github: undefined,
+      linkedin: undefined,
+      personalwebsite: undefined,
+    }
   });
 
   const createHacker = api.hacker.createHacker.useMutation({
