@@ -20,7 +20,7 @@ export default async function Home() {
 
   if (session == null) { // if the user is not logged in, redirect to the landing page
     redirect("/");
-}
+  }
 
   if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
     redirect("/");
@@ -34,8 +34,17 @@ export default async function Home() {
     <HydrateClient>
       <main className="flex min-h-screen flex-col items-center justify-center bg-background">
         <div className="container flex flex-col items-center justify-center gap-6 px-4 py-16">
+          <Image className="md:w-200 md:h-200" src="/images/miragetsx.png" width={300} height={300} alt="kmodo" />
           <div className="flex flex-col items-center gap-2">
             <p className="text-2xl text-white">Dashboard (for now ...)</p>
+            <form action="/api/auth/signout">
+              <Button
+                size="lg"
+                className="rounded-full text-[#59BC89] text-md bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+              >
+                Log Out!
+              </Button>
+            </form>
             <div className="flex flex-col items-center justify-center gap-4"></div>
           </div>
         </div>

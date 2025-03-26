@@ -17,18 +17,19 @@ const allowedUserIds = new Set([
 export default async function MemberApplicationPage() {
     const session = await auth();
     const userId = session?.user?.id;
-    const isHacker = await api.hacker.getHacker();
 
     if (session == null) { // if the user is not logged in, redirect to the landing page
-        redirect("/");
-    }
-  
-    if (isHacker) { // if the user is already a hacker, redirect to the dashboard
-      return redirect("/dashboard");
+      redirect("/");
     }
 
     if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
       redirect("/");
+    }
+
+    const hasSubmitted = await api.hacker.hasSubmittedForm();
+
+    if (hasSubmitted) {
+      redirect("/dashboard");
     }
 
     if (session?.user) {
