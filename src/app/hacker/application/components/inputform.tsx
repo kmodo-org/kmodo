@@ -106,7 +106,7 @@ export function InputForm() {
             />
           ))}
 
-          <Button type="submit" className="w-full text-[#59BC89] bg-white">Submit</Button>
+          <Button type="submit" className="w-full text-[#59BC89] bg-[#111111]">Submit</Button>
         </form>
       </Form>
     </div>
