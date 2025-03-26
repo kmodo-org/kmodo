@@ -6,7 +6,7 @@
   /* Global :root variables for colors */
   :root {
     --background: linear-gradient(0, hsl(240, 33%, 6%), hsl(240, 22%, 25%)); /* bg color */
-    --foreground: hsl(0, 0%, 100%); /* text color */
+    --foreground: 0, 0%, 100%; /* text color */
     --card: var(--background); /* card bg color */
     --card-foreground: var(--foreground); /* card text color */
 
@@ -71,6 +71,7 @@
   body {
     @apply bg-background text-foreground;
     background: var(--background); /* Ensure background is applied */
+    color: var(--foreground); /* Ensure text color is applied */
   }
 
   /* Specific class styles */

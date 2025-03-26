@@ -45,7 +45,23 @@ export const hackerRouter = createTRPCRouter({
       linkedin: input.linkedin,
       personalwebsite: input.personalwebsite,
     });
-
+ 
     return { success: true };
   }),
+
+  // getEvent: publicProcedure.query(async ({ ctx }) => {
+  //   const userId = ctx.session?.user?.id;
+      
+  //     if (!userId) {
+  //       throw new Error("User ID not found");
+  //     }
+
+  //     const eventProfile = await db
+  //       .select()
+  //       .from(event)
+  //       .where(eq(event.id, id))
+  //       .then((res) => res[0]);
+
+  //     return eventProfile;
+  //   }),
 });

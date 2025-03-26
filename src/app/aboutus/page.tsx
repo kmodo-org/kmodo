@@ -26,9 +26,9 @@ export default async function Home() {
     const session = await auth();
     const userId = session?.user?.id;
     
-    if (!userId || !allowedUserIds.has(userId)) {
-        redirect("/");
-    }
+    // if (!userId || !allowedUserIds.has(userId)) {
+    //     redirect("/");
+    // }
 
     if (session?.user) {
         void api.post.getLatest.prefetch();

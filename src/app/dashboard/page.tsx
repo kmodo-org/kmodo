@@ -20,11 +20,11 @@ export default async function Home() {
 
   if (session == null) { // if the user is not logged in, redirect to the landing page
     redirect("/");
-}
-
-  if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
-    redirect("/");
   }
+
+  // if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
+  //   redirect("/");
+  // }
 
   if (session?.user) {
     void api.post.getLatest.prefetch();

@@ -1,13 +1,16 @@
 import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
-import { HydrateClient } from "~/trpc/server";
+import { api, HydrateClient } from "~/trpc/server";
+import "~/styles/globals.css";
 
-export default async function Home() {
+const events = api.hacker.getHacker();
+
+export default async function EventsPage() {
   return (
     <HydrateClient>
       <main className="flex min-h-screen flex-col items-center bg-background p-8">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold tracking-tight mb-2">HACK SEASON</h1>
+          <h1 className="text-foreground text-4xl font-bold tracking-tight mb-2">HACK SEASON</h1>
           <p className="text-muted-foreground text-lg">FIND HACKATHONS ACROSS THE WORLD!</p>
         </div>
 
