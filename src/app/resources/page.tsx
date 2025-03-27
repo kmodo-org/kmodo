@@ -42,6 +42,7 @@ const allowedUserIds = new Set([
   "ec6e9191-6e59-49fa-a35a-71b99ce8b85e" // adrian
 ]);
 
+// will add more resources, maybe we can put in db?
 const resources: Resource[] = [
   { title: "How to Run a Successful Hackathon", image: "/images/howtorunahackathon.png", desc: "Step-by-step guide on running hackathons by Joshua Tauberer", tag: "ORGANIZATION", link: "https://hackathon.guide/"},
   { title: "Awesome Hackathon Projects", image: "/images/listofcoolprojects.png", desc: "This is a curated list of awesome hackathon projects.", tag: "BRAINSTORMING", link: "https://github.com/Olanetsoft/awesome-hackathon-projects"},
