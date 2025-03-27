@@ -1,7 +1,6 @@
 import { db } from "~/server/db";
 import { hackers, events, InsertHackerSchema, InsertEventSchema} from "~/server/db/schema";
-import { eq, InferSelectModel } from "drizzle-orm";
-import { z } from "zod";
+import { asc, eq } from "drizzle-orm";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 
 
@@ -66,43 +65,34 @@ export const hackerRouter = createTRPCRouter({
       school: input.school,
       description: input.description,
     });
- 
+
     return { success: true };
   }),
 
-  createEvent: protectedProcedure
-  .input(InsertEventSchema.omit({ id: true }))
-  .mutation(async ({ ctx, input }) => { 
-
-    const userId = ctx.session.user.id;
-
-    await db.insert(events).values({
-      name: input.name,
-      date: input.date,
-      location: input.location, 
-      starttime: input.starttime,
-      endtime: input.endtime,
-      school: input.school,
-      description: input.description,
-    });
-
-    return { success: true };
+  getEvents: publicProcedure.query(async ({ ctx }) => {
+    const result = await ctx.db
+      .select()
+      .from(events)
+      .orderBy(asc(events.date));
+    return result;
   }),
 
   hasSubmittedForm: protectedProcedure.query(async ({ ctx }) => {
     try {
       const userId = ctx.session.user.id;
       
-  //     if (!userId) {
-  //       throw new Error("User ID not found");
-  //     }
-
-  //     const eventProfile = await db
-  //       .select()
-  //       .from(event)
-  //       .where(eq(event.id, id))
-  //       .then((res) => res[0]);
-
-  //     return eventProfile;
-  //   }),
+      // Check if the user exists in the hackers table
+      const submission = await db
+        .select({ user_Id: hackers.user_Id })
+        .from(hackers)
+        .where(eq(hackers.user_Id, userId))
+        .limit(1) // Ensure we only check for the first result
+        .then(res => res[0]);
+  
+      return !!submission; // If a record exists, return true, otherwise false
+    } catch (error) {
+      console.error("Error checking form submission:", error);
+      return false;
+    }
+  })
 });
