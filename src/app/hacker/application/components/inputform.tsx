@@ -19,12 +19,13 @@ const hackerFormSchema = z.object({
   graduation: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Graduation date must be YYYY-MM-DD." }),
   university: z.string().min(1, { message: "University is required." }),
   phone: z.string().regex(/^\+?\d{10,15}$/, { message: "Invalid phone number format." }),
-  address: z.string().optional(),
-  gender: z.string().optional(),
-  race: z.string().optional(),
-  github: z.string().url({ message: "Invalid URL." }).optional(),
-  linkedin: z.string().url({ message: "Invalid URL." }).optional(),
-  personalwebsite: z.string().url({ message: "Invalid URL." }).optional(),
+  address: z.string().optional().or(z.literal("")),
+  gender: z.string().optional().or(z.literal("")),
+  race: z.string().optional().or(z.literal("")),
+  github: z.string().url({ message: "Invalid URL." }).optional().or(z.literal("")),
+  linkedin: z.string().url({ message: "Invalid URL." }).optional().or(z.literal("")),
+  personalwebsite: z.string().url({ message: "Invalid URL." }).optional().or(z.literal("")),
+  tosAgreement: z.number().min(1, { message: "You must agree to the Terms of Service." })
 });
 
 export function InputForm() {
@@ -41,13 +42,14 @@ export function InputForm() {
       graduation: "",
       university: "",
       phone: "",
-      address: "",
-      gender: "",
-      race: "",
-      github: "",
-      linkedin: "",
-      personalwebsite: "",
-    },
+      address: undefined,
+      gender: undefined,
+      race: undefined,
+      github: undefined,
+      linkedin: undefined,
+      personalwebsite: undefined,
+      tosAgreement: 0 
+    }
   });
 
   const createHacker = api.hacker.createHacker.useMutation({
@@ -71,7 +73,7 @@ export function InputForm() {
       <p className="text-sm text-gray-500">
         <i>Fill out this form to begin hacking with Kmodo!</i>
       </p>
-
+  
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
           {[
@@ -90,6 +92,7 @@ export function InputForm() {
             { name: "linkedin", label: "LinkedIn (optional)", placeholder: "https://linkedin.com/in/username", optional: true },
             { name: "personalwebsite", label: "Personal Website (optional)", placeholder: "https://yourwebsite.com", optional: true },
           ].map(({ name, label, placeholder, type = "text", optional = false }) => (
+
             <FormField
               key={name}
               control={form.control}
@@ -98,15 +101,50 @@ export function InputForm() {
                 <FormItem>
                   <FormLabel>{label}</FormLabel>
                   <FormControl>
-                    <Input type={type} placeholder={placeholder} {...field} />
+                    <Input
+                      type={type}
+                      placeholder={placeholder}
+                      {...field}
+                      value={typeof field.value === "boolean" ? "" : field.value}
+                      className="border-2 rounded-md p-2 shadow-xl"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           ))}
+          
+          <FormField
+            control={form.control}
+            name="tosAgreement"
+            render={({ field }) => (
+              <FormItem className="flex items-center gap-2">
+                <FormControl>
+                  <input
+                    type="checkbox"
+                    checked={field.value === 1} // Convert integer to boolean
+                    onChange={(e) => field.onChange(e.target.checked ? 1 : 0)} // Convert boolean to integer
+                    className="w-4 h-4 border-gray-300 rounded"
+                  />
+                </FormControl>
+                <FormLabel className="text-sm m-0 translate-y-[-4px]">
+                  I agree to the{" "}
+                  <a href="/tos" className="text-[#59BC89] underline">
+                    Terms of Service
+                  </a>
+                </FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          <Button type="submit" className="w-full text-[#59BC89] bg-white">Submit</Button>
+          <Button
+            type="submit"
+            disabled={form.watch("tosAgreement") !== 1 || form.formState.isSubmitting} 
+            className="w-full text-[#59BC89] bg-[#111111] disabled:opacity-50 disabled:cursor-not-allowed">
+            Submit
+          </Button>
         </form>
       </Form>
     </div>

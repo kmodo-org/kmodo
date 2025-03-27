@@ -32,6 +32,7 @@ export const hackerRouter = createTRPCRouter({
     await db.insert(hackers).values({
       user_Id: userId,
       firstname: input.firstname,
+      middlename: input.middlename,
       lastname: input.lastname,
       birthdate: input.birthdate, 
       graduation: input.graduation,
@@ -44,6 +45,26 @@ export const hackerRouter = createTRPCRouter({
       github: input.github,
       linkedin: input.linkedin,
       personalwebsite: input.personalwebsite,
+      tosAccepted: input.tosAccepted
+    });
+
+    return { success: true };
+  }),
+
+  createEvent: protectedProcedure
+  .input(InsertEventSchema.omit({ id: true }))
+  .mutation(async ({ ctx, input }) => { 
+
+    const userId = ctx.session.user.id;
+
+    await db.insert(events).values({
+      name: input.name,
+      date: input.date,
+      location: input.location, 
+      starttime: input.starttime,
+      endtime: input.endtime,
+      school: input.school,
+      description: input.description,
     });
  
     return { success: true };
