@@ -236,6 +236,7 @@ export const events = createTable( // table for events
       .notNull(),
     school: varchar("school", { length: 255 }) // school for the event (cant be null)
       .notNull(),
+    description: varchar("description", { length: 255 }), // description for event ( optional ) 
     createdAt: timestamp("created_at", { withTimezone: true }) // when the event was created
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(), 
@@ -244,6 +245,8 @@ export const events = createTable( // table for events
     eventIdx: index("event_idx").on(event.name), // index on the event name
   })
 );
+
+export const InsertEventSchema = createInsertSchema(events);
 
 export const eventOrganizers = createTable(
   "event_organizer",
