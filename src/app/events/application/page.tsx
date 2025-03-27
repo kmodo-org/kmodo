@@ -5,10 +5,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "~/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 import { Input } from "~/components/ui/input";
-import { auth } from "~/server/auth";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 
@@ -32,9 +31,9 @@ const allowedUserIds = new Set([
   "846fe944-93cd-4b07-8f47-bcd743f4ec39", // sam 
 ]);
 
-export default async function EventApplication() {
+export default function EventApplication() {
     const router = useRouter();
-
+    const { data: session, status } = useSession();
     
     const form = useForm<z.infer<typeof eventForm>>({
         resolver: zodResolver(eventForm),

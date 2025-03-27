@@ -12,7 +12,7 @@ import { TRPCClientErrorLike } from "@trpc/client";
 
 const hackerFormSchema = z.object({
   firstname: z.string().min(1, { message: "First name is required." }),
-  middlename: z.string().optional(),
+  middlename: z.string().optional().or(z.literal("")),
   lastname: z.string().min(1, { message: "Last name is required." }),
   birthdate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Birthdate must be YYYY-MM-DD." }),
   eduemail: z.string().email({ message: "Invalid email address." }),
@@ -35,7 +35,7 @@ export function InputForm() {
     resolver: zodResolver(hackerFormSchema),
     defaultValues: {
       firstname: "",
-      middlename: "",
+      middlename: undefined,
       lastname: "",
       birthdate: "",
       eduemail: "",

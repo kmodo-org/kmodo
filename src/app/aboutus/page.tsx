@@ -1,14 +1,11 @@
 import Image from "next/image";
 import { Button } from "src/components/ui/button";
 import { Card, CardContent } from "src/components/ui/card";
-// import { auth, signIn } from "~/server/auth";
-import { signIn } from "~/server/auth";
-// import { redirect } from "next/navigation";
-// import { api } from "~/trpc/server";
+import { auth, signIn } from "~/server/auth";
+import { redirect } from "next/navigation";
+import { api } from "~/trpc/server";
 import { FeatureBox } from "src/components/ui/featurebox";
 import { CarouselFeatureBox } from "src/components/ui/carouselfeaturebox";
-// import { GithubIcon } from "lucide-react";
-
 
 import {
     Carousel,
@@ -17,6 +14,7 @@ import {
     CarouselNext,
     CarouselPrevious,
   } from "src/components/ui/carousel"
+
 
   const allowedUserIds = new Set([
     "71181949-05ab-4011-a6c9-9f7f97d154e6", // daniel efres 
@@ -43,16 +41,16 @@ import {
   ]
 
 export default async function AboutUs() {  
-    // const session = await auth();
-    // const userId = session?.user?.id;
+    const session = await auth();
+    const userId = session?.user?.id;
     
-    // if (!userId || !allowedUserIds.has(userId)) {
-    //     redirect("/");
-    // }
+    if (!userId || !allowedUserIds.has(userId)) {
+         redirect("/");
+     }
 
-    // if (session?.user) {
-    //     void api.post.getLatest.prefetch();
-    // }
+     if (session?.user) {
+         void api.post.getLatest.prefetch();
+     }
 
     // border-red-400 border w-full
 
