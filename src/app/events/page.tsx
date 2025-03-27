@@ -2,6 +2,7 @@ import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 import { Input } from "~/components/ui/input";
 import { api, HydrateClient } from "~/trpc/server";
 import "~/styles/globals.css";
+import Events from "~/components/events";
 
 const events = api.hacker.getHacker();
 
@@ -9,31 +10,31 @@ export default async function EventsPage() {
   return (
     <HydrateClient>
       <main className="flex min-h-screen flex-col items-center bg-background p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-foreground text-4xl font-bold tracking-tight mb-2">HACK SEASON</h1>
-          <p className="text-muted-foreground text-lg">FIND HACKATHONS ACROSS THE WORLD!</p>
-        </div>
-
-          <Input 
-            placeholder="Search hackathons..." 
-            className="w-full max-w-2xl mx-auto rounded-full px-6 py-5"
-          />
-
-
+          
         {/* Rn just one card will be changed to dynamic cards with a fetch API */}
-        <Card className="max-w-lg">
-          <CardHeader>
-            <CardTitle>Events</CardTitle>
-            <CardDescription>
-              Find hackathons across the world!
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Coming soon...</p>
-          </CardContent>
-          <CardFooter>
-          </CardFooter>
-        </Card>
+        <div className="pt-10">
+          <Card className="bg-card">
+            <div className="p-6">
+              <CardHeader className="items-center">
+                <CardTitle className="mb-2 items-center">
+                  <span className="items-center text-accent text-5xl font-bold tracking-tight">HACKATHONS</span>
+                </CardTitle>
+                <CardDescription>
+                  <div className="text-center mb-8">
+                    <p className="text-foreground text-lg font-bold">FIND HACKATHONS ACROSS THE WORLD!</p>
+                  </div>             
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Input 
+                  placeholder="Search hackathons..." 
+                  className="w-full max-w-2xl mx-auto rounded-full px-6 py-5 bg-foreground text-black"
+                />
+                <Events />
+              </CardContent>
+            </div>
+          </Card>
+        </div>
       </main>
     </HydrateClient>
   );
