@@ -9,6 +9,8 @@ import { redirect, useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 import { Input } from "~/components/ui/input";
 import { auth } from "~/server/auth";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 const eventForm = z.object({
     name: z.string().min(1, { message: "Please input a valid event name." }),
@@ -32,6 +34,7 @@ const allowedUserIds = new Set([
 
 export default async function EventApplication() {
     const router = useRouter();
+
     
     const form = useForm<z.infer<typeof eventForm>>({
         resolver: zodResolver(eventForm),
@@ -64,13 +67,16 @@ export default async function EventApplication() {
         }
     };
 
-    const session = await auth();
-    const userId = session?.user?.id;
-    if (!session) {
-      redirect("/"); // if user is not signed up with github they are sent to landing
-    }
-    if (!userId || !allowedUserIds.has(userId)) {
-      redirect("/"); // if user is not a goat they are sent to landing
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/");
+        } else if (status === "authenticated" && (!session.user?.id || !allowedUserIds.has(session.user.id))) {
+            router.push("/");
+        }
+    }, [status, session, router]);
+
+    if (status !== "authenticated" || !session.user?.id || !allowedUserIds.has(session.user.id)) {
+        return null; // or a loading spinner
     }
 
     return (

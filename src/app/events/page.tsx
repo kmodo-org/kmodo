@@ -1,5 +1,8 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
+
+// import { redirect } from "next/navigation";
+// import { api, HydrateClient } from "~/trpc/server";
 import { HydrateClient } from "~/trpc/server";
 import "~/styles/globals.css";
 import Events from "~/components/events";

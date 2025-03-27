@@ -5,19 +5,18 @@
 @layer base {
   /* Global :root variables for colors */
   :root {
-    --background: linear-gradient(0, hsl(240, 33%, 6%), hsl(240, 22%, 25%)); /* bg color */
-    --foreground: 0, 0%, 100%; /* text color */
-    --card: 253, 30%, 21%; /* card bg color */
-    --card-foreground: var(--foreground); /* card text color */
     --accent: 149, 42%, 54%; /* kmodo green */
     --secondary: 237, 28%, 14%; /* bg color purple no gradient */
     --destructive: 235, 46%, 90%; /* card bg color off-white */
     --destructive-foreground: 240, 22%, 25%; /* card bg color off-black */
-
+    --background: linear-gradient(0, hsl(240, 33%, 6%), hsl(240, 22%, 25%));
+    --foreground: hsl(0, 0%, 100%);
+    --card: var(--background);
+    --card-foreground: var(--foreground);
     --custom-tertiary-text: #9E9BA8;
     --custom-secondary-text: #D9DBF1;
-    --custom-primary-text: var(--accent);
-    --custom-bg: var(--card);
+    --custom-primary-text: #59BC89;
+    --custom-bg: #2D2647;
 
     /* Other colors not assigned yet */
     --popover: 0 0% 100%;
