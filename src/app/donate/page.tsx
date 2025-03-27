@@ -1,9 +1,9 @@
-import Link from "next/link";
-import Image from "next/image";
+// import Link from "next/link";
+// import Image from "next/image";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
-import { Button } from "~/components/ui/button";
-import { redirect } from "next/navigation";
+// import { Button } from "~/components/ui/button";
+// import { redirect } from "next/navigation";
 
 const allowedUserIds = new Set([
   "71181949-05ab-4011-a6c9-9f7f97d154e6", // daniel efres 

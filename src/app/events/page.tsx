@@ -1,9 +1,10 @@
 import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 
-import { redirect } from "next/navigation";
-import { api, HydrateClient } from "~/trpc/server";
-import { auth } from "~/server/auth";
+// import { redirect } from "next/navigation";
+// import { api, HydrateClient } from "~/trpc/server";
+import { HydrateClient } from "~/trpc/server";
+// import { auth } from "~/server/auth";
 
 
 const allowedUserIds = new Set([

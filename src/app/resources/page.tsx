@@ -1,26 +1,26 @@
 "use client";
 // basically, the next header thing is a server side component BUT this is a client page so client conflicts with server but apparently i need this to be a client page in order to use react useState so whoops
 
-import Link from "next/link";
+// import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { Resource } from "src/components/ui/resource";
 
-import { redirect } from "next/navigation";
-import { api, HydrateClient } from "~/trpc/server";
-import { auth } from "~/server/auth";
+// import { redirect } from "next/navigation";
+// import { api, HydrateClient } from "~/trpc/server";
+// import { auth } from "~/server/auth";
 
 import { Button } from "src/components/ui/button"
 
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
+  // NavigationMenuIndicator,
   NavigationMenuItem,
-  NavigationMenuLink,
+  // NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
+  // NavigationMenuViewport,
 } from "src/components/ui/navigation-menu";
 
 import { Input } from "src/components/ui/input";

@@ -1,12 +1,13 @@
 import Image from "next/image";
 import { Button } from "src/components/ui/button";
 import { Card, CardContent } from "src/components/ui/card";
-import { auth, signIn } from "~/server/auth";
-import { redirect } from "next/navigation";
-import { api } from "~/trpc/server";
+// import { auth, signIn } from "~/server/auth";
+import { signIn } from "~/server/auth";
+// import { redirect } from "next/navigation";
+// import { api } from "~/trpc/server";
 import { FeatureBox } from "src/components/ui/featurebox";
 import { CarouselFeatureBox } from "src/components/ui/carouselfeaturebox";
-import { GithubIcon } from "lucide-react";
+// import { GithubIcon } from "lucide-react";
 
 
 import {
