@@ -3,12 +3,17 @@ import Image from "next/image";
 import { auth, signIn } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import { Button } from "~/components/ui/button";
+import { GithubIcon } from "lucide-react";
 
 export default async function Home() {
   const session = await auth();
   if (session?.user) {
     void api.post.getLatest.prefetch();
   }
+
+
+
+
   return (
     <HydrateClient>
       <main className="flex min-h-screen flex-col items-center justify-center bg-background">
@@ -29,14 +34,21 @@ export default async function Home() {
                 </Button>
               </Link>
               ) : (
-              <form action="/api/auth/signin">
-                <Button
-                  size="lg"
-                  className="rounded-full text-[#59BC89] text-md bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-                >
-                  Sign in with GitHub!
-                </Button>
-              </form>
+              <form className="p-[1.5px]">
+                  <Button
+                    size="lg"
+                    className="rounded-full text-[#59BC89] text-md bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+                    formAction={async () => {
+                      "use server";
+                      await signIn("github", {
+                        redirectTo: "/hacker/application",
+                      });
+                    }}
+                  >
+                    Sign in with GitHub! <GithubIcon className="ml-1"/>
+                  </Button>
+                </form>
+
               )}
             </div>
           </div>

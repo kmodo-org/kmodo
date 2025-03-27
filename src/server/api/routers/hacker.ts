@@ -32,6 +32,7 @@ export const hackerRouter = createTRPCRouter({
     await db.insert(hackers).values({
       user_Id: userId,
       firstname: input.firstname,
+      middlename: input.middlename,
       lastname: input.lastname,
       birthdate: input.birthdate, 
       graduation: input.graduation,
@@ -44,6 +45,7 @@ export const hackerRouter = createTRPCRouter({
       github: input.github,
       linkedin: input.linkedin,
       personalwebsite: input.personalwebsite,
+      tosAccepted: input.tosAccepted
     });
 
     return { success: true };
@@ -71,16 +73,19 @@ export const hackerRouter = createTRPCRouter({
   hasSubmittedForm: protectedProcedure.query(async ({ ctx }) => {
     try {
       const userId = ctx.session.user.id;
+      
+      // Check if the user exists in the hackers table
       const submission = await db
         .select({ user_Id: hackers.user_Id })
         .from(hackers)
         .where(eq(hackers.user_Id, userId))
+        .limit(1) // Ensure we only check for the first result
         .then(res => res[0]);
-        
-      return !!submission;
+  
+      return !!submission; // If a record exists, return true, otherwise false
     } catch (error) {
       console.error("Error checking form submission:", error);
       return false;
     }
-  }),
+  })
 });
