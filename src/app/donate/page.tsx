@@ -1,9 +1,9 @@
-import Link from "next/link";
-import Image from "next/image";
+// import Link from "next/link";
+// import Image from "next/image";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
-import { Button } from "~/components/ui/button";
-import { redirect } from "next/navigation";
+// import { Button } from "~/components/ui/button";
+// import { redirect } from "next/navigation";
 
 const allowedUserIds = new Set([
   "71181949-05ab-4011-a6c9-9f7f97d154e6", // daniel efres 
@@ -25,6 +25,7 @@ export default async function DonatePage() {
 
   return (
     <HydrateClient>
+
       <main className="flex min-h-screen flex-col items-center justify-center bg-background">
         <div className="container flex flex-col items-center justify-center gap-6 px-4 py-16">
           <div className="flex flex-col items-center gap-2">
