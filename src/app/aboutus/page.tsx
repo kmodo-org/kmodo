@@ -27,6 +27,7 @@ import {
     "ec6e9191-6e59-49fa-a35a-71b99ce8b85e" // adrian
   ]);
 
+
   const featureBoxList = [
     {title: "Easy Use", desc: "One site, one page to help everyone spend less time finding things out and spend more time hacking.", image: "/images/easyuse.png"},
     {title: "Organization", desc: "We help you organize your event dashboard to help personalize your hackathons.", image: "/images/organization.png"},

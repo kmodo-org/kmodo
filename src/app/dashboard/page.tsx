@@ -14,8 +14,7 @@ const allowedUserIds = new Set([
   "6ad7e677-86c3-46d9-8041-9fff7e9f6132", // kai
   "094f333e-589e-4a6b-9a58-41893606fc06", // carfos
   "b00087f4-fbe1-465c-a74d-791d74278e7b", // eli
-  "ec6e9191-6e59-49fa-a35a-71b99ce8b85e", // adrian
-  "846fe944-93cd-4b07-8f47-bcd743f4ec39", // sam 
+  "ec6e9191-6e59-49fa-a35a-71b99ce8b85e" // adrian
 ]);
 
 interface PageProps {
@@ -27,19 +26,13 @@ export default async function Home({ searchParams }: PageProps) {
   const userId = session?.user?.id;
   const params = await searchParams;
 
-  if (!session) {
-    redirect("/"); // if user is not signed up with github they are sent to landing
+  if (session == null) { // if the user is not logged in, redirect to the landing page
+    redirect("/");
   }
 
-  if (!userId || !allowedUserIds.has(userId)) {
-    redirect("/"); // if user is not a goat they are sent to landing
-  }
-
-  const userApplication = await api.hacker.hasSubmittedForm();
-
-  if (!userApplication) {
-    redirect("/hacker/application");  // if user has not filled up the form for hacker (arent in hacker table) they are sent there
-  }
+  // if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
+  //   redirect("/");
+  // }
 
   if (session?.user) {
     void api.post.getLatest.prefetch();
@@ -105,4 +98,3 @@ export default async function Home({ searchParams }: PageProps) {
     </HydrateClient>
   );
 }
-

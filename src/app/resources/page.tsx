@@ -90,14 +90,12 @@ export default function ResourcesPage() {
       });
   
       setShowCard(updatedShowCard);
-
     } else {
       const updatedShowCard = resources.map((resource) => {
         let hasKeyword = false;
         
         if(resource.tag.toLowerCase().includes(input.toLowerCase())) {
           hasKeyword=true;
-
         }
 
         return hasKeyword;
@@ -105,17 +103,13 @@ export default function ResourcesPage() {
       });
   
       setShowCard(updatedShowCard);
-
     }
-
-   
   };
 
   const clear = (): void => {
     setShowCard(new Array(resources.length).fill(true));
     setInput("");
   };
-
   return (
       <div className="flex min-h-screen flex-col">
         <Image className="object-contain w-full h-auto -mt-32 " src="/images/resources.JPG" width={2000} height={300} alt="title" />

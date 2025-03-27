@@ -5,9 +5,9 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 
+// Components 
 import { Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/ui/footer";
-
 export const metadata: Metadata = {
   title: "kmodo",
   description: "Hackathons Done Different",
