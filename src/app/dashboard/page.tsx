@@ -1,10 +1,12 @@
-import Link from "next/link";
-import Image from "next/image";
-import { auth, signOut } from "~/server/auth";
+import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
-import { Button } from "~/components/ui/button";
 import { redirect } from "next/navigation";
-import { GithubIcon } from "lucide-react";
+import { MobileHeader } from "./components/mobile-header";
+import { Sidebar } from "./components/sidebar";
+import { EventOverview } from "./components/event-overview";
+import { EventDetails } from "./components/event-details";
+import { ProgressSection } from "./components/progress-section";
+import { NoHackathonView } from "./components/no-hackathon-view";
 
 const allowedUserIds = new Set([
   "71181949-05ab-4011-a6c9-9f7f97d154e6", // daniel efres 
@@ -16,9 +18,14 @@ const allowedUserIds = new Set([
   "846fe944-93cd-4b07-8f47-bcd743f4ec39", // sam 
 ]);
 
-export default async function Home() {
+interface PageProps {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+
+export default async function Home({ searchParams }: PageProps) {
   const session = await auth();
   const userId = session?.user?.id;
+  const params = await searchParams;
 
   if (!session) {
     redirect("/"); // if user is not signed up with github they are sent to landing
@@ -38,28 +45,63 @@ export default async function Home() {
     void api.post.getLatest.prefetch();
   }
 
+  // Temp hackathon check
+  const hasHackathon = params.test === "with-hackathon";
+  
+  const currentEvent = hasHackathon ? {
+    name: "KnightHacks VIII",
+    date: "Oct 25-27, 2025",
+    location: "UCF",
+    participants: "500+",
+    description: "Join us for a weekend at KnightHacks VIII", // all of ts will be deleted after we incorporate the real data from the db
+    schedule: [
+      { time: "5:00 PM", event: "Check-in Opens" },
+      { time: "6:30 PM", event: "Opening Ceremony" },
+      { time: "7:30 PM", event: "Team Formation" },
+      { time: "8:00 PM", event: "Hacking Begins" },
+    ],
+    timeUntilStart: "Starting in 2 weeks", // will be tracker
+    participantGrowth: "+50 this week", // will be tracker
+    venueStatus: "Venue ready" // will be tracker
+  } : null;
+
   return (
     <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-background">
-        <div className="container flex flex-col items-center justify-center gap-6 px-4 py-16">
-          <Image className="md:w-200 md:h-200" src="/images/miragetsx.png" width={300} height={300} alt="kmodo" />
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">Dashboard (for now ...)</p>
-            <form className="p-[1.5px]">
-              <Button
-                size="lg"
-                className="rounded-full text-[#59BC89] text-md bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-                formAction={async () => {
-                  "use server";
-                  await signOut({ redirectTo: "/" });
-                }}
-              >
-                Log Out
-              </Button>
-            </form>
+      <div className="flex min-h-screen bg-[#1A1B2E] text-white">
+        <Sidebar userName={session.user.name ?? ""}
+         userImage={session.user.image ?? null} />
+        
+        <div className="flex-1 lg:pl-0 overflow-y-auto lg:overflow-hidden">
+          <div className="lg:hidden">
+            <MobileHeader />
+          </div>
+
+          <div className="p-6 lg:p-8">
+            {currentEvent ? (
+              <>
+                <EventOverview
+                  date={currentEvent.date}
+                  participants={currentEvent.participants}
+                  location={currentEvent.location}
+                  timeUntilStart={currentEvent.timeUntilStart}
+                  participantGrowth={currentEvent.participantGrowth}
+                  venueStatus={currentEvent.venueStatus}
+                />
+
+                <EventDetails
+                  name={currentEvent.name}
+                  description={currentEvent.description}
+                  schedule={currentEvent.schedule}
+                />
+
+                <ProgressSection />
+              </>
+            ) : (
+              <NoHackathonView />
+            )}
           </div>
         </div>
-      </main>
+      </div>
     </HydrateClient>
   );
 }

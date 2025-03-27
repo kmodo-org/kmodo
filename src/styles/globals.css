@@ -5,10 +5,15 @@
 @layer base {
   /* Global :root variables for colors */
   :root {
-    --background: linear-gradient(0, hsl(240, 33%, 6%), hsl(240, 22%, 25%)); /* bg color */
-    --foreground: hsl(0, 0%, 100%); /* text color */
-    --card: var(--background); /* card bg color */
-    --card-foreground: var(--foreground); /* card text color */
+    --background: linear-gradient(0, hsl(240, 33%, 6%), hsl(240, 22%, 25%));
+    --foreground: hsl(0, 0%, 100%);
+    --card: var(--background);
+    --card-foreground: var(--foreground);
+
+    --custom-tertiary-text: #9E9BA8;
+    --custom-secondary-text: #D9DBF1;
+    --custom-primary-text: #59BC89;
+    --custom-bg: #2D2647;
 
     /* Other colors not assigned yet */
     --popover: 0 0% 100%;
@@ -31,7 +36,6 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-
     --radius: 0.5rem;
   }
 
@@ -70,7 +74,7 @@
 
   body {
     @apply bg-background text-foreground;
-    background: var(--background); /* Ensure background is applied */
+    background: var(--background);
   }
 
   /* Specific class styles */
