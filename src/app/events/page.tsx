@@ -34,7 +34,6 @@ export default async function Home() {
           className="w-full max-w-2xl mx-auto rounded-full px-6 py-5"
         />
 
-        <EventCards />
       </main>
     </HydrateClient>
   );
