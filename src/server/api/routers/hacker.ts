@@ -1,5 +1,5 @@
 import { db } from "~/server/db";
-import { hackers, InsertHackerSchema} from "~/server/db/schema";
+import { hackers, events, InsertHackerSchema, InsertEventSchema} from "~/server/db/schema";
 import { eq, InferSelectModel } from "drizzle-orm";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
@@ -46,6 +46,25 @@ export const hackerRouter = createTRPCRouter({
       linkedin: input.linkedin,
       personalwebsite: input.personalwebsite,
       tosAccepted: input.tosAccepted
+    });
+
+    return { success: true };
+  }),
+
+  createEvent: protectedProcedure
+  .input(InsertEventSchema.omit({ id: true }))
+  .mutation(async ({ ctx, input }) => { 
+
+    const userId = ctx.session.user.id;
+
+    await db.insert(events).values({
+      name: input.name,
+      date: input.date,
+      location: input.location, 
+      starttime: input.starttime,
+      endtime: input.endtime,
+      school: input.school,
+      description: input.description,
     });
 
     return { success: true };
