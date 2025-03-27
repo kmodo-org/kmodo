@@ -10,7 +10,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 export const metadata: Metadata = {
   title: "kmodo",
   description: "Hackathons Done Different",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/icon.ico" }],
 };
 
 export default function RootLayout({
