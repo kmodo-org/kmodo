@@ -8,21 +8,23 @@ import { EventDetails } from "./components/event-details";
 import { ProgressSection } from "./components/progress-section";
 import { NoHackathonView } from "./components/no-hackathon-view";
 import { allowedUserIds } from "~/consts/goat";
-import Hide from "~/components/goatOnly";
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 export default async function Home({ searchParams }: PageProps) {
-  const session = await auth();
   const params = await searchParams;
+  const session = await auth();
+  const userId = session?.user?.id;
 
-  <Hide />  
-
-  if (session?.user) {
-    void api.post.getLatest.prefetch();
-  }
+  if (session == null) { // if the user is not logged in, redirect to the landing page
+      redirect("/");
+    }
+  
+    if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
+       redirect("/");
+    }
 
   // Temp hackathon check
   const hasHackathon = params.test === "with-hackathon";

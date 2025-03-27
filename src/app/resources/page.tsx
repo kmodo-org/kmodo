@@ -5,11 +5,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Resource } from "src/components/ui/resource";
-import Hide from "~/components/goatOnly";
 
-// import { redirect } from "next/navigation";
-// import { api, HydrateClient } from "~/trpc/server";
-// import { auth } from "~/server/auth";
+import { redirect } from "next/navigation";
+import { api, HydrateClient } from "~/trpc/server";
+import { auth } from "~/server/auth";
+import { allowedUserIds } from "~/consts/goat";
 
 import { Button } from "src/components/ui/button"
 
@@ -42,6 +42,18 @@ const resources: Resource[] = [
 ];
 
 export default function ResourcesPage() {
+
+  const session = await auth();
+      const userId = session?.user?.id;
+  
+      if (session == null) { // if the user is not logged in, redirect to the landing page
+          redirect("/");
+        }
+      
+        if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
+           redirect("/");
+        }
+
   const [showCard, setShowCard] = useState<boolean[]>(new Array(resources.length).fill(true)); 
   const [input, setInput] = useState<string>(""); 
 
