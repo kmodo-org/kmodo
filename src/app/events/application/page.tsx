@@ -5,9 +5,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "~/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 import { Input } from "~/components/ui/input";
+import { auth } from "~/server/auth";
 
 const eventForm = z.object({
     name: z.string().min(1, { message: "Please input a valid event name." }),
@@ -19,7 +20,17 @@ const eventForm = z.object({
     endtime: z.string().regex(/^\d{2}:\d{2}$/, { message: "Please enter the event's end time" }),
 });
 
-export default function EventApplication() {
+const allowedUserIds = new Set([
+  "71181949-05ab-4011-a6c9-9f7f97d154e6", // daniel efres 
+  "7052d1fe-bb96-4db4-9d90-0791d9a7b9c5", // carlos
+  "6ad7e677-86c3-46d9-8041-9fff7e9f6132", // kai
+  "094f333e-589e-4a6b-9a58-41893606fc06", // carfos
+  "b00087f4-fbe1-465c-a74d-791d74278e7b", // eli
+  "ec6e9191-6e59-49fa-a35a-71b99ce8b85e", // adrian
+  "846fe944-93cd-4b07-8f47-bcd743f4ec39", // sam 
+]);
+
+export default async function EventApplication() {
     const router = useRouter();
     
     const form = useForm<z.infer<typeof eventForm>>({
@@ -52,6 +63,15 @@ export default function EventApplication() {
             console.error("An error occurred:", error);
         }
     };
+
+    const session = await auth();
+    const userId = session?.user?.id;
+    if (!session) {
+      redirect("/"); // if user is not signed up with github they are sent to landing
+    }
+    if (!userId || !allowedUserIds.has(userId)) {
+      redirect("/"); // if user is not a goat they are sent to landing
+    }
 
     return (
         <div className="relative min-h-screen flex items-center justify-center">
