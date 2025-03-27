@@ -130,51 +130,34 @@ export default function ResourcesPage() {
         </div>
 
 
-        <div className="lg:my-20 my-10 flex flex-col items-center w-full">
+        <div className="flex flex-col items-center w-full">
 
-        <div className="text-[#59BC89] font-['Exo'] font-extrabold xl:text-6xl lg:text-5xl md:text-3xl sm:text-3xl text-3xl my-3">FEATURED CONTENT</div>
-
-          <div className="bg-white h-fit w-full p-10 space-y-7">
-            
-
-            <div className="flex-row flex gap-x-7 flex-wrap gap-5 justify-center">
-            {resources.map((card, index) => {
-              return (
-                index<5 && (
-                  <Resource key={index} title={card.title} desc="" image={card.image} link={card.link} tag=""/>
-                )
-              );
-            })}
-            </div>
-
-           
-          </div>
-
-          <div className="m-10"></div>
-
-          <div className="text-[#59BC89] font-['Exo'] font-extrabold xl:text-6xl lg:text-5xl md:text-3xl sm:text-3xl text-3xl my-3">ALL CONTENT</div>
+        <div className="bg-white w-3/4 p-10 -translate-y-1/2 rounded-xl shadow-black  transition-transform">
+          {/* <div className="text-[#59BC89] font-['Exo'] font-extrabold xl:text-6xl lg:text-5xl md:text-3xl sm:text-3xl text-3xl my-3">FIND RESOURCES</div> */}
 
           <div className="flex flex-row space-x-5 w-full justify-center place-items-center">
-            <Input className="rounded-lg h-11 w-1/2 sm:w-1/2 md:w-1/2 bg-white text-[#59BC89] file:text-base md:text-base text-base" type="text" placeholder="Ex: idea brainstorming" onChange={display} value={input}></Input>
+            <Input className="z-10 rounded-lg h-11 w-1/2 sm:w-1/2 md:w-1/2 bg-white text-[#59BC89] file:text-base md:text-base text-base font-['Open Sans']" type="text" placeholder="Ex: idea brainstorming" onChange={display} value={input}></Input>
 
-            <button className="transition-transform hover:scale-110" type="submit" onClick={() => update(true, input)}>
+            <button className="z-10 transition-transform hover:scale-110" type="submit" onClick={() => update(true, input)}>
               <Image className="" src="/images/magnifyingglass.png" width={30} height={30} alt="SUBMIT" />
             </button>
 
             <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-white hover:bg-slate-100 text-[#59BC89] hover:text-[#59BC89] focus:text-accent-foreground-[#59BC89]" >TAGS</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="bg-white hover:bg-slate-100 text-[#59BC89] hover:text-[#59BC89] focus:text-accent-foreground-[#59BC89] font-['Open Sans']" >TAGS</NavigationMenuTrigger>
                 <NavigationMenuContent className="">
-                  <Button className="block px-4 py-2 my-2 bg-[#59BC89] border rounded-md shadow-sm text-white font-bold transition-all duration-200 hover:bg-[#59BC89]/70 hover:shadow-md" onClick={() => update(false, "organization")} type="submit">ORGANIZATION</Button>
-                  <Button className="block px-4 py-2 my-2 bg-[#4264AC] border rounded-md shadow-sm text-white font-bold transition-all duration-200 hover:bg-[#4264AC]/70 hover:shadow-md" onClick={() => update(false, "brainstorming")} type="submit">BRAINSTORMING</Button>
+                  <Button className="z-10 block w-full px-4 py-2 my-2 bg-[#59BC89] border rounded-md shadow-sm text-white font-bold transition-all duration-200 hover:bg-[#59BC89]/70 hover:shadow-md font-['Open Sans']" onClick={() => update(false, "organization")} type="submit">ORGANIZATION</Button>
+                  <Button className="z-10 block w-full px-4 py-2 my-2 bg-[#4264AC] border rounded-md shadow-sm text-white font-bold font-['Open Sans'] transition-all duration-200 hover:bg-[#4264AC]/70 hover:shadow-md" onClick={() => update(false, "brainstorming")} type="submit">BRAINSTORMING</Button>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
             </NavigationMenu>
             
-            <Button className="p-1 text-white bg-[#59BC89] hover:bg-[#59BC89]/70 transition w-fit h-fit rounded-lg text-base" onClick={clear}>CLEAR</Button>
+            <Button className="p-1 z-10 text-white font-['Open Sans'] bg-[#59BC89] hover:bg-[#59BC89]/70 transition w-fit h-fit rounded-lg text-base" onClick={clear}>CLEAR</Button>
 
+          </div>
+        
           </div>
           
           <div className="flex flex-wrap gap-5 justify-center mt-10">

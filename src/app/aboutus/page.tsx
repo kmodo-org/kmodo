@@ -1,11 +1,13 @@
 import Image from "next/image";
 import { Button } from "src/components/ui/button";
 import { Card, CardContent } from "src/components/ui/card";
-import { auth } from "~/server/auth";
+import { auth, signIn } from "~/server/auth";
 import { redirect } from "next/navigation";
 import { api } from "~/trpc/server";
 import { FeatureBox } from "src/components/ui/featurebox";
 import { CarouselFeatureBox } from "src/components/ui/carouselfeaturebox";
+import { GithubIcon } from "lucide-react";
+
 
 import {
     Carousel,
@@ -61,7 +63,23 @@ export default async function AboutUs() {
                 <div className="justify-left space-y-3 w-fit h-fit bg-[#2D2647] rounded-3xl bg-opacity-90 xl:p-16 lg:p-8 md:p-10 sm:p-8 p-8 shadow-2xl shadow-black  transition-transform hover:scale-105 sm:justify-center justify-center">
                     <div className="text-[#59BC89] font-['Exo'] font-extrabold leading-tight lg:text-6xl md:text-3xl sm:text-xl text-xl">HACKATHONS<br></br>DONE<br></br>DIFFERENT.</div>
                     <div className="text-white font-['Open Sans'] lg:text-xl md:text-lg sm:text-base text-base">TRANSFORMING THE FUTURE, ONE HACKATHON AT A TIME.</div>
-                    <Button className=" text-white bg-[#4264AC] hover:bg-[#4264AC]/70 transition w-fit h-fit rounded-3xl lg:text-2xl md:text-xl sm:text-lg text-lg">JOIN NOW</Button>
+
+                    <form className="p-[1.5px]">
+                         <Button
+                         size="lg"
+                         className="p-2.5 text-white bg-[#4264AC] hover:bg-[#4264AC]/70 transition w-fit h-fit rounded-3xl lg:text-2xl md:text-xl sm:text-lg text-lg"
+                          formAction={async () => {
+                          "use server";
+                           await signIn("github", {
+                             redirectTo: "/hacker/application",
+                           });
+                          }}
+                        >
+                          JOIN NOW
+                         </Button>
+                    </form>
+
+                 
                 </div>
                 
             </div>

@@ -6,7 +6,7 @@ import { type Metadata } from "next";
 import { TRPCReactProvider } from "~/trpc/react";
 
 import { Navbar } from "~/components/Navbar";
-// Components 
+import { Footer } from "~/components/ui/footer";
 
 export const metadata: Metadata = {
   title: "kmodo",
@@ -21,8 +21,9 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
         <TRPCReactProvider> 
-        <Navbar /> {/* Navbar is included here */}
+        <Navbar /> 
         {children}
+        <Footer />
         </TRPCReactProvider>
       </body>
     </html>
