@@ -1,6 +1,6 @@
 import { db } from "~/server/db";
 import { hackers, events, InsertHackerSchema, InsertEventSchema} from "~/server/db/schema";
-import { eq, InferSelectModel } from "drizzle-orm";
+import { asc, eq, InferSelectModel } from "drizzle-orm";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 
@@ -87,5 +87,12 @@ export const hackerRouter = createTRPCRouter({
       console.error("Error checking form submission:", error);
       return false;
     }
-  })
+  }),
+  getAllEvents: publicProcedure.query(async ({ ctx }) => {
+    const result = await ctx.db
+      .select()
+      .from(events)
+      .orderBy(asc(events.date));
+    return result;
+  }),
 });
