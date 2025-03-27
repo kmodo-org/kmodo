@@ -18,6 +18,11 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+			RoseQuartz: "#9E9BA8",
+			Lavender: "#D9DBF1",
+			Mint: "#59BC89",
+			SpaceCadet: "#32324E",
+			OceanBlue: "#415A8E",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
