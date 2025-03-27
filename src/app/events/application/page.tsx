@@ -20,7 +20,7 @@ const eventForm = z.object({
 
 })
 
-export default function eventApplication() {
+export default function EventApplication() {
 
   const router = useRouter();
   
