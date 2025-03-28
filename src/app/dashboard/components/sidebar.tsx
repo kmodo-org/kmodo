@@ -44,7 +44,9 @@ export function Sidebar({ userName, userImage }: SidebarProps) {
         <ResizablePanel defaultSize={20} minSize={15} maxSize={25}>
           <div className="h-full bg-[#1A1B2E] p-6 flex flex-col">
             <div className="mb-8 flex justify-center">
-              <Image src="/kmodoL.svg" width={160} height={160} alt="kmodo" className="w-auto h-24" />
+              <Link href="/">
+                <Image src="/images/kmodoL.svg" width={160} height={160} alt="kmodo" className="w-auto h-24" />
+              </Link>
             </div>
             
             <div className="flex flex-col items-center mb-8">

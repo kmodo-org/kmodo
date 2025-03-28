@@ -8,10 +8,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 import { Input } from "~/components/ui/input";
-import { allowedUserIds } from "~/consts/goat";
-import { redirect } from "next/navigation";
-import { auth } from "~/server/auth";
-
 const eventForm = z.object({
     name: z.string().min(1, { message: "Please input a valid event name." }),
     school: z.string().min(1, { message: "Please enter a valid school name." }),
@@ -21,9 +17,6 @@ const eventForm = z.object({
     starttime: z.string().regex(/^\d{2}:\d{2}$/, { message: "Please enter the event's start time" }),
     endtime: z.string().regex(/^\d{2}:\d{2}$/, { message: "Please enter the event's end time" }),
 })
-
-
-
 export default function EventApplication() {
   const router = useRouter();
     const form = useForm<z.infer<typeof eventForm>>({
@@ -38,11 +31,7 @@ export default function EventApplication() {
         endtime: ""
       }
     });
-
-    if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
-         redirect("/");
-       }
-
+    
     const createEvent = api.hacker.createEvent.useMutation({
       onSuccess: () => {
         router.push("/dashboard");
