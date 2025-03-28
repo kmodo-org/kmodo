@@ -44,7 +44,7 @@ import {
         <div className="flex flex-col min-h-screen">
             <Navbar />
             <main className="flex-grow">
-                <Image className="object-cover -mt-32" src="/images/aboutus.png" width={2000} height={300} alt="title" />  
+                <Image className="object-fill -mt-32" src="/images/aboutus.png" width={1920} height={1080} alt="title" />  
                 <div className="absolute h-full flex flex-col lg:items-start md:items-start sm:items-center items-center 2xl:top-1/3 xl:top-52 md:top-40 sm:top-32 top-28 lg:ml-20 md:ml-10 sm:m-0 m-0">
                     <div className="justify-left space-y-3 w-fit h-fit bg-[#2D2647] rounded-3xl bg-opacity-90 xl:p-16 lg:p-8 md:p-10 sm:p-8 p-8 shadow-2xl shadow-black transition-transform hover:scale-105 sm:justify-center justify-center">
                         <div className="text-[#59BC89] font-extrabold leading-tight lg:text-6xl md:text-3xl sm:text-xl text-xl">

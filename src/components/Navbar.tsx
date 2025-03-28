@@ -8,7 +8,6 @@ import { signIn, useSession } from "next-auth/react";
 
 
 const routes: { title: string; href: string }[] = [
-  { title: "ABOUT US", href: "/aboutus" },
   { title: "EVENTS", href: "/events" },
   { title: "RESOURCES", href: "/resources" }
 ];
