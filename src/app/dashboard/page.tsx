@@ -47,10 +47,13 @@ export default async function Home({ searchParams }: PageProps) {
   } : null;
 
   return (
+    <Hide>
     <HydrateClient>
       <div className="flex min-h-screen bg-[#1A1B2E] text-white">
-        <Sidebar userName={session.user.name ?? ""}
-         userImage={session.user.image ?? null} />
+        {session ? (
+          <Sidebar userName={session.user.name ?? ""}
+           userImage={session.user.image ?? null} />
+        ) : null}
         
         <div className="flex-1 lg:pl-0 overflow-y-auto lg:overflow-hidden">
           <div className="lg:hidden">
@@ -84,5 +87,6 @@ export default async function Home({ searchParams }: PageProps) {
         </div>
       </div>
     </HydrateClient>
+    </Hide>
   );
 }
