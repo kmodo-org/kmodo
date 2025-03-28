@@ -28,11 +28,9 @@ export default async function MemberApplicationPage() {
     
 
     return (
-      <Hide>
       <main className="px-8 py-4">
         <InputForm />
       </main>
-      </Hide>
     );
 }
 

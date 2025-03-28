@@ -52,7 +52,6 @@ export default function EventApplication() {
       }
     };
     return (
-      <Hide>
       <div className="mt-4 p-6 max-w-lg mx-auto bg-Lavender shadow-md rounded-lg">
         <h1 className="text-2xl font-bold mb-2 pt-2 text-Mint">Event Application Form</h1> 
         <p className="text-sm text-gray-500 mb-4">
@@ -88,6 +87,5 @@ export default function EventApplication() {
         </form>
       </Form>
       </div>
-      </Hide>
-    )
+    );
 }
