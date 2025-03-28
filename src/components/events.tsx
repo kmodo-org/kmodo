@@ -26,7 +26,7 @@ export default async function Events() {
                     <Card key={event.id} className="bg-destructive text-destructive-foreground">
                         <div className="p-6">
                             <CardHeader>
-                                <CardTitle className="mb-2 font-extrabold text-4xl sm:text-3xl md:text-2xl lg:text-xl xl:text-lg break-words">
+                                <CardTitle className="mb-2 font-extrabold text-4xl sm:text-2xl md:text-2xl lg:text-3xl xl:text-4xl break-words">
                                     {event.name}
                                 </CardTitle>
                                 <CardDescription>
@@ -37,13 +37,15 @@ export default async function Events() {
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <Image
-                                    src={imageSrc}
-                                    width={400}
-                                    height={100}
-                                    alt={event.name}
-                                    className="mb-4"
-                                />
+                                <div className="flex justify-center">
+                                    <Image
+                                        src={imageSrc}
+                                        width={200}
+                                        height={100}
+                                        alt={event.name}
+                                        className="mb-4 object-fill h-[200px]" // Fixed height for the image
+                                    />
+                                </div>
                                 <p className="text-sm text-destructive-foreground mb-2 mt-4">
                                     {event.description}
                                 </p>
@@ -66,10 +68,12 @@ export default async function Events() {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="flex justify-end">
-                                    <Button className="mt-11 bg-accent text-destructive-foreground hover:bg-destructive-foreground hover:text-accent">
-                                        Register
-                                    </Button>
+                                <div className="flex mb-10 ">
+                                    <div className="flex justify-center w-full">
+                                        <Button className="mt-11 bg-accent text-destructive-foreground hover:bg-destructive-foreground hover:text-accent">
+                                            Register
+                                        </Button>
+                                    </div>
                                 </div>
                             </CardContent>
                         </div>

@@ -26,7 +26,7 @@ export default async function EventsPage() {
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow flex flex-col items-center p-8">
-          <Card className="w-full max-w-4xl shadow-lg rounded-lg overflow-hidden">
+          <Card className="w-full max-w-screen shadow-lg rounded-lg overflow-hidden bg-secondary">
             <div className="p-6">
               <CardHeader className="items-center text-center">
                 <CardTitle className="mb-2 text-accent text-5xl font-bold tracking-tight">
