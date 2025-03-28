@@ -15,7 +15,7 @@ export default async function Events() {
                 
                 // Define an image map with index signature
                 const imageMap: Record<string, string> = {
-                    "KnightHacks VIII": "/images/knighthacks.png",
+                    "Knight Hacks VIII": "/images/knighthacks.png",
                     "Bitcamp": "/images/bitcamp.png",
                     "ShellHacks": "/images/shellhacks.png"
                 };
