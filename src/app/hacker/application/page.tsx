@@ -7,7 +7,6 @@ import Hide from "~/components/goatOnly";
 
 export default async function MemberApplicationPage() {
     const session = await auth();
-    const userId = session?.user?.id;
     const isHacker = await api.hacker.getHacker();
 
     <Hide /> 
