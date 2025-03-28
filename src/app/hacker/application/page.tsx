@@ -7,9 +7,7 @@ import { allowedUserIds } from "~/consts/goat";
 export default async function MemberApplicationPage() {
     const session = await auth();
     const isHacker = await api.hacker.getHacker();
-
-    const session = await auth();
-      const userId = session?.user?.id;
+    const userId = session?.user?.id;
     
       if (session == null) { // if the user is not logged in, redirect to the landing page
           redirect("/");
