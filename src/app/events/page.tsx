@@ -5,6 +5,9 @@ import "~/styles/globals.css";
 import Events from "~/components/events";
 import { Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/ui/footer";
+import { auth } from "~/server/auth";
+import { redirect } from "next/navigation";
+import { allowedUserIds } from "~/consts/goat";
 
 export default async function EventsPage() {
 

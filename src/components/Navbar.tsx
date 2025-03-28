@@ -22,8 +22,9 @@ const Navbar: React.FC = () => {
   };
 
   const signInWithGithub = () => {
-    signIn("github");  
+    void signIn("github");
   };
+  
 
   return (
     <div className="relative flex items-center justify-between h-32 w-full bg-gradient-to-t from-transparent to-black/70 lg:pr-14 md:pr-10 sm:pr-2 lg:pl-8 py-5">
