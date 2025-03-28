@@ -5,10 +5,7 @@ import { redirect } from "next/navigation";
 import { api, HydrateClient } from "~/trpc/server";
 import "~/styles/globals.css";
 import Events from "~/components/events";
-import Hide from "~/components/goatOnly";
-import { redirect } from "next/navigation";
 import { auth } from "~/server/auth";
-import { allowedUserIds } from "~/consts/goat";
 
 
 export default async function EventsPage() {

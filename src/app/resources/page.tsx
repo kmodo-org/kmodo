@@ -43,16 +43,16 @@ const resources: Resource[] = [
 
 export default function ResourcesPage() {
 
-  const session = await auth();
-      const userId = session?.user?.id;
+  // const session = await auth();
+  //     const userId = session?.user?.id;
   
-      if (session == null) { // if the user is not logged in, redirect to the landing page
-          redirect("/");
-        }
+  //     if (session == null) { // if the user is not logged in, redirect to the landing page
+  //         redirect("/");
+  //       }
       
-        if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
-           redirect("/");
-        }
+  //       if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
+  //          redirect("/");
+  //       }
 
   const [showCard, setShowCard] = useState<boolean[]>(new Array(resources.length).fill(true)); 
   const [input, setInput] = useState<string>(""); 
