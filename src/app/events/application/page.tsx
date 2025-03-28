@@ -11,6 +11,7 @@ import { Input } from "~/components/ui/input";
 import { allowedUserIds } from "~/consts/goat";
 import { redirect } from "next/navigation";
 import { auth } from "~/server/auth";
+import Hide from "~/components/goatOnly";
 
 const eventForm = z.object({
     name: z.string().min(1, { message: "Please input a valid event name." }),
@@ -39,9 +40,7 @@ export default function EventApplication() {
       }
     });
 
-    if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
-         redirect("/");
-       }
+    <Hide />
 
     const createEvent = api.hacker.createEvent.useMutation({
       onSuccess: () => {

@@ -8,6 +8,7 @@ import { EventDetails } from "./components/event-details";
 import { ProgressSection } from "./components/progress-section";
 import { NoHackathonView } from "./components/no-hackathon-view";
 import { allowedUserIds } from "~/consts/goat";
+import Hide from "~/components/goatOnly";
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -18,7 +19,7 @@ export default async function Home({ searchParams }: PageProps) {
   const userId = session?.user?.id;
   const params = await searchParams;
 
-  
+  <Hide />  
 
   if (session?.user) {
     void api.post.getLatest.prefetch();

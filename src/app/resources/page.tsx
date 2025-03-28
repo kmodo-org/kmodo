@@ -42,9 +42,6 @@ const resources: Resource[] = [
 ];
 
 export default function ResourcesPage() {
-
-  {/* <Hide /> */}
-
   const [showCard, setShowCard] = useState<boolean[]>(new Array(resources.length).fill(true)); 
   const [input, setInput] = useState<string>(""); 
 
@@ -95,6 +92,7 @@ export default function ResourcesPage() {
   };
   return (
       <div className="flex min-h-screen flex-col">
+        {/*<Hide />*/}
         <Image className="object-contain w-full h-auto -mt-32 " src="/images/resources.JPG" width={2000} height={300} alt="title" />
         <div className="absolute h-full flex flex-col lg:items-start items-center w-full 2xl:top-1/3 xl:top-52 md:top-40 sm:top-32 top-28 lg:ml-20 sm:m-0 m-0">
           
