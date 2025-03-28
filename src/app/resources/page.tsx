@@ -5,7 +5,6 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Resource } from "src/components/ui/resource";
-import Hide from "~/components/goatOnly";
 import { Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/ui/footer";
 
