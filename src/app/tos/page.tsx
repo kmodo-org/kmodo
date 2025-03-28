@@ -25,7 +25,7 @@ export default async function Tos() {
     <div className="min-h-screen flex flex-col text-white pt-2">
       <header className="p-4 flex items-center justify-center">
         <div className="flex justify-center items-center">
-          <Image src="/kmodoL.svg" alt="Kmodo Logo" width={512} height={256} />
+          <Image src="/images/kmodoL.svg" alt="Kmodo Logo" width={512} height={256} />
         </div>
       </header>
       <h1 className="text-3xl md:text-7xl font-bold text-center">
