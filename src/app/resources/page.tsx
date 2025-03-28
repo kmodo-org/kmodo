@@ -5,6 +5,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Resource } from "src/components/ui/resource";
+import Hide from "~/components/goatOnly";
 
 // import { redirect } from "next/navigation";
 // import { api, HydrateClient } from "~/trpc/server";
@@ -33,15 +34,6 @@ type Resource = {
   link: string;
 };
 
-const allowedUserIds = new Set([
-  "71181949-05ab-4011-a6c9-9f7f97d154e6", // daniel efres 
-  "7052d1fe-bb96-4db4-9d90-0791d9a7b9c5", // carlos
-  "6ad7e677-86c3-46d9-8041-9fff7e9f6132", // kai
-  "094f333e-589e-4a6b-9a58-41893606fc06", // carfos
-  "b00087f4-fbe1-465c-a74d-791d74278e7b", // eli
-  "ec6e9191-6e59-49fa-a35a-71b99ce8b85e" // adrian
-]);
-
 // will add more resources, maybe we can put in db?
 const resources: Resource[] = [
   { title: "How to Run a Successful Hackathon", image: "/images/howtorunahackathon.png", desc: "Step-by-step guide on running hackathons by Joshua Tauberer", tag: "ORGANIZATION", link: "https://hackathon.guide/"},
@@ -50,18 +42,6 @@ const resources: Resource[] = [
 ];
 
 export default function ResourcesPage() {
-
-  //  const session = await auth();
-  //      const userId = session?.user?.id;
-     
-  //      if (!userId || !allowedUserIds.has(userId)) {
-  //        redirect("/");
-  //      }
-     
-  //      if (session?.user) {
-  //        void api.post.getLatest.prefetch();
-  //      }
-
   const [showCard, setShowCard] = useState<boolean[]>(new Array(resources.length).fill(true)); 
   const [input, setInput] = useState<string>(""); 
 
@@ -112,6 +92,7 @@ export default function ResourcesPage() {
   };
   return (
       <div className="flex min-h-screen flex-col">
+        {/*<Hide />*/}
         <Image className="object-contain w-full h-auto -mt-32 " src="/images/resources.JPG" width={2000} height={300} alt="title" />
         <div className="absolute h-full flex flex-col lg:items-start items-center w-full 2xl:top-1/3 xl:top-52 md:top-40 sm:top-32 top-28 lg:ml-20 sm:m-0 m-0">
           

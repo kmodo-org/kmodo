@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { api } from "~/trpc/server";
 import { FeatureBox } from "src/components/ui/featurebox";
 import { CarouselFeatureBox } from "src/components/ui/carouselfeaturebox";
+import { allowedUserIds } from "~/consts/goat";
 
 import {
     Carousel,
@@ -14,17 +15,6 @@ import {
     CarouselNext,
     CarouselPrevious,
   } from "src/components/ui/carousel"
-
-
-  const allowedUserIds = new Set([
-    "71181949-05ab-4011-a6c9-9f7f97d154e6", // daniel efres 
-    "7052d1fe-bb96-4db4-9d90-0791d9a7b9c5", // carlos
-    "6ad7e677-86c3-46d9-8041-9fff7e9f6132", // kai
-    "094f333e-589e-4a6b-9a58-41893606fc06", // carfos
-    "b00087f4-fbe1-465c-a74d-791d74278e7b", // eli
-    "ec6e9191-6e59-49fa-a35a-71b99ce8b85e" // adrian
-  ]);
-
 
   const featureBoxList = [
     {title: "Easy Use", desc: "One site, one page to help everyone spend less time finding things out and spend more time hacking.", image: "/images/easyuse.png"},

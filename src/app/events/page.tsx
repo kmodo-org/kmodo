@@ -6,8 +6,12 @@ import { Input } from "~/components/ui/input";
 import { HydrateClient } from "~/trpc/server";
 import "~/styles/globals.css";
 import Events from "~/components/events";
+import Hide from "~/components/goatOnly";
 
 export default async function EventsPage() {
+
+  <Hide />
+
   return (
     <HydrateClient>
       <main className="flex min-h-screen flex-col items-center p-8 bg-secondary">
