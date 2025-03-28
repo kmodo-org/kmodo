@@ -9,10 +9,8 @@ import Events from "~/components/events";
 import Hide from "~/components/goatOnly";
 
 export default async function EventsPage() {
-
-  <Hide />
-
   return (
+    <Hide>
     <HydrateClient>
       <main className="flex min-h-screen flex-col items-center p-8 bg-secondary">
         <Card>
@@ -38,5 +36,6 @@ export default async function EventsPage() {
         </Card>
       </main>
     </HydrateClient>
+    </Hide>
   );
 }

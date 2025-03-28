@@ -10,7 +10,6 @@ export default async function MemberApplicationPage() {
     const userId = session?.user?.id;
     const isHacker = await api.hacker.getHacker();
 
-    <Hide /> 
   
     if (isHacker) { // if the user is already a hacker, redirect to the dashboard
       return redirect("/dashboard");
@@ -22,9 +21,11 @@ export default async function MemberApplicationPage() {
     
 
     return (
+      <Hide>
       <main className="px-8 py-4">
         <InputForm />
       </main>
+      </Hide>
     );
 }
 

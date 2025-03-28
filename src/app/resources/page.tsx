@@ -91,6 +91,7 @@ export default function ResourcesPage() {
     setInput("");
   };
   return (
+    <Hide>
       <div className="flex min-h-screen flex-col">
         {/*<Hide />*/}
         <Image className="object-contain w-full h-auto -mt-32 " src="/images/resources.JPG" width={2000} height={300} alt="title" />
@@ -150,5 +151,6 @@ export default function ResourcesPage() {
 
         </div>
       </div>
+      </Hide>
   );
 }
