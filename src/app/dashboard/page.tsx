@@ -25,6 +25,9 @@ export default async function Home({ searchParams }: PageProps) {
     if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
        redirect("/");
     }
+  if (session?.user) {
+    void api.post.getLatest.prefetch();
+  }
 
   // Temp hackathon check
   const hasHackathon = params.test === "with-hackathon";
