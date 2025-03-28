@@ -50,7 +50,6 @@ export default async function Home({ searchParams }: PageProps) {
   } : null;
 
   return (
-    <Hide>
     <HydrateClient>
       <div className="flex min-h-screen bg-[#1A1B2E] text-white">
         {session ? (
@@ -90,6 +89,5 @@ export default async function Home({ searchParams }: PageProps) {
         </div>
       </div>
     </HydrateClient>
-    </Hide>
   );
 }
