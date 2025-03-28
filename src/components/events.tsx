@@ -29,7 +29,7 @@ export default async function Events() {
                             </CardHeader>
                             <CardContent>
                                 <Image
-                                    src={"kmodoL.svg"}
+                                    src={"/images/kmodoL.svg"}
                                     width={400}
                                     height={100}
                                     alt={""}
@@ -58,7 +58,7 @@ export default async function Events() {
                                     </div>
                                 </div>
                                 <div className="flex justify-end">
-                                    <Button className="mt-11 bg-accent text-destructive-foreground hover:bg-card hover:text-accent">
+                                    <Button className="mt-11  bg-accent text-destructive-foreground hover:bg-destructive-foreground hover:text-accent">
                                         Register
                                     </Button>
                                 </div>
