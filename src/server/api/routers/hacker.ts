@@ -1,7 +1,6 @@
 import { db } from "~/server/db";
 import { hackers, events, InsertHackerSchema, InsertEventSchema} from "~/server/db/schema";
-import { asc, eq, InferSelectModel } from "drizzle-orm";
-import { z } from "zod";
+import { asc, eq } from "drizzle-orm";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 
 
@@ -55,7 +54,7 @@ export const hackerRouter = createTRPCRouter({
   .input(InsertEventSchema.omit({ id: true }))
   .mutation(async ({ ctx, input }) => { 
 
-    const userId = ctx.session.user.id;
+    const _userId = ctx.session.user.id;
 
     await db.insert(events).values({
       name: input.name,

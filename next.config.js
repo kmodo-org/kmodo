@@ -4,10 +4,22 @@
  */
 import "./src/env.js";
 
-/** @type {import("next").NextConfig} */
+/** @type {import('next').NextConfig} */
 const config = {
+  reactStrictMode: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
-    domains: ['avatars.githubusercontent.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
+    ],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 

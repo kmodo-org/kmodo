@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { Url } from "next/dist/shared/lib/router/router";
 
 interface FeatureBoxProps {
     title: string;

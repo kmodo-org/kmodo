@@ -2,11 +2,9 @@ import Image from "next/image";
 import { Button } from "src/components/ui/button";
 import { Card, CardContent } from "src/components/ui/card";
 import { auth, signIn } from "~/server/auth";
-import { redirect } from "next/navigation";
 import { api } from "~/trpc/server";
 import { FeatureBox } from "src/components/ui/featurebox";
 import { CarouselFeatureBox } from "src/components/ui/carouselfeaturebox";
-import { allowedUserIds } from "~/consts/goat";
 import { Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/ui/footer";
 
@@ -34,7 +32,6 @@ import {
 
   export default async function AboutUs() {  
     const session = await auth();
-    const userId = session?.user?.id;
     
     if (session?.user) {
         void api.post.getLatest.prefetch();

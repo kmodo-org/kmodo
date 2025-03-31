@@ -1,5 +1,4 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { eq } from "drizzle-orm";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import { db } from "~/server/db";
@@ -7,9 +6,7 @@ import {
   accounts,
   sessions,
   users,
-  hackers,
 } from "~/server/db/schema";
-import { auth } from ".";
 
 /**
  * Module augmentation for next-auth types. Allows us to add custom properties to the session

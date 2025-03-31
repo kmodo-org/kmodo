@@ -8,7 +8,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
-import { TRPCClientErrorLike } from "@trpc/client";
 
 const hackerFormSchema = z.object({
   firstname: z.string().min(1, { message: "First name is required." }),
@@ -91,7 +90,7 @@ export function InputForm() {
             { name: "github", label: "GitHub (optional)", placeholder: "https://github.com/username", optional: true },
             { name: "linkedin", label: "LinkedIn (optional)", placeholder: "https://linkedin.com/in/username", optional: true },
             { name: "personalwebsite", label: "Personal Website (optional)", placeholder: "https://yourwebsite.com", optional: true },
-          ].map(({ name, label, placeholder, type = "text", optional = false }) => (
+          ].map(({ name, label, placeholder, type = "text", _optional = false }) => (
 
             <FormField
               key={name}

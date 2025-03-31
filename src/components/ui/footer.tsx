@@ -2,8 +2,6 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
-import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/solid";
-import { Button } from "src/components/ui/button";
 import { Github, Instagram, Linkedin, Twitter } from 'lucide-react';
 
 const socials: { title: string; href: string; icon: React.ReactNode }[] = [
