@@ -19,6 +19,6 @@ export function getMinioImageUrl(key: string): string {
   }
   
   // Otherwise, construct the URL using the public Minio URL
-  const baseUrl = process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL || "http://localhost:9000";
-  return `${baseUrl}/${process.env.MINIO_BUCKET || "assets"}/${key}`;
+  const baseUrl = process.env.NEXT_PUBLIC_MINIO_PUBLIC_URL ?? "http://localhost:9000";
+  return `${baseUrl}/${process.env.MINIO_BUCKET ?? "assets"}/${key}`;
 }

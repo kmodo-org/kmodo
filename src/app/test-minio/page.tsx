@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { ImageUpload } from "~/components/ImageUpload";
 import { getMinioImageUrl } from "~/lib/utils";
 import { api } from "~/trpc/react";
+import Image from "next/image";
 
 export default function TestMinioPage() {
   const [imageKey, setImageKey] = useState<string | null>(null);
@@ -95,10 +96,12 @@ export default function TestMinioPage() {
           
           {imageKey && imageUrl && (
             <div className="relative w-full h-64">
-              <img
+              <Image
                 src={imageUrl}
                 alt="Uploaded"
-                className="object-contain w-full h-full"
+                fill
+                className="object-contain"
+                unoptimized
               />
             </div>
           )}

@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from "react";
 import { api } from "~/trpc/react";
 import Image from "next/image";
-import { getMinioImageUrl } from "~/lib/utils";
 
 interface ImageUploadProps {
   category: "profile" | "hackathon" | "general";
@@ -72,7 +71,7 @@ export function ImageUpload({
     setPreviewUrl(objectUrl);
 
     // Upload the file
-    uploadFile(file);
+    void uploadFile(file);
   };
 
   const uploadFile = async (file: File) => {
@@ -80,9 +79,9 @@ export function ImageUpload({
     
     try {
       const reader = new FileReader();
-      reader.onload = async () => {
+      reader.onload = () => {
         const base64 = (reader.result as string).split(",")[1];
-        await uploadImage.mutateAsync({
+        void uploadImage.mutateAsync({
           category,
           fileName: file.name,
           fileType: file.type,

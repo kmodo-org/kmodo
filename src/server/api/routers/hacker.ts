@@ -52,9 +52,7 @@ export const hackerRouter = createTRPCRouter({
 
   createEvent: protectedProcedure
   .input(InsertEventSchema.omit({ id: true }))
-  .mutation(async ({ ctx, input }) => { 
-
-    const _userId = ctx.session.user.id;
+  .mutation(async ({ input }) => { 
 
     await db.insert(events).values({
       name: input.name,
