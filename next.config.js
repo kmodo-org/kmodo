@@ -16,6 +16,12 @@ const config = {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com',
       },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '9000',
+        pathname: '/assets/**',
+      },
     ],
   },
   eslint: {
