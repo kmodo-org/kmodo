@@ -90,7 +90,7 @@ export function InputForm() {
             { name: "github", label: "GitHub (optional)", placeholder: "https://github.com/username", optional: true },
             { name: "linkedin", label: "LinkedIn (optional)", placeholder: "https://linkedin.com/in/username", optional: true },
             { name: "personalwebsite", label: "Personal Website (optional)", placeholder: "https://yourwebsite.com", optional: true },
-          ].map(({ name, label, placeholder, type = "text", _optional = false }) => (
+          ].map(({ name, label, placeholder, type = "text", optional = false }) => (
 
             <FormField
               key={name}

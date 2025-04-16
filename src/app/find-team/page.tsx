@@ -1,6 +1,6 @@
 import { auth } from "~/server/auth";
 import { redirect } from "next/navigation";
-import { Sidebar } from "~/app/dashboard/components/sidebar";
+import { Sidebar } from "~/components/sidebar";
 
 export default async function FindTeam() {
   const session = await auth();

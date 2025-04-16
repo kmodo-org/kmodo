@@ -1,13 +1,13 @@
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import { redirect } from "next/navigation";
-import { MobileHeader } from "./components/mobile-header";
-import { Sidebar } from "./components/sidebar";
-import { EventOverview } from "./components/event-overview";
-import { EventDetails } from "./components/event-details";
-import { ProgressSection } from "./components/progress-section";
-import { NoHackathonView } from "./components/no-hackathon-view";
-import { allowedUserIds } from "~/consts/goat";
+import { MobileHeader } from "../../components/mobile-header";
+import { Sidebar } from "../../components/sidebar";
+import { EventOverview } from "../../components/event-overview";
+import { EventDetails } from "../../components/event-details";
+import { ProgressSection } from "../../components/progress-section";
+import { NoHackathonView } from "../../components/no-hackathon-view";
+
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -19,12 +19,9 @@ export default async function Home({ searchParams }: PageProps) {
   const userId = session?.user?.id;
 
   if (session == null) { // if the user is not logged in, redirect to the landing page
-      redirect("/");
-    }
-  
-    if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
-       redirect("/");
-    }
+    redirect("/");
+  }
+    
   if (session?.user) {
     void api.post.getLatest.prefetch();
   }
