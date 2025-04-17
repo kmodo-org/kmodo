@@ -25,6 +25,22 @@ export const hackerRouter = createTRPCRouter({
     return !!hackerProfile; 
   }),
 
+  getHackerProfile: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+
+    const hackerProfile = await db
+      .select()
+      .from(hackers)
+      .where(eq(hackers.user_Id, userId))
+      .then((res) => res[0]);
+
+    if (!hackerProfile) {
+      throw new Error("Hacker profile not found");
+    }
+
+    return hackerProfile;
+  }),
+
   createHacker: protectedProcedure
   .input(InsertHackerSchema.omit({ id: true }))
   .mutation(async ({ ctx, input }) => {
@@ -117,7 +133,9 @@ export const hackerRouter = createTRPCRouter({
 
     await db.insert(organizerApplications).values({
       hacker_id: hacker.id,
-      event_id: input.event_id,
+      organization: input.organization,
+      target_days: input.target_days,
+      additional_info: input.additional_info,
       status: "pending",
     });
 
@@ -141,5 +159,26 @@ export const hackerRouter = createTRPCRouter({
       .then(res => res[0]);
   
     return !!organizer;
+  }),
+  
+  // Check if user has already applied to be an organizer
+  hasAppliedToOrganize: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+    
+    const hacker = await db
+      .select()
+      .from(hackers)
+      .where(eq(hackers.user_Id, userId))
+      .then(res => res[0]);
+      
+    if (!hacker) return false;
+    
+    const application = await db
+      .select()
+      .from(organizerApplications)
+      .where(eq(organizerApplications.hacker_id, hacker.id))
+      .then(res => res[0]);
+      
+    return !!application;
   }),
 });

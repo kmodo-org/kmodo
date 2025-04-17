@@ -10,9 +10,15 @@ import { Badge } from "../../components/ui/badge";
 import { toast } from "sonner";
 import { allowedUserIds } from "~/consts/goat";
 import { Search } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
+import { useSession } from "next-auth/react";
 
 export function UserManagement() {
   const [search, setSearch] = useState("");
+  
+  // Get current user session
+  const { data: session } = useSession();
+  const currentUserId = session?.user?.id;
   
   const { data: users, isLoading, refetch } = api.admin.getAllUsers.useQuery(
     { search },
@@ -29,8 +35,8 @@ export function UserManagement() {
     },
   });
   
-  const handleDeleteUser = (userId: string) => {
-    if (confirm("Are you sure you want to delete this user? This action cannot be undone.")) {
+  const handleDeleteUser = (userId: string, userName: string) => {
+    if (confirm(`Are you sure you want to delete user ${userName}? This action cannot be undone and will permanently remove the user and all their data.`)) {
       deleteUserMutation.mutate({ userId });
     }
   };
@@ -71,44 +77,67 @@ export function UserManagement() {
               <TableHeader>
                 <TableRow className="bg-[#32324E] hover:bg-[#32324E]">
                   <TableHead className="text-[#D9DBF1]">Name</TableHead>
-                  <TableHead className="text-[#D9DBF1]">Email</TableHead>
-                  <TableHead className="text-[#D9DBF1]">Status</TableHead>
+                  <TableHead className="text-[#D9DBF1]">ID</TableHead>
+                  <TableHead className="text-[#D9DBF1]">Email Verified</TableHead>
+                  <TableHead className="text-[#D9DBF1] text-center">Role</TableHead>
                   <TableHead className="text-right text-[#D9DBF1]">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {users.map((user) => (
-                  <TableRow key={user.id} className="hover:bg-[#32324E]/50 border-b border-[#4264AC]/30">
-                    <TableCell className="font-medium text-white">{user.name ?? "N/A"}</TableCell>
-                    <TableCell className="text-white">{user.email ?? "N/A"}</TableCell>
-                    <TableCell>
-                      {allowedUserIds.has(user.id) ? (
-                        <Badge className="bg-[#59BC89] text-white hover:bg-[#59BC89]/80 border-none">
-                          Admin
-                        </Badge>
-                      ) : (
-                        <Badge className="bg-[#4264AC] text-white hover:bg-[#4264AC]/80 border-none">
-                          User
-                        </Badge>
+                  <TableRow key={user.id} className="hover:bg-white/5">
+                    <TableCell className="font-medium text-white">
+                      {user.name || "No name"}
+                      <div className="text-xs text-gray-400">{user.email || "No email"}</div>
+                    </TableCell>
+                    <TableCell className="text-white">
+                      {user.id}
+                    </TableCell>
+                    <TableCell className="text-white">
+                      {user.emailVerified ? new Date(user.emailVerified).toLocaleString() : "Not verified"}
+                    </TableCell>
+                    <TableCell className="text-white text-center">
+                      {allowedUserIds.has(user.id) && (
+                        <Badge variant="default" className="bg-green-600">Admin</Badge>
                       )}
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => handleDeleteUser(user.id)}
-                        className="bg-red-600 hover:bg-red-700 text-white border-none"
-                        disabled={allowedUserIds.has(user.id) || deleteUserMutation.isPending}
-                      >
-                        {deleteUserMutation.isPending && deleteUserMutation.variables?.userId === user.id ? (
-                          <>
-                            <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
-                            Deleting...
-                          </>
-                        ) : (
-                          "Delete"
-                        )}
-                      </Button>
+                      {allowedUserIds.has(user.id) || user.id === currentUserId ? (
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="destructive"
+                                size="sm"
+                                className="bg-red-600/50 hover:bg-red-700/50 text-white cursor-not-allowed opacity-50"
+                                disabled={true}
+                              >
+                                Delete User
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Cannot delete admin users or yourself</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      ) : (
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => handleDeleteUser(user.id, user.name || user.email || user.id)}
+                          className="bg-red-600 hover:bg-red-700 text-white"
+                          disabled={deleteUserMutation.isPending}
+                        >
+                          {deleteUserMutation.isPending && deleteUserMutation.variables?.userId === user.id ? (
+                            <>
+                              <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+                              Deleting...
+                            </>
+                          ) : (
+                            "Delete User"
+                          )}
+                        </Button>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}

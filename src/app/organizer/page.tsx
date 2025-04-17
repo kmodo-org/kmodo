@@ -7,6 +7,7 @@ import { EventDetails } from "../../components/event-details";
 import { ProgressSection } from "../../components/progress-section";
 import { NoHackathonView } from "../../components/no-hackathon-view";
 import { OrganizerSidebar } from "~/components/organizersidebar";
+import { OrganizerDashboardClient } from "~/components/organizer/OrganizerDashboardClient";
 
 
 interface PageProps {
@@ -21,7 +22,8 @@ export default async function OrganizerDashboard({ searchParams }: PageProps) {
     redirect("/");
   }
 
-  // if user is not an organizer redirect to the landing page
+  // Note: organizer status will be checked on the client-side
+  // and redirect to application page if needed
     
   if (session?.user) {
     void api.post.getLatest.prefetch();
@@ -49,43 +51,45 @@ export default async function OrganizerDashboard({ searchParams }: PageProps) {
 
   return (
     <HydrateClient>
-      <div className="flex min-h-screen bg-[#1A1B2E] text-white">
-        {session ? (
-          <OrganizerSidebar userName={session.user.name ?? ""}
-           userImage={session.user.image ?? null} />
-        ) : null}
-        
-        <div className="flex-1 lg:pl-0 overflow-y-auto lg:overflow-hidden">
-          <div className="lg:hidden">
-            <MobileHeader />
-          </div>
-        
-          <div className="p-6 lg:p-8">
-            {currentEvent ? (
-              <>
-                <EventOverview
-                  date={currentEvent.date}
-                  participants={currentEvent.participants}
-                  location={currentEvent.location}
-                  timeUntilStart={currentEvent.timeUntilStart}
-                  participantGrowth={currentEvent.participantGrowth}
-                  venueStatus={currentEvent.venueStatus}
-                />
+      <OrganizerDashboardClient>
+        <div className="flex min-h-screen bg-[#1A1B2E] text-white">
+          {session ? (
+            <OrganizerSidebar userName={session.user.name ?? ""}
+             userImage={session.user.image ?? null} />
+          ) : null}
+          
+          <div className="flex-1 lg:pl-0 overflow-y-auto lg:overflow-hidden">
+            <div className="lg:hidden">
+              <MobileHeader />
+            </div>
+          
+            <div className="p-6 lg:p-8">
+              {currentEvent ? (
+                <>
+                  <EventOverview
+                    date={currentEvent.date}
+                    participants={currentEvent.participants}
+                    location={currentEvent.location}
+                    timeUntilStart={currentEvent.timeUntilStart}
+                    participantGrowth={currentEvent.participantGrowth}
+                    venueStatus={currentEvent.venueStatus}
+                  />
 
-                <EventDetails
-                  name={currentEvent.name}
-                  description={currentEvent.description}
-                  schedule={currentEvent.schedule}
-                />
+                  <EventDetails
+                    name={currentEvent.name}
+                    description={currentEvent.description}
+                    schedule={currentEvent.schedule}
+                  />
 
-                <ProgressSection />
-              </>
-            ) : (
-              <NoHackathonView />
-            )}
+                  <ProgressSection />
+                </>
+              ) : (
+                <NoHackathonView />
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </OrganizerDashboardClient>
     </HydrateClient>
   );
 }

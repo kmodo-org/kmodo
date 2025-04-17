@@ -178,19 +178,14 @@ export const organizers = createTable(
     hacker_id: integer("hacker_id") // the hacker's unique id (remember orgs are just hackers) which cant be null and references the hackers table as it gets the hacker for the organizer
       .notNull()
       .references(() => hackers.id), 
-    event_id: integer("event_id") // the event's unique id which cant be null and references the events table as it gets the event for the organizer
-      .notNull()
-      .references(() => events.id), 
     createdAt: timestamp("created_at", { withTimezone: true }) // when the organizer was created
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
   },
   (organizer) => ({
     hackerIdIdx: index("organizer_hacker_id_idx").on(organizer.hacker_id), // index on the hacker id
-    eventIdIdx: index("organizer_event_id_idx").on(organizer.event_id), // index on the event id
   })
 );
-
 
 export const sponsors = createTable(
   "sponsor",
@@ -216,11 +211,9 @@ export const sponsors = createTable(
   })
 );
 
-
 export const sponsorsRelations = relations(sponsors, ({ one }) => ({
   user: one(users, { fields: [sponsors.user_Id], references: [users.id] }), // relations for sponsors and users
 }));
-
 
 export const events = createTable( // table for events
   "event",
@@ -282,7 +275,6 @@ export const eventOrganizersRelations = relations(eventOrganizers, ({ one }) => 
   }),
 }));
 
-
 export const organizerApplications = createTable(
   "organizer_application",
   {
@@ -292,24 +284,39 @@ export const organizerApplications = createTable(
       .notNull()
       .references(() => hackers.id),
 
-    event_id: integer("event_id") // event the hacker is applying to help organize
-      .notNull()
+    event_id: integer("event_id") // event the hacker is applying to help organize - now optional
       .references(() => events.id),
+      
+    organization: varchar("organization", { length: 255 }) // organization the applicant is part of
+      .notNull(),
+      
+    target_days: varchar("target_days", { length: 100 }) // target days for the hackathon
+      .notNull(),
+      
+    availability: varchar("availability", { length: 20 }), // availability type - now optional
+      
+    additional_info: text("additional_info"), // any additional information (optional)
 
     status: varchar("status", { length: 20 }) // status of the application (pending, approved, rejected)
       .default("pending")
       .notNull(),
+      
+    admin_notes: text("admin_notes"), // notes from admin reviewing the application (optional)
 
     createdAt: timestamp("created_at", { withTimezone: true }) // when the application was created
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
+      
+    updatedAt: timestamp("updated_at", { withTimezone: true }) // when the application was last updated
+      .default(sql`CURRENT_TIMESTAMP`)
+      .$onUpdate(() => new Date()),
   },
   (app) => ({
-    // prevents duplicate applications from the same hacker for the same event
-    hackerEventUnique: unique("unique_hacker_event").on(app.hacker_id, app.event_id),
-
-    // index for quick lookups by hacker/event
-    hackerEventIdx: index("organizer_app_hacker_event_idx").on(app.hacker_id, app.event_id),
+    // Updated unique constraint to only use hacker_id since event_id is now optional
+    hackerIdx: index("organizer_app_hacker_idx").on(app.hacker_id),
+    
+    // Keep the event index for when event_id is provided
+    eventIdx: index("organizer_app_event_idx").on(app.event_id),
   })
 );
 
@@ -332,4 +339,8 @@ export const InsertOrganizerApplicationSchema = createInsertSchema(organizerAppl
   hacker_id: true, 
   status: true,  
   createdAt: true,
+  updatedAt: true,
+  admin_notes: true,
+  event_id: true, // Now omitting event_id as well
+  availability: true, // Now omitting availability as well
 });
