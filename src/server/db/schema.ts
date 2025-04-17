@@ -9,6 +9,7 @@ import {
   timestamp,
   varchar,
   date,
+  unique,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 import { createInsertSchema } from "drizzle-zod";
@@ -280,3 +281,55 @@ export const eventOrganizersRelations = relations(eventOrganizers, ({ one }) => 
     references: [organizers.id],
   }),
 }));
+
+
+export const organizerApplications = createTable(
+  "organizer_application",
+  {
+    id: integer("id").primaryKey().generatedByDefaultAsIdentity(), // unique id for each application
+
+    hacker_id: integer("hacker_id") // hacker who is applying to be an organizer
+      .notNull()
+      .references(() => hackers.id),
+
+    event_id: integer("event_id") // event the hacker is applying to help organize
+      .notNull()
+      .references(() => events.id),
+
+    status: varchar("status", { length: 20 }) // status of the application (pending, approved, rejected)
+      .default("pending")
+      .notNull(),
+
+    createdAt: timestamp("created_at", { withTimezone: true }) // when the application was created
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+  },
+  (app) => ({
+    // prevents duplicate applications from the same hacker for the same event
+    hackerEventUnique: unique("unique_hacker_event").on(app.hacker_id, app.event_id),
+
+    // index for quick lookups by hacker/event
+    hackerEventIdx: index("organizer_app_hacker_event_idx").on(app.hacker_id, app.event_id),
+  })
+);
+
+export const organizerApplicationsRelations = relations( // relations for application to hacker and event
+  organizerApplications,
+  ({ one }) => ({
+    hacker: one(hackers, {
+      fields: [organizerApplications.hacker_id],
+      references: [hackers.id],
+    }),
+    event: one(events, {
+      fields: [organizerApplications.event_id],
+      references: [events.id],
+    }),
+  })
+);
+
+export const InsertOrganizerApplicationSchema = createInsertSchema(organizerApplications).omit({ // makes insert schema and omits the id and status fields as they are auto generated
+  id: true,
+  hacker_id: true, 
+  status: true,  
+  createdAt: true,
+});

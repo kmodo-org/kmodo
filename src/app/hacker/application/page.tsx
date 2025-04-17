@@ -13,7 +13,7 @@ export default async function MemberApplicationPage() {
       }
 
     if (isHacker) { // if the user is already a hacker, redirect to the dashboard
-      return redirect("/dashboard");
+      return redirect("/hacker");
     }
 
     if (session?.user) {

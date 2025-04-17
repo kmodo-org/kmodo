@@ -2,6 +2,9 @@ import { db } from "~/server/db";
 import { hackers, events, InsertHackerSchema, InsertEventSchema} from "~/server/db/schema";
 import { asc, eq } from "drizzle-orm";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+import { organizerApplications } from "~/server/db/schema";
+import { InsertOrganizerApplicationSchema } from "~/server/db/schema";
+import { organizers } from "~/server/db/schema";
 
 
 export const hackerRouter = createTRPCRouter({
@@ -90,5 +93,53 @@ export const hackerRouter = createTRPCRouter({
       console.error("Error checking form submission:", error);
       return false;
     }
-  })
+  }),
+  getAllEvents: publicProcedure.query(async ({ ctx }) => {
+    const result = await ctx.db
+      .select()
+      .from(events)
+      .orderBy(asc(events.date));
+    return result;
+  }),
+
+  applyToOrganize: protectedProcedure
+  .input(InsertOrganizerApplicationSchema)
+  .mutation(async ({ ctx, input }) => {
+    const userId = ctx.session.user.id;
+
+    const hacker = await db
+      .select()
+      .from(hackers)
+      .where(eq(hackers.user_Id, userId))
+      .then(res => res[0]);
+
+    if (!hacker) throw new Error("Hacker profile not found.");
+
+    await db.insert(organizerApplications).values({
+      hacker_id: hacker.id,
+      event_id: input.event_id,
+      status: "pending",
+    });
+
+    return { success: true };
+  }),
+  isOrganizer: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+  
+    const hacker = await db
+      .select()
+      .from(hackers)
+      .where(eq(hackers.user_Id, userId))
+      .then(res => res[0]);
+  
+    if (!hacker) return false;
+
+    const organizer = await db
+      .select()
+      .from(organizers)
+      .where(eq(organizers.hacker_id, hacker.id))
+      .then(res => res[0]);
+  
+    return !!organizer;
+  }),
 });

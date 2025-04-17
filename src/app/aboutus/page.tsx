@@ -28,7 +28,7 @@ export default async function Home() {
               </p>
               <div className="flex flex-col items-center justify-center gap-4 pb-32">
               {session?.user ? (
-                <Link href="/dashboard">
+                <Link href="/hacker">
                   <Button size="lg" className="rounded-full text-[#59BC89] text-md bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20">
                     Go to Dashboard
                   </Button>

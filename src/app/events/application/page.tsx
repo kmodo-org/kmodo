@@ -34,7 +34,7 @@ export default function EventApplication() {
     
     const createEvent = api.hacker.createEvent.useMutation({
       onSuccess: () => {
-        router.push("/dashboard");
+        router.push("/hacker");
       }
     });
     const onSubmit = async (values: z.infer<typeof eventForm>) => { 

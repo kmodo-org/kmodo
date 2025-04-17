@@ -9,23 +9,28 @@ import {
   ResizablePanelGroup,
 } from "~/components/ui/resizable";
 import { SignOutButton } from "./sign-out-button";
-import {
-  LayoutDashboard,
-  Trophy,
-  Users,
-  Settings,
+import { 
+  LayoutDashboard,  
+  Users, 
+  Calendar, 
+  Settings, 
+  Gem,
 } from "lucide-react";
 
 interface SidebarProps {
   userName: string;
   userImage: string | null;
-  isOrganizer: boolean;
 }
 
-export function Sidebar({ userName, userImage, isOrganizer }: SidebarProps) {
+export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
   const pathname = usePathname();
 
-  const isActive = (path: string) => pathname.startsWith(path);
+  const isActive = (path: string) => {
+    if (path === '/organizer') {
+      return pathname === path;
+    }
+    return pathname.startsWith(path);
+  };
 
   return (
     <div
@@ -37,14 +42,13 @@ export function Sidebar({ userName, userImage, isOrganizer }: SidebarProps) {
         className="min-h-screen rounded-lg hidden lg:flex"
       >
         <ResizablePanel defaultSize={20} minSize={15} maxSize={25}>
-          <div className="flex flex-col justify-between h-full bg-[#1A1B2E] p-6">
+          <div className="h-full bg-[#1A1B2E] p-6 flex flex-col">
             <div className="mb-8 flex justify-center">
               <Link href="/">
                 <Image src="/images/kmodoL.svg" width={160} height={160} alt="kmodo" className="w-auto h-24" />
               </Link>
             </div>
-
-            {/* User Info */}
+            
             <div className="flex flex-col items-center mb-8">
               <div className="w-20 h-20 rounded-full overflow-hidden mb-4 ring-2 ring-[#59BC89]/20">
                 <Image
@@ -55,57 +59,71 @@ export function Sidebar({ userName, userImage, isOrganizer }: SidebarProps) {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p className="text-[#59BC89] font-bold text-lg text-center">{userName}</p>
+              <div className="text-center">
+                <p className="text-[#59BC89] font-bold text-lg">{userName}</p>
+              </div>
             </div>
 
-            {/* Navigation */}
             <nav className="flex-1">
               <ul className="space-y-1">
                 <li>
-                  <Link
-                    href="/hacker"
+                  <Link 
+                    href="/organizer" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/hacker') && pathname === '/hacker'
-                        ? 'text-[#59BC89] bg-white/5'
+                      isActive('/organizer') 
+                        ? 'text-[#59BC89] bg-white/5' 
                         : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
                     }`}
                   >
                     <LayoutDashboard className="w-5 h-5 mr-3" />
-                    {isOrganizer ? "ORGANIZER DASHBOARD" : "DASHBOARD"}
+                    DASHBOARD
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/hacker/find-team"
+                  <Link 
+                    href="/eventpage" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/hacker/find-team')
-                        ? 'text-[#59BC89] bg-white/5'
+                      isActive('/eventpage') 
+                        ? 'text-[#59BC89] bg-white/5' 
+                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
+                    }`}
+                  >
+                    <Calendar className="w-5 h-5 mr-3" />
+                    EVENT
+                  </Link>   
+                </li>
+                <li>
+                  <Link 
+                    href="/members" 
+                    className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
+                      isActive('/members') 
+                        ? 'text-[#59BC89] bg-white/5' 
                         : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
                     }`}
                   >
                     <Users className="w-5 h-5 mr-3" />
-                    TEAM FINDER
+                    MEMBERS
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/hacker/ranked"
+                  <Link 
+                    href="/sponsors" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/hacker/ranked')
-                        ? 'text-[#59BC89] bg-white/5'
+                      isActive('/sponsors') 
+                        ? 'text-[#59BC89] bg-white/5' 
                         : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
                     }`}
                   >
-                    <Trophy className="w-5 h-5 mr-3" />
-                    RANKED
+                    <Gem className="w-5 h-5 mr-3" />
+                    SPONSORS
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/hacker/settings"
+                  <Link 
+                    href="/settings" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/hacker/settings')
-                        ? 'text-[#59BC89] bg-white/5'
+                      isActive('/settings') 
+                        ? 'text-[#59BC89] bg-white/5' 
                         : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
                     }`}
                   >
@@ -115,9 +133,7 @@ export function Sidebar({ userName, userImage, isOrganizer }: SidebarProps) {
                 </li>
               </ul>
             </nav>
-
-            {/* Footer Buttons */}
-            <div className="space-y-3 pt-4">
+            <div className="mt-4 mb-4">
               <Link href="/organizer/application">
                 <Button
                   size="sm"
@@ -126,11 +142,11 @@ export function Sidebar({ userName, userImage, isOrganizer }: SidebarProps) {
                   Apply to be an Organizer
                 </Button>
               </Link>
-              <SignOutButton />
             </div>
+            <SignOutButton />
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
   );
-}
+} 

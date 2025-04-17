@@ -53,7 +53,7 @@ export function InputForm() {
 
   const createHacker = api.hacker.createHacker.useMutation({
     onSuccess: () => {
-      router.push("/dashboard");
+      router.push("/hacker");
     }
   });
 
