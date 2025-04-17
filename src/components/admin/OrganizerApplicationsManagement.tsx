@@ -9,7 +9,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { Textarea } from "~/components/ui/textarea";
 import { Badge } from "~/components/ui/badge";
 import { toast } from "sonner";
-import { format } from "date-fns";
 import { Trash2 } from "lucide-react";
 
 export function OrganizerApplicationsManagement() {
@@ -55,7 +54,7 @@ export function OrganizerApplicationsManagement() {
         updateApplicationMutation.mutate({
           applicationId,
           status: "approved",
-          adminNotes: adminNotes[applicationId] || undefined
+          adminNotes: adminNotes[applicationId] ?? undefined
         });
       } catch (error) {
         console.error("Error in handleApprove:", error);
@@ -71,7 +70,7 @@ export function OrganizerApplicationsManagement() {
         updateApplicationMutation.mutate({
           applicationId,
           status: "rejected",
-          adminNotes: adminNotes[applicationId] || undefined
+          adminNotes: adminNotes[applicationId] ?? undefined
         });
       } catch (error) {
         console.error("Error in handleReject:", error);
@@ -161,15 +160,15 @@ export function OrganizerApplicationsManagement() {
                                 className="cursor-pointer"
                                 onClick={() => {
                                   alert(`
-Organization: ${item.application.organization || "Not specified"}
+Organization: ${item.application.organization ?? "Not specified"}
 
-Target Days: ${item.application.target_days || "Not specified"}
+Target Days: ${item.application.target_days ?? "Not specified"}
 
 ${item.event ? `Event: ${item.event.name} (${item.event.school})` : 'No specific event'}
 
 ${item.application.availability ? `Availability: ${item.application.availability}` : 'Availability not specified'}
 
-Additional Info: ${item.application.additional_info || "None provided"}
+Additional Info: ${item.application.additional_info ?? "None provided"}
                                   `);
                                 }}
                               >
@@ -182,7 +181,7 @@ Additional Info: ${item.application.additional_info || "None provided"}
                                 <TableCell>
                                   <Textarea
                                     placeholder="Add notes about this application"
-                                    value={adminNotes[item.application.id] || ""}
+                                    value={adminNotes[item.application.id] ?? ""}
                                     onChange={(e) => 
                                       setAdminNotes({
                                         ...adminNotes,

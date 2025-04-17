@@ -87,8 +87,8 @@ export function UserManagement() {
                 {users.map((user) => (
                   <TableRow key={user.id} className="hover:bg-white/5">
                     <TableCell className="font-medium text-white">
-                      {user.name || "No name"}
-                      <div className="text-xs text-gray-400">{user.email || "No email"}</div>
+                      {user.name ?? "No name"}
+                      <div className="text-xs text-gray-400">{user.email ?? "No email"}</div>
                     </TableCell>
                     <TableCell className="text-white">
                       {user.id}
@@ -124,7 +124,7 @@ export function UserManagement() {
                         <Button
                           variant="destructive"
                           size="sm"
-                          onClick={() => handleDeleteUser(user.id, user.name || user.email || user.id)}
+                          onClick={() => handleDeleteUser(user.id, user.name ?? user.email ?? user.id)}
                           className="bg-red-600 hover:bg-red-700 text-white"
                           disabled={deleteUserMutation.isPending}
                         >

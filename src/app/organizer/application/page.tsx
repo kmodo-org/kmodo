@@ -70,7 +70,7 @@ export default function OrganizerApplicationForm() {
       await applyToOrganize.mutateAsync({
         organization: values.organization,
         target_days: values.targetDays,
-        additional_info: values.additionalInfo || null,
+        additional_info: values.additionalInfo ?? null,
       });
     } catch (err) {
       console.error("Application failed:", err);

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 import { users, hackers, events, organizers, eventOrganizers, organizerApplications } from "~/server/db/schema";
-import { eq, and, type SQL, desc } from "drizzle-orm";
+import { eq, and, type SQL } from "drizzle-orm";
 import { allowedUserIds } from "~/consts/goat";
 import { sql } from "drizzle-orm";
 
