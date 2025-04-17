@@ -1,12 +1,13 @@
 import Image from "next/image";
 import { Button } from "src/components/ui/button";
 import { Card, CardContent } from "src/components/ui/card";
-import { auth, signIn } from "~/server/auth";
+import { auth } from "~/server/auth";
 import { api } from "~/trpc/server";
 import { FeatureBox } from "src/components/ui/featurebox";
 import { CarouselFeatureBox } from "src/components/ui/carouselfeaturebox";
 import { Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/ui/footer";
+const ModoSvg = "/images/ModoStanding.svg";
 
 import {
     Carousel,
@@ -16,21 +17,31 @@ import {
     CarouselPrevious,
   } from "src/components/ui/carousel"
 
-  const featureBoxList = [
-    {title: "Easy Use", desc: "One site, one page to help everyone spend less time finding things out and spend more time hacking.", image: "/images/easyuse.png"},
-    {title: "Organization", desc: "We help you organize your event dashboard to help personalize your hackathons.", image: "/images/organization.png"},
-    {title: "Ranked", desc: "The ranked system helps bring a new competitive scene to hackathon events.", image: "/images/ranked.png"},
-    {title: "Free-Use", desc: "Free use allows our users big or small, to plan, attend, or sponsor hackathons!", image: "/images/freeuse.png"}
+interface FeatureBoxItem {
+  title: string;
+  desc: string;
+  image: string;
+}
 
-  ]
+interface CarouselFeatureItem {
+  title: string;
+  desc: string;
+  image: string;
+}
 
-  const carouselFeatureList = [
+const featureBoxList: FeatureBoxItem[] = [
+    {title: "Easy Use", desc: "One site, one page to help everyone spend less time finding things out and spend more time hacking.", image: "/images/globe.svg"},
+    {title: "Organization", desc: "We help you organize your event dashboard to help personalize your hackathons.", image: "/images/users.svg"},
+    {title: "Ranked", desc: "The ranked system helps bring a new competitive scene to hackathon events.", image: "/images/award.svg"},
+    {title: "Free-Use", desc: "Free use allows our users big or small, to plan, attend, or sponsor hackathons!", image: "/images/circle-check.svg"}
+]
+
+const carouselFeatureList: CarouselFeatureItem[] = [
     {title: "EVENT ORGANIZATION TOOLKIT", desc: "Our tool empowers organizers to easily set up and manage hackathon events with intuitive features for creating event pages, setting schedules, and managing participant registrations. With real-time updates and customizable options, organizers can focus on fostering innovation while we handle the logistics.", image: "/images/eventorganizationtoolkit.png"},
     {title: "HACKER FINDER", desc: "This feature allows hackers to easily discover local hackathons and tech events based on their location and interests. Users can find nearby competitions, registration deadlines, and event details to stay engaged in the hackathon community.", image: "/images/hackerfinder.JPG"}
-   
-  ]
+]
 
-  export default async function AboutUs() {  
+export default async function AboutUs() {  
     const session = await auth();
     
     if (session?.user) {
@@ -40,34 +51,32 @@ import {
     return (
         <div className="flex flex-col min-h-screen">
             <Navbar />
-            <main className="flex-grow">
-                <Image className="object-fill -mt-32" src="/images/aboutus.png" width={1920} height={1080} alt="title" />  
-                <div className="absolute h-full flex flex-col lg:items-start md:items-start sm:items-center items-center 2xl:top-1/3 xl:top-52 md:top-40 sm:top-32 top-28 lg:ml-20 md:ml-10 sm:m-0 m-0">
+            <section className="relative flex items-center justify-center h-screen">
+                <div className="container mx-auto flex flex-col lg:flex-row items-center px-6 lg:px-0">
                     <div className="justify-left space-y-3 w-fit h-fit bg-[#2D2647] rounded-3xl bg-opacity-90 xl:p-16 lg:p-8 md:p-10 sm:p-8 p-8 shadow-2xl shadow-black transition-transform hover:scale-105 sm:justify-center justify-center">
-                        <div className="text-[#59BC89] font-extrabold leading-tight lg:text-6xl md:text-3xl sm:text-xl text-xl">
-                            HACKATHONS<br />DONE<br />DIFFERENT.
-                        </div>
-                        <div className="text-white font-['Open Sans'] lg:text-xl md:text-lg sm:text-base text-base">
-                            TRANSFORMING THE FUTURE, ONE HACKATHON AT A TIME.
-                        </div>
-
-                        <form className="p-[1.5px]">
-                            <Button
-                                size="lg"
-                                className="text-[#59BC89] transition bg-white hover:bg-slate-600 hover:text-accent "
-                                formAction={async () => {
-                                    "use server";
-                                    await signIn("github", {
-                                        redirectTo: "/hacker/application",
-                                    });
-                                }}
-                            >
-                                JOIN NOW
-                            </Button>
-                        </form>
+                        <h1 className="text-[#59BC89] font-extrabold leading-tight text-4xl md:text-6xl">
+                            Hackathons<br />Done Different.
+                        </h1>
+                        <p className="text-white font-light text-base md:text-lg">
+                            Transforming the future, one hackathon at a time.
+                        </p>
+                        <Button
+                            size="lg"
+                            className="bg-white text-[#59BC89] hover:bg-gray-100 hover:text-[#4264AC]"
+                        >
+                            Join Now
+                        </Button>
+                    </div>
+                    <div className="lg:w-1/2 mt-12 lg:mt-0 flex justify-center">
+                        <Image
+                            src={ModoSvg}
+                            width={450}
+                            height={450}
+                            alt="Modo Mascot"
+                        />
                     </div>
                 </div>
-
+            </section>
                 <div className="flex items-center justify-center w-full">
                     <div className="h-fit lg:-translate-y-2/4 sm:-translate-y-1/4 translate-y-6 w-9/12 lg:space-y-4 sm:space-y-0 space-y-0 bg-white rounded-3xl lg:p-8 sm:p-4 p-4 shadow-2xl shadow-black transition-transform hover:scale-105">
                         <div className="text-center text-[#59BC89] font-extrabold lg:text-4xl md:text-2xl sm:text-xl text-xl">
@@ -92,8 +101,10 @@ import {
                         Choose us for a seamless, all-in-one platform that enhances collaboration...
                     </div>
                     <div className="flex flex-wrap justify-center sm:p-5 p-0 gap-5">
-                        {featureBoxList.map((featurebox, index) => (
-                            <FeatureBox key={index} title={featurebox.title} desc={featurebox.desc} image={featurebox.image} />
+                        {featureBoxList.map((featurebox: FeatureBoxItem, index: number) => (
+                            <div key={index} className="flex flex-col justify-center items-center w-full sm:w-auto">
+                                <FeatureBox title={featurebox.title} desc={featurebox.desc} image={featurebox.image} />
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -105,7 +116,7 @@ import {
                 <div className="flex justify-center items-center bg-white w-full h-fit">
                     <Carousel className="flex h-full justify-between">
                         <CarouselContent className="flex-row gap-4">
-                            {carouselFeatureList.map((carouselFeature, index) => (
+                            {carouselFeatureList.map((carouselFeature: CarouselFeatureItem, index: number) => (
                                 <CarouselItem key={index}>
                                     <div className="flex sm:p-12 p-10 w-full">
                                         <Card className="shadow-none w-full">
@@ -125,7 +136,6 @@ import {
                         <CarouselNext className="right-4 top-1/2 transform -translate-y-1/2 z-10 bg-[#4264AC] text-white p-2 rounded-full shadow-lg hover:bg-[#324f8c]" />
                     </Carousel>
                 </div>
-            </main>
             <Footer />
         </div>
     );
