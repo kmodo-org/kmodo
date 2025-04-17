@@ -42,7 +42,7 @@ export default function OrganizerApplicationForm() {
     <div className="mt-4 p-6 max-w-lg mx-auto bg-Lavender shadow-md rounded-lg">
       <h1 className="text-2xl font-bold mb-2 pt-2 text-Mint">Apply to Organize</h1>
       <p className="text-sm text-gray-500 mb-4">
-        <i>Select an event you'd like to help organize.</i>
+        <i>Select an event you&apos;d like to help organize.</i>
       </p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="text-SpaceCadet space-y-4">

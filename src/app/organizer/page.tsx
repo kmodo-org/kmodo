@@ -2,7 +2,6 @@ import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import { redirect } from "next/navigation";
 import { MobileHeader } from "../../components/mobile-header";
-import { Sidebar } from "../../components/sidebar";
 import { EventOverview } from "../../components/event-overview";
 import { EventDetails } from "../../components/event-details";
 import { ProgressSection } from "../../components/progress-section";
@@ -17,7 +16,6 @@ interface PageProps {
 export default async function OrganizerDashboard({ searchParams }: PageProps) {
   const params = await searchParams;
   const session = await auth();
-  const userId = session?.user?.id;
 
   if (session == null) { // if the user is not logged in, redirect to the landing page
     redirect("/");

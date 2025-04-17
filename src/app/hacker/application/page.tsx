@@ -2,7 +2,6 @@ import { auth } from "~/server/auth";
 import { api } from "~/trpc/server";
 import { redirect } from "next/navigation";
 import { InputForm } from "../../../components/inputform";
-import { allowedUserIds } from "~/consts/goat";
 
 export default async function MemberApplicationPage() {
     const session = await auth();

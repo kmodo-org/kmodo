@@ -15,7 +15,6 @@ interface PageProps {
 export default async function Home({ searchParams }: PageProps) {
   const params = await searchParams;
   const session = await auth();
-  const userId = session?.user?.id;
 
   if (!session) {
     redirect("/");
