@@ -1,12 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { UserManagement } from "~/components/admin/UserManagement";
 import { EventManagement } from "~/components/admin/EventManagement";
+import { Button } from "~/components/ui/button";
 
 export function AdminDashboard() {
   const [, setActiveTab] = useState("users");
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  
+  const handleCheeseClick = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+        videoRef.current.style.display = "none";
+      } else {
+        videoRef.current.style.display = "block";
+        void videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  useEffect(() => {
+    // Hide video initially
+    if (videoRef.current) {
+      videoRef.current.style.display = "none";
+    }
+  }, []);
 
   return (
     <div className="space-y-8">
@@ -15,6 +39,29 @@ export function AdminDashboard() {
         <p className="text-[#D9DBF1] font-['Open Sans'] font-light">
           Comprehensive tools to manage users, events, and platform settings.
         </p>
+      </div>
+
+      <div className="flex flex-col items-center">
+        <Button 
+          onClick={handleCheeseClick}
+          className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold text-xl px-8 py-4 rounded-full shadow-lg transform transition-transform hover:scale-105"
+        >
+          {isPlaying ? "Stop Cheese" : "Cheese"}
+        </Button>
+        
+        <div className="mt-6 rounded-lg overflow-hidden shadow-xl">
+          <video 
+            ref={videoRef}
+            src="/images/spinning-food-spinny-food.mp4" 
+            width="400"
+            height="400"
+            autoPlay
+            muted
+            loop
+            controls
+            className="rounded-lg"
+          />
+        </div>
       </div>
 
       <Tabs defaultValue="users" className="w-full" onValueChange={setActiveTab}>

@@ -6,7 +6,7 @@ import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
-import { Badge } from "~/components/ui/badge";
+import { Badge } from "../../components/ui/badge";
 import { toast } from "sonner";
 import { allowedUserIds } from "~/consts/goat";
 import { Search } from "lucide-react";
@@ -98,8 +98,16 @@ export function UserManagement() {
                         size="sm"
                         onClick={() => handleDeleteUser(user.id)}
                         className="bg-red-600 hover:bg-red-700 text-white border-none"
+                        disabled={allowedUserIds.has(user.id) || deleteUserMutation.isPending}
                       >
-                        Delete
+                        {deleteUserMutation.isPending && deleteUserMutation.variables?.userId === user.id ? (
+                          <>
+                            <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+                            Deleting...
+                          </>
+                        ) : (
+                          "Delete"
+                        )}
                       </Button>
                     </TableCell>
                   </TableRow>

@@ -10,15 +10,6 @@ import { toast } from "sonner";
 import { format } from "date-fns";
 import { Search } from "lucide-react";
 
-// Define event type
-type Event = {
-  id: number;
-  name: string;
-  date: string;
-  location: string;
-  school: string;
-};
-
 export function EventManagement() {
   const [search, setSearch] = useState("");
   
@@ -45,7 +36,13 @@ export function EventManagement() {
   // Event handlers
   const handleDeleteEvent = (eventId: number) => {
     if (confirm("Are you sure you want to delete this event? This action cannot be undone.")) {
-      deleteEventMutation.mutate({ id: eventId });
+      console.log("Deleting event with ID:", eventId);
+      try {
+        deleteEventMutation.mutate({ id: eventId });
+      } catch (error) {
+        console.error("Error in deleteEventMutation:", error);
+        toast.error("An error occurred while deleting the event");
+      }
     }
   };
   
@@ -124,8 +121,16 @@ export function EventManagement() {
                         size="sm"
                         onClick={() => handleDeleteEvent(event.id)}
                         className="bg-red-600 hover:bg-red-700 text-white border-none"
+                        disabled={deleteEventMutation.isPending}
                       >
-                        Delete
+                        {deleteEventMutation.isPending && deleteEventMutation.variables?.id === event.id ? (
+                          <>
+                            <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+                            Deleting...
+                          </>
+                        ) : (
+                          "Delete"
+                        )}
                       </Button>
                     </TableCell>
                   </TableRow>

@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { api } from "~/trpc/react";
-import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
 import { toast } from "sonner";
@@ -81,7 +80,7 @@ export function OrganizerManagement() {
             <div className="space-y-2">
               <label className="text-sm font-medium">Select Hacker</label>
               <Select
-                value={selectedHacker?.toString() || ""}
+                value={selectedHacker?.toString() ?? ""}
                 onValueChange={(value: string) => setSelectedHacker(parseInt(value))}
               >
                 <SelectTrigger>
@@ -100,7 +99,7 @@ export function OrganizerManagement() {
             <div className="space-y-2">
               <label className="text-sm font-medium">Select Event</label>
               <Select
-                value={selectedEvent?.toString() || ""}
+                value={selectedEvent?.toString() ?? ""}
                 onValueChange={(value: string) => setSelectedEvent(parseInt(value))}
               >
                 <SelectTrigger>

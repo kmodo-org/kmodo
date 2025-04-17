@@ -4,14 +4,12 @@ import { db } from "~/server/db";
 import { users, hackers, events, organizers, eventOrganizers } from "~/server/db/schema";
 import { eq, and, type SQL } from "drizzle-orm";
 import { allowedUserIds } from "~/consts/goat";
+import { sql } from "drizzle-orm";
 
 // Helper function to check if user is an admin
 const isAdmin = (userId: string) => {
   return allowedUserIds.has(userId);
 };
-
-// Define some types to help with type safety
-type Organizer = typeof organizers.$inferSelect;
 
 export const adminRouter = createTRPCRouter({
   // Get all users
@@ -87,10 +85,51 @@ export const adminRouter = createTRPCRouter({
       }
 
       const { id } = input;
-      
-      await db.delete(events).where(eq(events.id, id));
-      
-      return { success: true };
+
+      try {
+        // Begin transaction
+        await db.transaction(async (tx) => {
+          // First delete organizer applications for this event 
+          // This table isn't defined in our schema but exists in the database
+          await tx.execute(
+            sql`DELETE FROM "kmodo_organizer_application" WHERE "event_id" = ${id}`
+          );
+
+          // Find organizers for this event first to handle the relationship
+          const eventOrgs = await tx
+            .select()
+            .from(organizers)
+            .where(eq(organizers.event_id, id));
+
+          // Delete organizer records for this event
+          if (eventOrgs.length > 0) {
+            for (const org of eventOrgs) {
+              // Delete from eventOrganizers junction table
+              await tx
+                .delete(eventOrganizers)
+                .where(
+                  and(
+                    eq(eventOrganizers.event_id, id),
+                    eq(eventOrganizers.organizer_id, org.id)
+                  )
+                );
+
+              // Then delete the organizer record
+              await tx
+                .delete(organizers)
+                .where(eq(organizers.id, org.id));
+            }
+          }
+
+          // Finally delete the event itself
+          await tx.delete(events).where(eq(events.id, id));
+        });
+
+        return { success: true };
+      } catch (error) {
+        console.error("Error deleting event:", error);
+        throw new Error(`Failed to delete event: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
     }),
     
   // Make a user an organizer for an event
@@ -138,7 +177,7 @@ export const adminRouter = createTRPCRouter({
       // Safely access the first item
       const newOrganizer = newOrganizerResult[0];
       
-      if (!newOrganizer || !newOrganizer.id) {
+      if (!newOrganizer?.id) {
         throw new Error("Failed to get organizer ID");
       }
         
@@ -184,7 +223,7 @@ export const adminRouter = createTRPCRouter({
       
       const organizer = organizers_found[0];
       
-      if (!organizer || !organizer.id) {
+      if (!organizer?.id) {
         throw new Error("Invalid organizer record");
       }
       
