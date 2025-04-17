@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from "~/components/ui/button";
-import { handleSignOut } from "../actions";
+import { handleSignOut } from "../server/api/routers/actions";
 
 export function SignOutButton() {
   return (
