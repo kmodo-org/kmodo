@@ -1,10 +1,10 @@
 export const allowedUserIds = new Set([
-    process.env.carlos,
-    process.env.sam, 
-    process.env.adrian,
-    process.env.kai,
-    process.env.daniel,
-    process.env.eli,
-    process.env.carfos,
-    process.env.test, // This is a test user for local testing purposes, remove in production
+    process.env.NEXT_PUBLIC_CARLOS,
+    process.env.NEXT_PUBLIC_SAM, 
+    process.env.NEXT_PUBLIC_ADRIAN,
+    process.env.NEXT_PUBLIC_KAI,
+    process.env.NEXT_PUBLIC_DANIEL,
+    process.env.NEXT_PUBLIC_ELI,
+    process.env.NEXT_PUBLIC_CARFOS,
+    process.env.NEXT_PUBLIC_TEST, // This is a test user for local testing purposes, remove in production
 ]);
