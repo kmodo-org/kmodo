@@ -11,8 +11,8 @@ import { Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/ui/footer";
 import { count } from "drizzle-orm";
 const ModoSvg = "/images/ModoStanding.svg";
-const Computer = "/images/computer.svg";
-const Binary = "/images/binary.svg";
+const Computer = "/images/Computer.svg";
+const Binary = "/images/Binary.svg";
 
 import {
     Carousel,
