@@ -20,9 +20,9 @@ export default async function EventsPage() {
 
   // if user is not an organizer redirect to the landing page
   
-  if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
-    redirect("/");
-  }
+  // if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
+  //   redirect("/");
+  // }
 
   return (
     <HydrateClient>
@@ -46,7 +46,7 @@ export default async function EventsPage() {
                   placeholder="Search hackathons..."
                   className="w-full max-w-2xl mx-auto rounded-full px-6 py-5 bg-destructive text-black"
                 />
-                <Events />
+                <Events /> {/* This component will fetch and display events from the database */}
               </CardContent>
             </div>
           </Card>

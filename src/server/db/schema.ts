@@ -261,6 +261,7 @@ export const eventOrganizers = createTable(
 
 export const eventsRelations = relations(events, ({ many }) => ({
   organizers: many(eventOrganizers), // relations for organizers and events
+  applications: many(hackathonApplications),
 }));
 
 export const eventOrganizersRelations = relations(eventOrganizers, ({ one }) => ({ // relations for event organizers and events so we can have organizer teams on events
@@ -342,4 +343,59 @@ export const InsertOrganizerApplicationSchema = createInsertSchema(organizerAppl
   admin_notes: true,
   event_id: true, // Now omitting event_id as well
   availability: true, // Now omitting availability as well
+});
+
+export const hackathonApplications = createTable(
+  "hackathon_application",
+  {
+    id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+    
+    hacker_id: integer("hacker_id")
+      .notNull()
+      .references(() => hackers.id),
+      
+    event_id: integer("event_id")
+      .notNull()
+      .references(() => events.id),
+      
+    status: varchar("status", { length: 20 })
+      .default("pending")
+      .notNull(),
+      
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+      
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .$onUpdate(() => new Date()),
+  },
+  (app) => ({
+    hackerIdx: index("hackathon_app_hacker_idx").on(app.hacker_id),
+    eventIdx: index("hackathon_app_event_idx").on(app.event_id),
+  })
+);
+
+export const hackathonApplicationsRelations = relations(
+  hackathonApplications,
+  ({ one }) => ({
+    hacker: one(hackers, {
+      fields: [hackathonApplications.hacker_id],
+      references: [hackers.id],
+    }),
+    event: one(events, {
+      fields: [hackathonApplications.event_id],
+      references: [events.id],
+    }),
+  })
+);
+
+export const hackersRelations = relations(hackers, ({ many }) => ({
+  applications: many(hackathonApplications),
+}));
+
+export const InsertHackathonApplicationSchema = createInsertSchema(hackathonApplications).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
 });
