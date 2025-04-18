@@ -1,8 +1,8 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "~/components/ui/card";
-import { Input } from "~/components/ui/input";
+// import { Input } from "~/components/ui/input";
 import { HydrateClient } from "~/trpc/server";
 import "~/styles/globals.css";
-import {Events} from "~/components/events";
+// import {Events} from "~/components/events";
 import { Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/ui/footer";
 import { auth } from "~/server/auth";

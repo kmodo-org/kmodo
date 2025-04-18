@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
-import { api } from "~/trpc/server";
+// import { api } from "~/trpc/server";
 import Image from "next/image";
 
 interface HackathonCardProps {

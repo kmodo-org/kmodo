@@ -1,15 +1,15 @@
 "use client";
 import Image from "next/image";
-import { Button } from "src/components/ui/button";
-import { Card, CardContent } from "src/components/ui/card";
-import { auth, signIn } from "~/server/auth";
-import { api } from "~/trpc/server";
-import { FeatureBox } from "src/components/ui/featurebox";
-import { CarouselFeatureBox } from "src/components/ui/carouselfeaturebox";
+// import { Button } from "src/components/ui/button";
+// import { Card, CardContent } from "src/components/ui/card";
+// import { auth, signIn } from "~/server/auth";
+// import { api } from "~/trpc/server";
+// import { FeatureBox } from "src/components/ui/featurebox";
+// import { CarouselFeatureBox } from "src/components/ui/carouselfeaturebox";
 import { Navbar } from "~/components/Navbar";
-import { Footer } from "~/components/ui/footer";
+// import { Footer } from "~/components/ui/footer";
 import Link from "next/link";
-import { useState } from "react";
+// import { useState } from "react";
 
 
 
@@ -25,20 +25,21 @@ const dashboardRoutes: { title: string; href: string }[] = [
 
 export default function SponsorDashboard() {  
     // we'll pull these from database lol
-    let [companyName, setCompanyName] = useState("");
 
-    let [companyMissionStatement, setCompanyMissionStatement] = useState("");
+    // const [companyName, setCompanyName] = useState("");
 
-    let [companyProfilePictureURL, setCompanyProfilePictureURL] = useState("/images/resources.JPG");
-    let [companyPhotoURL, setCompanyPhotoURL] = useState("/images/resources.JPG");
+    // const [companyMissionStatement, setCompanyMissionStatement] = useState("");
 
-    let [companyDescription, setCompanyDescription] = useState("");
-    let [companyLocation, setCompanyLocation] = useState("");
-    let [employeeCount, setEmployeeCount] = useState(0);
+    // const [companyProfilePictureURL, setCompanyProfilePictureURL] = useState("/images/resources.JPG");
+    // const [companyPhotoURL, setCompanyPhotoURL] = useState("/images/resources.JPG");
 
-    let [companyContacts, setCompanyContacts] = useState([]);
+    // const [companyDescription, setCompanyDescription] = useState("");
+    // const [companyLocation, setCompanyLocation] = useState("");
+    // const [employeeCount, setEmployeeCount] = useState(0);
 
-    let [companySites, setCompanySites] = useState([]);
+    // const [companyContacts, setCompanyContacts] = useState([]);
+
+    // const [companySites, setCompanySites] = useState([]);
 
     // pull contact info struct list 
     // pull focus area struct list
@@ -53,14 +54,15 @@ export default function SponsorDashboard() {
                 <div className="flex flex-col w-1/6 pl-7 align-middle items-center">
                     <Image
                         className="rounded-full object-cover h-[27vh] w-[27vh]]"
-                        src={companyProfilePictureURL}
+                        src=""
+                        // src={companyProfilePictureURL}
                         width={2000}
                         height={2000}
                         alt="title"
                     />
 
                     
-                    <div className="flex text-[#59BC89] font-bold justify-center items-center my-3 align-middle">Welcome back {companyName}!</div>
+                    <div className="flex text-[#59BC89] font-bold justify-center items-center my-3 align-middle">Welcome back companyName!</div>
                     
                     <div className="my-3"></div>
 
@@ -88,7 +90,8 @@ export default function SponsorDashboard() {
                         <div className="text-[#DBDBF1] font-bold my-2">Sponsor Dashboard</div>
                         <Image
                             className="object-cover h-[40vh] w-full rounded-xl"
-                            src={companyPhotoURL}
+                            src = ""
+                            // src={companyPhotoURL}
                             width={2000}
                             height={2000}
                             alt="title"
@@ -96,14 +99,14 @@ export default function SponsorDashboard() {
                         
                     </div>
 
-                    <div className="text-[#DBDBF1] my-2">{companyMissionStatement}</div>
+                    <div className="text-[#DBDBF1] my-2">companyMissionStatement</div>
 
                     <div className="flex flex-wrap  align-middle justify-center">
                             <div className="bg-[#32324e] w-[70vh] h-[70vh] rounded-2xl p-8 m-3">
                                 <div className="text-[#DBDBF1] font-bold">Overview</div>
-                                <div className="text-[#DBDBF1] ">{companyDescription}</div>
-                                <div className="text-[#DBDBF1] ">{companyLocation}</div>
-                                <div className="text-[#DBDBF1] ">{employeeCount} employees</div>
+                                <div className="text-[#DBDBF1] ">companyDescription</div>
+                                <div className="text-[#DBDBF1] ">companyLocation</div>
+                                <div className="text-[#DBDBF1] ">employeeCount employees</div>
                             </div>
 
                             <div className="bg-[#32324e] w-[70vh] h-[70vh] rounded-2xl p-8 m-3">
@@ -121,24 +124,24 @@ export default function SponsorDashboard() {
 
                             <div className="bg-[#32324e] w-[70vh] h-[70vh] rounded-2xl p-8 m-3">
                                 <div className="text-[#DBDBF1] font-bold">Contact Information</div>
-                                    {companyContacts.map( (index) => (
+                                    {/* {companyContacts.map( (index) => (
                                         
                                         <div className="hover:text-[#59BC89] text-[#DBDBF1] inline-flex h-10 w-full items-center text-sm transition-colors"></div>
                                         
 
                                     ))
-                                    }
+                                    } */}
                             </div>
 
                             <div className="bg-[#32324e] w-[70vh] h-[70vh] rounded-2xl p-8 m-3">
                                 <div className="text-[#DBDBF1] font-bold">Company Sites</div>
-                                    {companyContacts.map( (index) => (
+                                    {/* {companyContacts.map( (index) => (
                                         
                                         <div className="hover:text-[#59BC89] text-[#DBDBF1] inline-flex h-10 w-full items-center text-sm transition-colors"></div>
                                         
 
                                     ))
-                                    }
+                                    } */}
                             </div>
 
                         </div> 

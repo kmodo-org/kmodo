@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+// import Link from "next/link";
 import Image from "next/image";
 import { Input } from "src/components/ui/input";
 import { api } from "~/trpc/react";
@@ -32,7 +32,7 @@ const HackathonSearch: React.FC = () => {
 
         keywords.forEach((keyword) => {
           if (
-            event.name.toLowerCase().includes(keyword) ||
+            event.name.toLowerCase().includes(keyword) ??
             event.description?.toLowerCase().includes(keyword)
           ) {
             hasKeyword = true;
@@ -93,11 +93,11 @@ const HackathonSearch: React.FC = () => {
               <Events
                 key={index}
                 title={event.name}
-                desc={event.description || ""}
+                desc={event.description ?? ""}
                 date={event.date}
                 starttime={event.starttime}
                 endtime={event.endtime}
-                school={event.school || "Unknown School"}
+                school={event.school ?? "Unknown School"}
                 location={event.location}
               />
             )
