@@ -17,9 +17,9 @@ export default async function FindTeam() {
       />
 
       <div className="flex-1 p-8">
-        <h1 className="text-3xl font-bold mb-6">Ranked</h1>
+        <h1 className="text-3xl font-bold mb-6">Team Finder</h1>
         <p className="text-gray-400 text-lg">
-          Ranked hackathons are a great way to showcase your skills and compete with others!
+          Connect with other hackers to make your own teams!
         </p>
       </div>
     </div>

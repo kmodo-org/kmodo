@@ -13,7 +13,7 @@ import { Card } from "./ui/card";
 export function ProjectsCard() {
   return (
     <Card>
-    <div className="bg-white/5 rounded-xl p-6 border border-white/5">
+    <div className="bg-white/5 rounded-xl p-6">
       <h2 className="text-xl font-semibold  text-[#a72828]">Projects</h2>
 
       <Carousel className="w-full">

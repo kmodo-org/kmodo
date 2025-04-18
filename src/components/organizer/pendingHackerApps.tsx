@@ -7,6 +7,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { format } from 'date-fns';
+import { StatusBadge } from '../icon';
 
 export function PendingHackerApps() {
   const { data: applications, isLoading, refetch } = api.hacker.getAllHackathonApplications.useQuery();
@@ -55,7 +56,7 @@ export function PendingHackerApps() {
   if (!applications || applications.length === 0) {
     return (
       <>
-        <div className="rounded-xl bg-white/5 p-6 ring-1 ring-white/10">
+        <div className="rounded-xl bg-white/5 p-6 ring-white/10">
           <h2 className="text-xl font-semibold mb-4">Pending Hacker Applications</h2>
           <p className="opacity-70 text-sm">
             No hackathon applications found.
@@ -72,14 +73,14 @@ export function PendingHackerApps() {
 
   return (
     <>
-      <div className="rounded-xl bg-white/5 p-6 ring-1 ring-white/10">
-        <h2 className="text-xl font-semibold mb-4">Hackathon Applications</h2>
+      <div className="rounded-xl bg-white/5 px-6 pt-6 pb-6 space-y-4">
+        <h2 className="text-xl font-semibold text-[#a72828]">Hackathon Applications</h2>
         
         {/* Pending Applications */}
-        <div className="mb-6">
-          <h3 className="text-lg font-medium mb-2">Pending Applications ({pendingApplications.length})</h3>
+        <div>
+          <h3 className="flex items-center gap-2 text-lg font-medium mb-1 text-gray-400"> <StatusBadge status="pending" /> Pending Applications ({pendingApplications.length})</h3>
           {pendingApplications.length === 0 ? (
-            <p className="opacity-70 text-sm">No pending applications</p>
+            <p className="opacity-70 text-sm text-gray-400">No pending applications</p>
           ) : (
             <ScrollArea className="h-[300px] rounded-md p-4">
               <div className="space-y-4">
@@ -99,13 +100,13 @@ export function PendingHackerApps() {
         </div>
         
         {/* Accepted Applications */}
-        <div className="mb-6">
-          <h3 className="text-lg font-medium mb-2">Accepted Applications ({acceptedApplications.length})</h3>
+        <div className="mb-1">
+          <h3 className="flex items-center gap-2 text-lg font-medium mb-1 text-gray-400"> <StatusBadge status="accepted" /> Accepted Applications ({acceptedApplications.length})</h3>
           {acceptedApplications.length === 0 ? (
-            <p className="opacity-70 text-sm">No accepted applications</p>
+            <p className="opacity-70 text-sm text-gray-400">No accepted applications</p>
           ) : (
-            <ScrollArea className="h-[300px] rounded-md p-4">
-              <div className="space-y-4">
+            <ScrollArea className="h-[300px] rounded-md px-4 py-4">
+              <div className="space-y-2">
                 {acceptedApplications.map((app) => (
                   <ApplicationCard 
                     key={app.id} 
@@ -124,10 +125,10 @@ export function PendingHackerApps() {
         </div>
         
         {/* Rejected Applications */}
-        <div>
-          <h3 className="text-lg font-medium mb-2">Rejected Applications ({rejectedApplications.length})</h3>
+        <div className="mb-0">
+          <h3 className="flex items-center gap-2 text-lg font-medium mb-1 text-gray-400"> <StatusBadge status="rejected" /> Rejected Applications ({rejectedApplications.length})</h3>
           {rejectedApplications.length === 0 ? (
-            <p className="opacity-70 text-sm">No rejected applications</p>
+            <p className="opacity-70 text-sm text-gray-400">No rejected applications</p>
           ) : (
             <ScrollArea className="h-[300px] rounded-md p-4">
               <div className="space-y-4">
