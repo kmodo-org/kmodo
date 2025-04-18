@@ -49,7 +49,6 @@ export default function SponsorDashboard() {
 
     return (
         <div className="flex min-h-screen flex-col bg-[#1A1B2E]">
-            <Navbar />
             <main className="flex flex-grow flex-row">
 
                 <SponsorSideBar

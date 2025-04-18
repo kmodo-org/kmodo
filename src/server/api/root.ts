@@ -5,6 +5,7 @@ import { assetRouter } from "./routers/assets";
 import { adminRouter } from "./routers/admin";
 import { organizerRouter } from "./routers/organizer";
 import { supportRouter } from "./routers/support";
+import { sponsorRouter } from "./routers/sponsor";
 
 /**
  * This is the primary router for your server.
@@ -18,6 +19,7 @@ export const appRouter = createTRPCRouter({
   asset: assetRouter,
   admin: adminRouter,
   support: supportRouter,
+  sponsor:   sponsorRouter,
 });
 
 // export type definition of API
