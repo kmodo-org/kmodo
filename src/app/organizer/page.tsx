@@ -48,10 +48,11 @@ export default async function OrganizerDashboard() {
                 />
               </div>
               <div className="lg:col-span-3">
-                <div className="grid gap-6 lg:grid-cols-2">
+                <div className="grid gap-6 lg:grid-cols-2 pb-14">
                   <AttendeesCard />
                   <ProjectsCard />
                 </div>
+                <PendingHackerApps />
               </div>
             </div>
           </div>
