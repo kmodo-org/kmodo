@@ -55,7 +55,7 @@ const HackathonSearch: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="bg-destructive w-3/4 p-10  rounded-xl shadow-black transition-transform">
+      <div className=" w-3/4 p-10  rounded-xl shadow-black transition-transform">
         <div className="flex flex-row space-x-5 w-full justify-center place-items-center">
           <Input
             className="z-10 rounded-lg h-11 w-1/2 sm:w-1/2 md:w-1/2 bg-white text-[#59BC89] file:text-base md:text-base text-base font-['Open Sans']"
@@ -79,7 +79,7 @@ const HackathonSearch: React.FC = () => {
           </button>
 
           <Button
-            className="p-1 z-10 text-white font-['Open Sans'] bg-[#59BC89] hover:bg-[#59BC89]/70 transition w-fit h-fit rounded-lg text-base"
+            className="p-3 z-10 text-white font-['Open Sans'] bg-[#59BC89] hover:bg-[#59BC89]/70 transition w-fit h-fit rounded-lg text-base"
             onClick={clear}
           >
             CLEAR
