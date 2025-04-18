@@ -204,7 +204,7 @@ export default function ResourcesPage() {
           <div className="my-44"></div>
         </div>
       </main>
-      <Footer />
+      < Footer />
     </div>
   );
 }

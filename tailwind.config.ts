@@ -23,6 +23,7 @@ export default {
 			Mint: "#59BC89",
 			SpaceCadet: "#32324E",
 			OceanBlue: "#415A8E",
+			DeepBlue: "#162f51",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
