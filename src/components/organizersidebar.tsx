@@ -46,7 +46,7 @@ export function OrganizerSidebar({ userName, userImage, isOrganizer }: SidebarPr
           <div className="h-full bg-[#1A1B2E] p-6 flex flex-col">
             <div className="mb-8 flex justify-center">
               <Link href="/">
-                <Image src="/images/KmodoRed.svg" width={160} height={160} alt="kmodo" className="w-auto h-24" />
+                <Image src="/images/KmodoRed.svg" width={150} height={150} alt="kmodo" className="w-auto h-24" />
               </Link>
             </div>
             
