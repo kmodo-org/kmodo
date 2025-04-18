@@ -71,7 +71,7 @@ export function Sidebar({ userName, userImage, isOrganizer }: SidebarProps) {
                     }`}
                   >
                     <LayoutDashboard className="w-5 h-5 mr-3" />
-                    {isOrganizer ? "ORGANIZER DASHBOARD" : "DASHBOARD"}
+                    DASHBOARD
                   </Link>
                 </li>
                 <li>
@@ -116,16 +116,16 @@ export function Sidebar({ userName, userImage, isOrganizer }: SidebarProps) {
               </ul>
             </nav>
 
-            {/* Footer Buttons */}
             <div className="space-y-3 pt-4">
-              <Link href="/organizer/application">
+              <Link href={isOrganizer ? "/organizer" : "/organizer/application"}>
                 <Button
                   size="sm"
                   className="w-full text-[#59BC89] bg-[#59BC89]/10 hover:bg-[#59BC89]/20 border border-[#59BC89]/30 font-medium"
                 >
-                  Apply to be an Organizer
+                  {isOrganizer ? "Organizer Dashboard" : "Apply to be an Organizer"}
                 </Button>
               </Link>
+
               <SignOutButton />
             </div>
           </div>

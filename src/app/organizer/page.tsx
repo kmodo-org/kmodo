@@ -1,91 +1,57 @@
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import { redirect } from "next/navigation";
+
+import { CountdownBanner } from "~/components/countdown";
+import { OrganizerEventOverview } from "~/components/OrganizerEventOverview";
+import { AttendeesCard } from "~/components/attendees";
+import { ProjectsCard } from "~/components/projects";
+
 import { MobileHeader } from "../../components/mobile-header";
-import { EventOverview } from "../../components/event-overview";
-import { EventDetails } from "../../components/event-details";
-import { ProgressSection } from "../../components/progress-section";
-import { NoHackathonView } from "../../components/no-hackathon-view";
 import { OrganizerSidebar } from "~/components/organizersidebar";
 import { OrganizerDashboardClient } from "~/components/organizer/OrganizerDashboardClient";
 
-
-interface PageProps {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}
-
-export default async function OrganizerDashboard({ searchParams }: PageProps) {
-  const params = await searchParams;
+export default async function OrganizerDashboard() {
+  /* ----- gate checks ----- */
   const session = await auth();
+  if (!session) redirect("/");
 
-  if (session == null) { // if the user is not logged in, redirect to the landing page
-    redirect("/");
-  }
+  const isOrganizer = await api.organizer.isOrganizer();
+  if (!isOrganizer) redirect("/");
 
-  // Note: organizer status will be checked on the client-side
-  // and redirect to application page if needed
-    
-  if (session?.user) {
-    void api.post.getLatest.prefetch();
-  }
+  void api.post.getLatest.prefetch();
 
-  // Temp hackathon check
-  const hasHackathon = params.test === "with-hackathon";
-  
-  const currentEvent = hasHackathon ? {
-    name: "KnightHacks VIII",
-    date: "Oct 25-27, 2025",
-    location: "UCF",
-    participants: "500+",
-    description: "Join us for a weekend at KnightHacks VIII", // all of ts will be deleted after we incorporate the real data from the db
-    schedule: [
-      { time: "5:00 PM", event: "Check-in Opens" },
-      { time: "6:30 PM", event: "Opening Ceremony" },
-      { time: "7:30 PM", event: "Team Formation" },
-      { time: "8:00 PM", event: "Hacking Begins" },
-    ],
-    timeUntilStart: "Starting in 2 weeks", // will be tracker
-    participantGrowth: "+50 this week", // will be tracker
-    venueStatus: "Venue ready" // will be tracker
-  } : null;
-
+  /* ----- render ----- */
   return (
     <HydrateClient>
-      <OrganizerDashboardClient>
+      <OrganizerDashboardClient isOrganizer={isOrganizer}>
         <div className="flex min-h-screen bg-[#1A1B2E] text-white">
-          {session ? (
-            <OrganizerSidebar userName={session.user.name ?? ""}
-             userImage={session.user.image ?? null} />
-          ) : null}
-          
+          <OrganizerSidebar
+            userName={session.user.name ?? ""}
+            userImage={session.user.image ?? null}
+            isOrganizer={isOrganizer}
+          />
           <div className="flex-1 lg:pl-0 overflow-y-auto lg:overflow-hidden">
             <div className="lg:hidden">
               <MobileHeader />
             </div>
-          
-            <div className="p-6 lg:p-8">
-              {currentEvent ? (
-                <>
-                  <EventOverview
-                    date={currentEvent.date}
-                    participants={currentEvent.participants}
-                    location={currentEvent.location}
-                    timeUntilStart={currentEvent.timeUntilStart}
-                    participantGrowth={currentEvent.participantGrowth}
-                    venueStatus={currentEvent.venueStatus}
-                  />
-
-                  <EventDetails
-                    name={currentEvent.name}
-                    description={currentEvent.description}
-                    schedule={currentEvent.schedule}
-                  />
-
-                  <ProgressSection />
-                </>
-              ) : (
-                <NoHackathonView />
-              )}
+            <div className="grid gap-6 p-6 lg:p-10 grid-cols-1 lg:grid-cols-3">
+              <div className="lg:col-span-3 pb-10">
+                <CountdownBanner start="2025-05-23T10:00:00-04:00" />
+              </div>
+              <div className="lg:col-span-3">
+                <OrganizerEventOverview
+                  date="May 23 – 25 2025"
+                  times="10 AM – 9 PM"
+                  location="UCF Student Union"
+                />
+              </div>
+              <div className="lg:col-span-3">
+                <div className="grid gap-6 lg:grid-cols-2">
+                  <AttendeesCard />
+                  <ProjectsCard />
+                </div>
+              </div>
             </div>
           </div>
         </div>

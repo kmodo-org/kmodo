@@ -8,7 +8,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "~/components/ui/resizable";
-import { SignOutButton } from "./sign-out-button";
+import { RedSignoutButton } from "./redsignoutbutton";
 import { 
   LayoutDashboard,  
   Users, 
@@ -18,11 +18,12 @@ import {
 } from "lucide-react";
 
 interface SidebarProps {
-  userName: string;
-  userImage: string | null;
-}
+    userName: string;
+    userImage: string | null;
+    isOrganizer: boolean;  
+  }
 
-export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
+export function OrganizerSidebar({ userName, userImage, isOrganizer }: SidebarProps) {
   const pathname = usePathname();
 
   const isActive = (path: string) => {
@@ -45,12 +46,12 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
           <div className="h-full bg-[#1A1B2E] p-6 flex flex-col">
             <div className="mb-8 flex justify-center">
               <Link href="/">
-                <Image src="/images/kmodoL.svg" width={160} height={160} alt="kmodo" className="w-auto h-24" />
+                <Image src="/images/KmodoRed.svg" width={150} height={150} alt="kmodo" className="w-auto h-24" />
               </Link>
             </div>
             
             <div className="flex flex-col items-center mb-8">
-              <div className="w-20 h-20 rounded-full overflow-hidden mb-4 ring-2 ring-[#59BC89]/20">
+              <div className="w-20 h-20 rounded-full overflow-hidden mb-4 ring-2 ring-[#a72828]/20">
                 <Image
                   src={userImage ?? "/default-avatar.png"}
                   width={96}
@@ -60,7 +61,7 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
                 />
               </div>
               <div className="text-center">
-                <p className="text-[#59BC89] font-bold text-lg">{userName}</p>
+                <p className="text-[#a72828] font-bold text-lg">{userName}</p>
               </div>
             </div>
 
@@ -71,8 +72,8 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
                     href="/organizer" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
                       isActive('/organizer') 
-                        ? 'text-[#59BC89] bg-white/5' 
-                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
+                        ? 'text-[#a72828] bg-white/5' 
+                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#a72828]'
                     }`}
                   >
                     <LayoutDashboard className="w-5 h-5 mr-3" />
@@ -81,11 +82,11 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
                 </li>
                 <li>
                   <Link 
-                    href="/eventpage" 
+                    href="/organizer/event" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/eventpage') 
-                        ? 'text-[#59BC89] bg-white/5' 
-                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
+                      isActive('/organizer/event') 
+                        ? 'text-[#a72828] bg-white/5' 
+                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#a72828]'
                     }`}
                   >
                     <Calendar className="w-5 h-5 mr-3" />
@@ -94,11 +95,11 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
                 </li>
                 <li>
                   <Link 
-                    href="/members" 
+                    href="/organizer/members" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/members') 
-                        ? 'text-[#59BC89] bg-white/5' 
-                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
+                      isActive('/organizer/member') 
+                        ? 'text-[#a72828] bg-white/5' 
+                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#a72828]'
                     }`}
                   >
                     <Users className="w-5 h-5 mr-3" />
@@ -107,11 +108,11 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
                 </li>
                 <li>
                   <Link 
-                    href="/sponsors" 
+                    href="/organizer/sponsors" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/sponsors') 
-                        ? 'text-[#59BC89] bg-white/5' 
-                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
+                      isActive('/organizer/sponsors') 
+                        ? 'text-[#a72828] bg-white/5' 
+                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#a72828]'
                     }`}
                   >
                     <Gem className="w-5 h-5 mr-3" />
@@ -120,11 +121,11 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
                 </li>
                 <li>
                   <Link 
-                    href="/settings" 
+                    href="/organizer/settings" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/settings') 
-                        ? 'text-[#59BC89] bg-white/5' 
-                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
+                      isActive('/organizer/settings') 
+                        ? 'text-[#a72828] bg-white/5' 
+                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#a72828]'
                     }`}
                   >
                     <Settings className="w-5 h-5 mr-3" />
@@ -134,16 +135,16 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
               </ul>
             </nav>
             <div className="mt-4 mb-4">
-              <Link href="/organizer/application">
+              <Link href="/hacker">
                 <Button
                   size="sm"
-                  className="w-full text-[#59BC89] bg-[#59BC89]/10 hover:bg-[#59BC89]/20 border border-[#59BC89]/30 font-medium"
+                  className="w-full text-[#a72828] bg-[#a72828]/10 hover:bg-[#a72828]/20 border border-[#a72828]/30 font-medium"
                 >
-                  Apply to be an Organizer
+                  Back to Hacker Dashboard
                 </Button>
               </Link>
             </div>
-            <SignOutButton />
+            <RedSignoutButton />
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
