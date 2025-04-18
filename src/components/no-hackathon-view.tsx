@@ -2,9 +2,7 @@ import { Button } from "~/components/ui/button";
 import { Calendar, Search, Users, Trophy, Target, Award, Star, ChevronRight, FileText } from "lucide-react";
 import Link from "next/link";
 import { db } from "~/server/db";
-import { users, events } from "~/server/db/schema";
-import { count, eq, desc, sql } from "drizzle-orm";
-import Image from "next/image";
+import { events } from "~/server/db/schema";
 
 async function getStats(userId?: string) {
   // Get total hackathons participated (placeholder for now)
