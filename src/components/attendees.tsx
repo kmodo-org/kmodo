@@ -16,7 +16,7 @@ export function AttendeesCard() { // temorary hardcoded values
 
   return (
     <Card>
-      <h2 className="text-xl font-semibold mb-4">Attendees</h2>
+      <h2 className="text-xl font-semibold mb-4 text-brand-red">Attendees</h2>
       <InfoRow label="Registered" value={totalRegistered} />
       <InfoRow label="Accepted"   value={totalAccepted} />
     </Card>
