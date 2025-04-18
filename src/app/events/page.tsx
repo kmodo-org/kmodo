@@ -1,13 +1,16 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "~/components/ui/card";
-import { Input } from "~/components/ui/input";
+// import { Input } from "~/components/ui/input";
 import { HydrateClient } from "~/trpc/server";
 import "~/styles/globals.css";
-import Events from "~/components/events";
+// import {Events} from "~/components/events";
 import { Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/ui/footer";
 import { auth } from "~/server/auth";
 import { redirect } from "next/navigation";
 import { allowedUserIds } from "~/consts/goat";
+
+import { HackathonSearch } from "~/components/hackathonsearch";
+
 
 export default async function EventsPage() {
 
@@ -36,17 +39,14 @@ export default async function EventsPage() {
                   HACKATHONS
                 </CardTitle>
                 <CardDescription>
-                  <p className="text-foreground text-lg font-bold">
+                  <p className="text-foreground text-lg font-bold text-white">
                     FIND HACKATHONS ACROSS THE WORLD!
                   </p>
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col items-center gap-4">
-                <Input
-                  placeholder="Search hackathons..."
-                  className="w-full max-w-2xl mx-auto rounded-full px-6 py-5 bg-destructive text-black"
-                />
-                <Events />
+                  <HackathonSearch/>
+
               </CardContent>
             </div>
           </Card>
