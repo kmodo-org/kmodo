@@ -81,9 +81,9 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
                 </li>
                 <li>
                   <Link 
-                    href="/eventpage" 
+                    href="/organizer/event" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/eventpage') 
+                      isActive('/organizer/event') 
                         ? 'text-[#59BC89] bg-white/5' 
                         : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
                     }`}
@@ -94,9 +94,9 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
                 </li>
                 <li>
                   <Link 
-                    href="/members" 
+                    href="/organizer/members" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/members') 
+                      isActive('/organizer/member') 
                         ? 'text-[#59BC89] bg-white/5' 
                         : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
                     }`}
@@ -107,9 +107,9 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
                 </li>
                 <li>
                   <Link 
-                    href="/sponsors" 
+                    href="/organizer/sponsors" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/sponsors') 
+                      isActive('/organizer/sponsors') 
                         ? 'text-[#59BC89] bg-white/5' 
                         : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
                     }`}
@@ -120,9 +120,9 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
                 </li>
                 <li>
                   <Link 
-                    href="/settings" 
+                    href="/organizer/settings" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/settings') 
+                      isActive('/organizer/settings') 
                         ? 'text-[#59BC89] bg-white/5' 
                         : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
                     }`}
@@ -134,12 +134,12 @@ export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
               </ul>
             </nav>
             <div className="mt-4 mb-4">
-              <Link href="/organizer/application">
+              <Link href="/hacker">
                 <Button
                   size="sm"
-                  className="w-full text-[#59BC89] bg-[#59BC89]/10 hover:bg-[#59BC89]/20 border border-[#59BC89]/30 font-medium"
+                  className="w-full text-[#791c1c] bg-[#59BC89]/10 hover:bg-[#59BC89]/20 border border-[#59BC89]/30 font-medium"
                 >
-                  Apply to be an Organizer
+                  Back to Hacker Dashboard
                 </Button>
               </Link>
             </div>
