@@ -1,15 +1,15 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle,} from "~/components/ui/card";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle, } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import CompanyCards from "~/components/companies";
-import {Footer} from "~/components/ui/footer";
+import { Footer } from "~/components/ui/footer";
 import { Navbar } from "~/components/Navbar";
 
-export default function CompanyCardsPage() {
+export default function sponsors() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-start text-black">
       <Navbar />
-      <Card className=" w-full max-w-screen overflow-hidden rounded-lg drop-shadow-2xl">
-        <div className="rounded-lg bg-[#1a1b2e] p-6 m-8">
+      <Card className="max-w-screen w-full overflow-hidden rounded-lg drop-shadow-2xl">
+        <div className="m-8 rounded-lg bg-[#1a1b2e] p-6">
           <CardHeader className="items-center text-center">
             <CardTitle className="mb-2 text-5xl font-bold tracking-tight text-accent">
               SPONSORS
@@ -26,14 +26,11 @@ export default function CompanyCardsPage() {
               placeholder="Search companies..."
               className="mx-auto w-full max-w-2xl rounded-full bg-destructive px-6 py-5 text-black"
             />
-             <CompanyCards />
+            <CompanyCards />
           </CardContent>
         </div>
       </Card>
-      
-      
-        <Footer />
-      
+      <Footer />
     </div>
   );
 }
