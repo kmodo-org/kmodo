@@ -40,7 +40,7 @@ export function Sidebar({ userName, userImage, isOrganizer }: SidebarProps) {
           <div className="flex flex-col justify-between h-full bg-[#1A1B2E] p-6">
             <div className="mb-8 flex justify-center">
               <Link href="/">
-                <Image src="/images/kmodoL.svg" width={160} height={160} alt="kmodo" className="w-auto h-24" />
+                            <Image className="object-contain" src="/images/kmodoL.svg" alt="My Icon" width={150} height={150} />
               </Link>
             </div>
 

@@ -68,6 +68,12 @@ async function getStats() {
     const formattedEventCount = `${eventsCount}+`;
     const formattedCompanyCount = `${companiesCount}+`;
 
+const featureBoxList: FeatureBoxItem[] = [
+    {title: "Easy Use", desc: "One site, one page to help everyone spend less time finding things out and spend more time hacking.", image: "/images/globe.svg"},
+    {title: "Organization", desc: "We help you organize your event dashboard to help personalize your hackathons.", image: "/images/users.svg"},
+    {title: "Ranked", desc: "The ranked system helps bring a new competitive scene to hackathon events.", image: "/images/award.svg"},
+    {title: "Free-Use", desc: "Free use allows our users big or small, to plan, attend, or sponsor hackathons!", image: "/images/circle-check.svg"}
+]
 
 const featureBoxList: FeatureBoxItem[] = [
     {title: "Easy Use", desc: "One site, one page to help everyone spend less time finding things out and spend more time hacking.", image: "/images/globe.svg"},
@@ -76,13 +82,10 @@ const featureBoxList: FeatureBoxItem[] = [
     {title: "Free-Use", desc: "Free use allows our users big or small, to plan, attend, or sponsor hackathons!", image: "/images/circle-check.svg"}
 ]
 
-
 const carouselFeatureList: CarouselFeatureItem[] = [
     {title: "EVENT ORGANIZATION TOOLKIT", desc: "Our tool empowers organizers to easily set up and manage hackathon events with intuitive features for creating event pages, setting schedules, and managing participant registrations. With real-time updates and customizable options, organizers can focus on fostering innovation while we handle the logistics.", image: "/images/eventorganizationtoolkit.png"},
     {title: "HACKER FINDER", desc: "This feature allows hackers to easily discover local hackathons and tech events based on their location and interests. Users can find nearby competitions, registration deadlines, and event details to stay engaged in the hackathon community.", image: "/images/hackerfinder.JPG"}
 ]
-
-
 
 export default async function AboutUs() {  
     const session = await auth();
@@ -106,6 +109,15 @@ export default async function AboutUs() {
                             Transforming the future, one hackathon at a time. Join our platform and experience a new way to collaborate, innovate, and compete.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                            <Button size="lg" className="bg-[#59BC89] text-white hover:bg-[#4ca975] text-lg px-8 py-6">
+                                Join Now
+                            </Button>
+                            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:bg-opacity-10 text-lg px-8 py-6">
+                                Learn More
+                            </Button>
+                        </div>
+                    </div>
+                <div className="relative top-10 lg:top-0 flex justify-center items-center">
                         <Link href="/hacker" className="w-full sm:w-auto">
                             <Button size="lg" className="bg-[#59BC89] text-white hover:bg-[#4ca975] text-lg px-8 py-6">
                                 Join Now
