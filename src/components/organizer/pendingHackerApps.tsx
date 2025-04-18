@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { api } from "~/trpc/react";
 import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { format } from 'date-fns';
 
@@ -14,11 +14,23 @@ export function PendingHackerApps() {
   
   const updateStatusMutation = api.hacker.updateHackathonApplicationStatus.useMutation({
     onSuccess: async () => {
-      toast.success("Application status updated successfully");
+      toast.success("Application status updated successfully", {
+        autoClose: 3000,
+        closeButton: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       await refetch();
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to update application status");
+      toast.error(error.message || "Failed to update application status", {
+        autoClose: 3000,
+        closeButton: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     },
     onSettled: () => {
       setPendingActions({});
@@ -43,7 +55,6 @@ export function PendingHackerApps() {
   if (!applications || applications.length === 0) {
     return (
       <>
-        <ToastContainer position="top-right" autoClose={3000} />
         <div className="rounded-xl bg-white/5 p-6 ring-1 ring-white/10">
           <h2 className="text-xl font-semibold mb-4">Pending Hacker Applications</h2>
           <p className="opacity-70 text-sm">
@@ -61,7 +72,6 @@ export function PendingHackerApps() {
 
   return (
     <>
-      <ToastContainer position="top-right" autoClose={3000} />
       <div className="rounded-xl bg-white/5 p-6 ring-1 ring-white/10">
         <h2 className="text-xl font-semibold mb-4">Hackathon Applications</h2>
         

@@ -110,3 +110,64 @@
     @apply bg-background text-foreground;
   }
 }
+
+body .Toastify__toast {
+  border-radius: 8px;
+  font-family: 'Geist Sans', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+body .Toastify__toast--success {
+  background: #2D2647;
+  color: #59BC89;
+}
+
+body .Toastify__toast--error {
+  background: #2D2647;
+  color: #59BC89;
+}
+
+body .Toastify__toast--info {
+  background: #2D2647;
+  color: #59BC89;
+}
+
+body .Toastify__toast--warning {
+  background: #2D2647;
+  color: #59BC89;
+}
+
+body .Toastify__toast-body {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+body .Toastify__progress-bar {
+  height: 3px;
+  background: #59BC89;
+}
+
+body .Toastify__close-button {
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+body .Toastify__close-button:hover {
+  opacity: 1;
+}
+
+body .Toastify__toast--success .Toastify__toast-icon {
+  color: #59BC89;
+}
+
+body .Toastify__toast--error .Toastify__toast-icon {
+  color: #59BC89;
+}
+
+body .Toastify__toast--info .Toastify__toast-icon {
+  color: #59BC89;
+}
+
+body .Toastify__toast--warning .Toastify__toast-icon {
+  color: #59BC89;
+}
