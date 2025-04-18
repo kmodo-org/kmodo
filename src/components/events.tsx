@@ -4,18 +4,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { Button } from "./ui/button";
 import { api } from "~/trpc/react";
 import Image from "next/image";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Events() {
     const { data: events, isLoading: eventsLoading } = api.hacker.getEvents.useQuery();
     const { data: hackerProfile } = api.hacker.getHackerProfile.useQuery();
-    const { data: applications = [] } = api.hacker.getHackathonApplications.useQuery();
+    const { data: applications = [], refetch: refetchApplications } = api.hacker.getHackathonApplications.useQuery();
+    
+    // Track pending state for each event ID
+    const [pendingEventIds, setPendingEventIds] = useState<number[]>([]);
     
     const applyMutation = api.hacker.applyToHackathon.useMutation({
-        onSuccess: () => {
+        onSuccess: async () => {
             toast.success("Successfully applied to hackathon!");
+            // Refetch applications to update the UI
+            await refetchApplications();
         },
         onError: (error) => {
             toast.error(error.message || "Failed to apply. Please try again.");
@@ -29,9 +34,15 @@ export default function Events() {
                 return;
             }
 
+            // Add this event ID to pending list
+            setPendingEventIds(prev => [...prev, eventId]);
+            
             await applyMutation.mutateAsync({ eventId });
         } catch (error) {
             console.error('Failed to register:', error);
+        } finally {
+            // Remove this event ID from pending list
+            setPendingEventIds(prev => prev.filter(id => id !== eventId));
         }
     }, [hackerProfile, applyMutation]);
 
@@ -55,6 +66,9 @@ export default function Events() {
                 
                 // Check if user has already applied to this specific event
                 const hasApplied = applications.some(app => app.event_id === event.id);
+                
+                // Check if this specific event is pending
+                const isPending = pendingEventIds.includes(event.id);
 
                 return (
                     <Card key={event.id} className="bg-destructive text-destructive-foreground">
@@ -106,10 +120,10 @@ export default function Events() {
                                     <div className="flex justify-center w-full">
                                         <Button 
                                             onClick={() => handleHackathonRegistration(event.id)}
-                                            disabled={hasApplied ?? applyMutation.isPending}
+                                            disabled={hasApplied ?? isPending}
                                             className="mt-11 bg-accent text-destructive-foreground hover:bg-destructive-foreground hover:text-accent"
                                         >
-                                            {hasApplied ? 'Applied' : applyMutation.isPending ? 'Applying...' : 'Register'}
+                                            {hasApplied ? 'Applied' : isPending ? 'Applying...' : 'Register'}
                                         </Button>
                                     </div>
                                 </div>
