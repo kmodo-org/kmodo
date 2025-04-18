@@ -69,9 +69,14 @@ export function InputForm() {
   return (
     <div className="p-6 max-w-lg mx-auto bg-white shadow-md rounded-lg">
       <h1 className="text-2xl font-bold mb-4 text-[#59BC89]">Hacker Application Form</h1>
-      <p className="text-sm text-gray-500">
-        <i>Fill out this form to begin hacking with Kmodo!</i>
-      </p>
+      <div className="mb-6">
+        <p className="text-base text-gray-700 mb-2">
+          <i>Fill out this form to begin hacking with Kmodo!</i>
+        </p>
+        <p className="text-sm text-gray-600">
+          Please complete all required fields. Fields marked as optional can be left blank.
+        </p>
+      </div>
   
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
@@ -98,17 +103,17 @@ export function InputForm() {
               name={name as keyof z.infer<typeof hackerFormSchema>}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{label}</FormLabel>
+                  <FormLabel className="font-medium text-gray-800">{label}{!optional && <span className="text-red-500 ml-1">*</span>}</FormLabel>
                   <FormControl>
                     <Input
                       type={type}
                       placeholder={placeholder}
                       {...field}
                       value={typeof field.value === "boolean" ? "" : field.value}
-                      className="border-2 rounded-md p-2 shadow-xl"
+                      className="border-2 rounded-md p-2 shadow-md text-gray-700"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
@@ -122,21 +127,26 @@ export function InputForm() {
                 <FormControl>
                   <input
                     type="checkbox"
-                    checked={field.value === 1} // Convert integer to boolean
-                    onChange={(e) => field.onChange(e.target.checked ? 1 : 0)} // Convert boolean to integer
+                    checked={field.value === 1}
+                    onChange={(e) => field.onChange(e.target.checked ? 1 : 0)}
                     className="w-4 h-4 border-gray-300 rounded"
                   />
                 </FormControl>
-                <FormLabel className="text-sm m-0 translate-y-[-4px]">
+                <FormLabel className="text-sm m-0 translate-y-[-4px] text-gray-700">
                   I agree to the{" "}
                   <a href="/tos" className="text-[#59BC89] underline">
                     Terms of Service
                   </a>
+                  <span className="text-red-500 ml-1">*</span>
                 </FormLabel>
-                <FormMessage />
+                <FormMessage className="text-red-500" />
               </FormItem>
             )}
           />
+
+          <div className="mt-6 text-sm text-gray-700">
+            <p>Fields marked with <span className="text-red-500">*</span> are required</p>
+          </div>
 
           <Button
             type="submit"

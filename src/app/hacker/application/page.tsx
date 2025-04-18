@@ -5,15 +5,7 @@ import { InputForm } from "../../../components/inputform";
 
 export default async function MemberApplicationPage() {
     const session = await auth();
-    const isHacker = await api.hacker.getHacker();
-    
-    if (session == null) { // if the user is not logged in, redirect to the landing page
-        redirect("/");
-      }
-
-    if (isHacker) { // if the user is already a hacker, redirect to the dashboard
-      return redirect("/hacker");
-    }
+   
 
     if (session?.user) {
       void api.post.getLatest.prefetch();
