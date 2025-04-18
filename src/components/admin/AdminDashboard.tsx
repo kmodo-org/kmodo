@@ -2,9 +2,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
-import { UserManagement } from "~/components/admin/userManagement";
-import { EventManagement } from "~/components/admin/eventManagement";
-import { OrganizerApplicationsManagement } from "~/components/admin/organizerApplicationsManagement";
+import { UserManagement } from "~/components/admin/UserManagement";
+import { EventManagement } from "~/components/admin/EventManagement";
+import { OrganizerApplicationsManagement } from "~/components/admin/OrganizerApplicationsManagement";
 import { SupportTicketManagement } from "~/components/admin/supportTicketManagement";
 import { Button } from "~/components/ui/button";
 

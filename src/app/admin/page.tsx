@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { allowedUserIds } from "~/consts/goat";
 import { Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/ui/footer";
-import { AdminDashboard } from "~/components/admin/adminDashboard";
+import { AdminDashboard } from "~/components/admin/AdminDashboard";
 
 export default async function AdminPage() {
   const session = await auth();
