@@ -14,16 +14,19 @@ import { HackathonSearch } from "~/components/hackathonsearch";
 
 export default async function EventsPage() {
 
-  // const session = await auth();
-  // const userId = session?.user?.id;
+  const session = await auth();
+  const userId = session?.user?.id;
 
-  // if (session == null) { // if the user is not logged in, redirect to the landing page
-  //     redirect("/");
-  //   }
+  if (session == null) { // if the user is not logged in, redirect to the landing page
+    redirect("/");
+  }
+
+  // if user is not an organizer redirect to the landing page
   
-  //   if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
-  //      redirect("/");
-  //   }
+  if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
+    redirect("/");
+  }
+
   return (
     <HydrateClient>
       <div className="flex flex-col min-h-screen">

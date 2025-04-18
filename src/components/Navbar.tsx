@@ -9,8 +9,7 @@ import { signIn, useSession } from "next-auth/react";
 
 const routes: { title: string; href: string }[] = [
   { title: "EVENTS", href: "/events" },
-  { title: "RESOURCES", href: "/resources" },
-  { title: "SPONSORS", href: "/sponsordashboard"}
+  { title: "RESOURCES", href: "/resources" }
 ];
 
 const Navbar: React.FC = () => {
@@ -50,7 +49,7 @@ const Navbar: React.FC = () => {
 
       <div className="hidden items-center gap-2 sm:flex cursor-pointer">
         {session?.user ? (
-          <Link href="/dashboard" className="w-full sm:w-auto">
+          <Link href="/hacker" className="w-full sm:w-auto">
             <Button
               size="lg"
               className="text-[#59BC89] lg:text-base md:text-sm sm:text-xs transition w-full bg-white hover:bg-destructive-foreground hover:text-accent"
