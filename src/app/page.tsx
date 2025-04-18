@@ -59,33 +59,7 @@ async function getStats() {
       eventsCount,
       companiesCount
     };
-  }
-
-  const { usersCount, eventsCount, companiesCount } = await getStats();
-    
-    // Format stats with a "+" symbol for display
-    const formattedUserCount = `${usersCount}+`;
-    const formattedEventCount = `${eventsCount}+`;
-    const formattedCompanyCount = `${companiesCount}+`;
-
-const featureBoxList: FeatureBoxItem[] = [
-    {title: "Easy Use", desc: "One site, one page to help everyone spend less time finding things out and spend more time hacking.", image: "/images/globe.svg"},
-    {title: "Organization", desc: "We help you organize your event dashboard to help personalize your hackathons.", image: "/images/users.svg"},
-    {title: "Ranked", desc: "The ranked system helps bring a new competitive scene to hackathon events.", image: "/images/award.svg"},
-    {title: "Free-Use", desc: "Free use allows our users big or small, to plan, attend, or sponsor hackathons!", image: "/images/circle-check.svg"}
-]
-
-const featureBoxList: FeatureBoxItem[] = [
-    {title: "Easy Use", desc: "One site, one page to help everyone spend less time finding things out and spend more time hacking.", image: "/images/globe.svg"},
-    {title: "Organization", desc: "We help you organize your event dashboard to help personalize your hackathons.", image: "/images/users.svg"},
-    {title: "Ranked", desc: "The ranked system helps bring a new competitive scene to hackathon events.", image: "/images/award.svg"},
-    {title: "Free-Use", desc: "Free use allows our users big or small, to plan, attend, or sponsor hackathons!", image: "/images/circle-check.svg"}
-]
-
-const carouselFeatureList: CarouselFeatureItem[] = [
-    {title: "EVENT ORGANIZATION TOOLKIT", desc: "Our tool empowers organizers to easily set up and manage hackathon events with intuitive features for creating event pages, setting schedules, and managing participant registrations. With real-time updates and customizable options, organizers can focus on fostering innovation while we handle the logistics.", image: "/images/eventorganizationtoolkit.png"},
-    {title: "HACKER FINDER", desc: "This feature allows hackers to easily discover local hackathons and tech events based on their location and interests. Users can find nearby competitions, registration deadlines, and event details to stay engaged in the hackathon community.", image: "/images/hackerfinder.JPG"}
-]
+}
 
 export default async function AboutUs() {  
     const session = await auth();
@@ -93,15 +67,32 @@ export default async function AboutUs() {
     if (session?.user) {
         void api.post.getLatest.prefetch();
     }
+    
+    const { usersCount, eventsCount, companiesCount } = await getStats();
+    
+    // Format stats with a "+" symbol for display
+    const formattedUserCount = `${usersCount}+`;
+    const formattedEventCount = `${eventsCount}+`;
+    const formattedCompanyCount = `${companiesCount}+`;
+
+    const featureBoxList: FeatureBoxItem[] = [
+        {title: "Easy Use", desc: "One site, one page to help everyone spend less time finding things out and spend more time hacking.", image: "/images/globe.svg"},
+        {title: "Organization", desc: "We help you organize your event dashboard to help personalize your hackathons.", image: "/images/users.svg"},
+        {title: "Ranked", desc: "The ranked system helps bring a new competitive scene to hackathon events.", image: "/images/award.svg"},
+        {title: "Free-Use", desc: "Free use allows our users big or small, to plan, attend, or sponsor hackathons!", image: "/images/circle-check.svg"}
+    ];
+
+    const carouselFeatureList: CarouselFeatureItem[] = [
+        {title: "EVENT ORGANIZATION TOOLKIT", desc: "Our tool empowers organizers to easily set up and manage hackathon events with intuitive features for creating event pages, setting schedules, and managing participant registrations. With real-time updates and customizable options, organizers can focus on fostering innovation while we handle the logistics.", image: "/images/eventorganizationtoolkit.png"},
+        {title: "HACKER FINDER", desc: "This feature allows hackers to easily discover local hackathons and tech events based on their location and interests. Users can find nearby competitions, registration deadlines, and event details to stay engaged in the hackathon community.", image: "/images/hackerfinder.JPG"}
+    ];
 
     return (
         <div className="flex flex-col min-h-screen bg-[#2D2647] text-white">
-
-            
             <Navbar />
             <section className="relative flex items-center justify-center h-auto">
                 <div className="container mx-auto px-4 z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                <div className="text-center lg:text-left lg:pr-12">
+                    <div className="text-center lg:text-left lg:pr-12">
                         <h1 className="text-[#59BC89] font-extrabold leading-tight text-xl md:text-6xl lg:text-8xl mb-6">
                             Hackathons<br />Done Different.
                         </h1>
@@ -109,19 +100,10 @@ export default async function AboutUs() {
                             Transforming the future, one hackathon at a time. Join our platform and experience a new way to collaborate, innovate, and compete.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <Button size="lg" className="bg-[#59BC89] text-white hover:bg-[#4ca975] text-lg px-8 py-6">
-                                Join Now
-                            </Button>
-                            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:bg-opacity-10 text-lg px-8 py-6">
-                                Learn More
-                            </Button>
-                        </div>
-                    </div>
-                <div className="relative top-10 lg:top-0 flex justify-center items-center">
-                        <Link href="/hacker" className="w-full sm:w-auto">
-                            <Button size="lg" className="bg-[#59BC89] text-white hover:bg-[#4ca975] text-lg px-8 py-6">
-                                Join Now
-                            </Button>
+                            <Link href="/hacker" className="w-full sm:w-auto">
+                                <Button size="lg" className="bg-[#59BC89] text-white hover:bg-[#4ca975] text-lg px-8 py-6">
+                                    Join Now
+                                </Button>
                             </Link>
                             <Link href="/aboutus" className="w-full sm:w-auto">
                                 <Button
@@ -134,8 +116,7 @@ export default async function AboutUs() {
                             </Link>
                         </div>
                     </div>
-                <div className="relative top-10 lg:top-0 flex justify-center items-center">
-                    
+                    <div className="relative top-10 lg:top-0 flex justify-center items-center">
                         <Image
                             src={Computer}
                             alt="Computer Image"
@@ -159,8 +140,7 @@ export default async function AboutUs() {
                         />
                     </div>
                 </div>
-        
-            </section >
+            </section>
             
             <div className="h-48 md:h-64 w-full"></div>
             
