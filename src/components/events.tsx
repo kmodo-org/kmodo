@@ -21,9 +21,9 @@ interface HackathonCardProps {
 
 // Define an image map with index signature
 const imageMap: Record<string, string> = {
-    "Knight Hacks VIII": "/images/knighthacks.png",
+    "Knight Hacks": "/images/knighthacks.png",
     "Bitcamp": "/images/bitcamp.png",
-    "ShellHacks": "/images/shellhacks.png"
+    "Shell Hacks": "/images/shellhacks.png"
 };
 
 const Events: React.FC<HackathonCardProps> = (props) => {
