@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "src/components/ui/button";
 import { Card, CardContent } from "src/components/ui/card";
 import { auth } from "~/server/auth";
@@ -105,15 +106,24 @@ export default async function AboutUs() {
                             Transforming the future, one hackathon at a time. Join our platform and experience a new way to collaborate, innovate, and compete.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <Link href="/hacker" className="w-full sm:w-auto">
                             <Button size="lg" className="bg-[#59BC89] text-white hover:bg-[#4ca975] text-lg px-8 py-6">
                                 Join Now
                             </Button>
-                            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:bg-opacity-10 text-lg px-8 py-6">
-                                Learn More
-                            </Button>
+                            </Link>
+                            <Link href="/aboutus" className="w-full sm:w-auto">
+                                <Button
+                                    size="lg"
+                                    variant="outline"
+                                    className="border border-white text-white bg-transparent hover:bg-white hover:text-black text-lg px-8 py-6 transition-colors duration-300"
+                                >
+                                    Learn More
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                 <div className="relative top-10 lg:top-0 flex justify-center items-center">
+                    
                         <Image
                             src={Computer}
                             alt="Computer Image"
