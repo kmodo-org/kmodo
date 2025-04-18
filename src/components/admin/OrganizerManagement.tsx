@@ -56,7 +56,7 @@ export function OrganizerManagement() {
   const handleRemoveOrganizer = (hackerId: number, eventId: number) => {
     if (confirm("Are you sure you want to remove this organizer? This action cannot be undone.")) {
       removeOrganizerMutation.mutate({
-        hackerId,
+        organizerId: hackerId,
         eventId,
       });
     }

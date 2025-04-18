@@ -100,13 +100,13 @@ export function OrganizerApplicationsManagement() {
       
       <Tabs defaultValue="pending" value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-3 mb-8 bg-[#2D2647]">
-          <TabsTrigger value="pending" className="data-[state=active]:bg-[#4264AC] data-[state=active]:text-white">
+          <TabsTrigger value="pending" className="data-[state=active]:bg-[#59BC89] data-[state=active]:text-white">
             Pending
           </TabsTrigger>
-          <TabsTrigger value="approved" className="data-[state=active]:bg-[#4264AC] data-[state=active]:text-white">
+          <TabsTrigger value="approved" className="data-[state=active]:bg-[#59BC89] data-[state=active]:text-white">
             Approved
           </TabsTrigger>
-          <TabsTrigger value="rejected" className="data-[state=active]:bg-[#4264AC] data-[state=active]:text-white">
+          <TabsTrigger value="rejected" className="data-[state=active]:bg-[#59BC89] data-[state=active]:text-white">
             Rejected
           </TabsTrigger>
         </TabsList>
@@ -188,7 +188,7 @@ Additional Info: ${item.application.additional_info ?? "None provided"}
                                         [item.application.id]: e.target.value
                                       })
                                     }
-                                    className="min-h-[80px] text-black"
+                                    className="min-h-[80px] text-black focus-visible:ring-[#59BC89]"
                                   />
                                 </TableCell>
                                 <TableCell className="text-right">
@@ -197,7 +197,7 @@ Additional Info: ${item.application.additional_info ?? "None provided"}
                                       variant="default"
                                       size="sm"
                                       onClick={() => handleApprove(item.application.id)}
-                                      className="bg-green-600 hover:bg-green-700 text-white border-none"
+                                      className="bg-[#59BC89] hover:bg-[#59BC89]/80 text-white border-none"
                                       disabled={updateApplicationMutation.isPending}
                                     >
                                       Approve
@@ -206,7 +206,7 @@ Additional Info: ${item.application.additional_info ?? "None provided"}
                                       variant="destructive"
                                       size="sm"
                                       onClick={() => handleReject(item.application.id)}
-                                      className="bg-red-600 hover:bg-red-700 text-white border-none"
+                                      className="bg-[#FF6B6B] hover:bg-[#FF6B6B]/80 text-white border-none"
                                       disabled={updateApplicationMutation.isPending}
                                     >
                                       Reject
@@ -220,7 +220,7 @@ Additional Info: ${item.application.additional_info ?? "None provided"}
                                   variant="destructive"
                                   size="sm"
                                   onClick={() => handleDelete(item.application.id)}
-                                  className="bg-red-600 hover:bg-red-700 text-white border-none"
+                                  className="bg-[#FF6B6B] hover:bg-[#FF6B6B]/80 text-white border-none"
                                   disabled={deleteApplicationMutation.isPending}
                                 >
                                   <Trash2 className="h-4 w-4 mr-1" />

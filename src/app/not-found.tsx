@@ -11,7 +11,7 @@ export default function NotFound() {
                 <span className="text-4xl font-bold text-foreground pl-5">Page not found</span>
             </div>
             <Link href="/" className='mt-4'>
-                <Button className='bg-accent text-foreground hover:text-accent transform transition hover:scale-105 hover:underline hover:font-bold hover:bg-foreground'>              
+                <Button className='bg-accent text-foreground transform transition hover:scale-105 hover:underline hover:font-bold hover:bg-foreground hover:text-accent'>              
                     <span>Go back home</span>
                 </Button>
             </Link>

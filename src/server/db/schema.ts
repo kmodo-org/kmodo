@@ -399,3 +399,33 @@ export const InsertHackathonApplicationSchema = createInsertSchema(hackathonAppl
   createdAt: true,
   updatedAt: true,
 });
+
+export const supportTickets = createTable(
+  "support_ticket",
+  {
+    id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+    title: varchar("title", { length: 255 }).notNull(),
+    description: text("description").notNull(),
+    type: varchar("type", { length: 50 }).notNull().default("hacker"),
+    status: varchar("status", { length: 50 }).notNull().default("open"),
+    userId: varchar("user_id", { length: 255 })
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    adminResponse: text("admin_response"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+  },
+  (ticket) => ({
+    userIdIdx: index("support_ticket_user_id_idx").on(ticket.userId),
+    statusIdx: index("support_ticket_status_idx").on(ticket.status),
+    typeIdx: index("support_ticket_type_idx").on(ticket.type),
+  })
+);
+
+export const supportTicketsRelations = relations(supportTickets, ({ one }) => ({
+  user: one(users, { fields: [supportTickets.userId], references: [users.id] }),
+}));

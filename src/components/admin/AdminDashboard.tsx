@@ -2,9 +2,10 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
-import { UserManagement } from "~/components/admin/UserManagement";
-import { EventManagement } from "~/components/admin/EventManagement";
-import { OrganizerApplicationsManagement } from "~/components/admin/OrganizerApplicationsManagement";
+import { UserManagement } from "~/components/admin/userManagement";
+import { EventManagement } from "~/components/admin/eventManagement";
+import { OrganizerApplicationsManagement } from "~/components/admin/organizerApplicationsManagement";
+import { SupportTicketManagement } from "~/components/admin/supportTicketManagement";
 import { Button } from "~/components/ui/button";
 
 export function AdminDashboard() {
@@ -66,10 +67,11 @@ export function AdminDashboard() {
       </div>
 
       <Tabs defaultValue="users" className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-3 mb-8 bg-[#2D2647]">
-          <TabsTrigger value="users" className="data-[state=active]:bg-[#4264AC] data-[state=active]:text-white">Users</TabsTrigger>
-          <TabsTrigger value="events" className="data-[state=active]:bg-[#4264AC] data-[state=active]:text-white">Events</TabsTrigger>
-          <TabsTrigger value="applications" className="data-[state=active]:bg-[#4264AC] data-[state=active]:text-white">Applications</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-4 mb-8 bg-[#2D2647]">
+          <TabsTrigger value="users" className="data-[state=active]:bg-[#59BC89] data-[state=active]:text-white">Users</TabsTrigger>
+          <TabsTrigger value="events" className="data-[state=active]:bg-[#59BC89] data-[state=active]:text-white">Events</TabsTrigger>
+          <TabsTrigger value="applications" className="data-[state=active]:bg-[#59BC89] data-[state=active]:text-white">Applications</TabsTrigger>
+          <TabsTrigger value="support" className="data-[state=active]:bg-[#59BC89] data-[state=active]:text-white">Support</TabsTrigger>
         </TabsList>
         
         <TabsContent value="users">
@@ -82,6 +84,10 @@ export function AdminDashboard() {
         
         <TabsContent value="applications">
           <OrganizerApplicationsManagement />
+        </TabsContent>
+
+        <TabsContent value="support">
+          <SupportTicketManagement />
         </TabsContent>
       </Tabs>
     </div>
