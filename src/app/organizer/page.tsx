@@ -7,6 +7,7 @@ import { ProjectsCard } from "~/components/projects";
 import { MobileHeader } from "../../components/mobile-header";
 import { OrganizerSidebar } from "~/components/organizersidebar";
 import { OrganizerDashboardClient } from "~/components/organizer/OrganizerDashboardClient";
+import { PendingHackerApps } from "~/components/organizer/pendingHackerApps";
 
 export default async function OrganizerDashboard() {
   const session = await auth();
@@ -35,6 +36,7 @@ export default async function OrganizerDashboard() {
               <EventSummaryCard />
               <AttendeesCard />
               <ProjectsCard />
+              <PendingHackerApps />
             </div>
           </div>
         </div>

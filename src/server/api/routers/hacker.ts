@@ -278,4 +278,92 @@ export const hackerRouter = createTRPCRouter({
       
       return applications;
     }),
+
+  // Add a new procedure to get all hackathon applications (for organizers)
+  getAllHackathonApplications: protectedProcedure
+    .query(async ({ ctx }) => {
+      // Check if the user is an organizer
+      const userId = ctx.session.user.id;
+      
+      const hacker = await db
+        .select()
+        .from(hackers)
+        .where(eq(hackers.user_Id, userId))
+        .then((res) => res[0]);
+        
+      if (!hacker) return [];
+      
+      const organizer = await db
+        .select()
+        .from(organizers)
+        .where(eq(organizers.hacker_id, hacker.id))
+        .then((res) => res[0]);
+        
+      if (!organizer) throw new Error("You must be an organizer to view all applications");
+      
+      // Get all applications with hacker and event details
+      const applications = await db
+        .select({
+          id: hackathonApplications.id,
+          status: hackathonApplications.status,
+          createdAt: hackathonApplications.createdAt,
+          hacker: {
+            id: hackers.id,
+            firstname: hackers.firstname,
+            lastname: hackers.lastname,
+            eduemail: hackers.eduemail,
+            university: hackers.university,
+          },
+          event: {
+            id: events.id,
+            name: events.name,
+            date: events.date,
+            school: events.school,
+          }
+        })
+        .from(hackathonApplications)
+        .leftJoin(hackers, eq(hackathonApplications.hacker_id, hackers.id))
+        .leftJoin(events, eq(hackathonApplications.event_id, events.id))
+        .orderBy(asc(hackathonApplications.createdAt));
+      
+      return applications;
+    }),
+
+  // Add a mutation to update application status
+  updateHackathonApplicationStatus: protectedProcedure
+    .input(z.object({
+      applicationId: z.number(),
+      status: z.enum(["pending", "accepted", "rejected"]),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      // Check if the user is an organizer
+      const userId = ctx.session.user.id;
+      
+      const hacker = await db
+        .select()
+        .from(hackers)
+        .where(eq(hackers.user_Id, userId))
+        .then((res) => res[0]);
+        
+      if (!hacker) throw new Error("Hacker profile not found");
+      
+      const organizer = await db
+        .select()
+        .from(organizers)
+        .where(eq(organizers.hacker_id, hacker.id))
+        .then((res) => res[0]);
+        
+      if (!organizer) throw new Error("You must be an organizer to update application status");
+      
+      // Update the application status
+      await db
+        .update(hackathonApplications)
+        .set({ 
+          status: input.status,
+          updatedAt: new Date(),
+        })
+        .where(eq(hackathonApplications.id, input.applicationId));
+      
+      return { success: true };
+    }),
 });
