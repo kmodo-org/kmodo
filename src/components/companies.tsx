@@ -19,7 +19,7 @@ const companies: Company[] = [
     subtitle: "Supporting Developers in Finance",
     companyemail: "",
     phone: "",
-    image: "/images/bny.png",
+    image: "/images/BNY.png",
     description:
       "A trusted leader in global finance, BNY Mellon supports developers building the future of fintech and investment technology.",
     activehackathons: 3,
@@ -30,7 +30,7 @@ const companies: Company[] = [
     subtitle: "Artificial Intelligence Research Organization",
     companyemail: "",
     phone: "",
-    image: "/images/openAI.png",
+    image: "/images/OpenAI.png",
     description:
       "Creators of ChatGPT and DALL·E, OpenAI is advancing safe and beneficial AI to empower developers and solve real-world challenges.",
     activehackathons: 2,
