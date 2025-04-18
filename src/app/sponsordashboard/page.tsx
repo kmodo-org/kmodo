@@ -11,6 +11,8 @@ import { Footer } from "~/components/ui/footer";
 import Link from "next/link";
 import { useState } from "react";
 
+
+
 const dashboardRoutes: { title: string; href: string }[] = [
     { title: "DASHBOARD", href: "/" },
     { title: "RANKED", href: "/" },
@@ -44,6 +46,7 @@ export default function SponsorDashboard() {
 
     return (
         <div className="flex min-h-screen flex-col bg-[#2d2647]">
+
             <Navbar />
             <main className="flex flex-grow flex-row">
                 {/* left lol */}
