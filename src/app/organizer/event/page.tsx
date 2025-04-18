@@ -1,10 +1,7 @@
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import { redirect } from "next/navigation";
-import { EventSummaryCard } from "~/components/eventsummary";
-import { AttendeesCard } from "~/components/attendees";
-import { ProjectsCard } from "~/components/projects";
-import { MobileHeader } from "../../components/mobile-header";
+import { MobileHeader } from "../../../components/mobile-header";
 import { OrganizerSidebar } from "~/components/organizersidebar";
 import { OrganizerDashboardClient } from "~/components/organizer/OrganizerDashboardClient";
 
@@ -31,11 +28,7 @@ export default async function OrganizerDashboard() {
             <div className="lg:hidden">
               <MobileHeader />
             </div>
-            <div className="grid gap-6 p-6 lg:p-10 lg:grid-cols-3grid-cols-1">
-              <EventSummaryCard />
-              <AttendeesCard />
-              <ProjectsCard />
-            </div>
+            <main>Hello this is ur event</main>
           </div>
         </div>
       </OrganizerDashboardClient>

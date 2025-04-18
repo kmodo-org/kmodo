@@ -1,10 +1,53 @@
+'use client'
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
-import { api } from "~/trpc/server";
+import { api } from "~/trpc/react";
 import Image from "next/image";
+import { useCallback, useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default async function Events() {
-    const events = await api.hacker.getEvents();
+export default function Events() {
+    const { data: events, isLoading: eventsLoading } = api.hacker.getEvents.useQuery();
+    const { data: hackerProfile } = api.hacker.getHackerProfile.useQuery();
+    const { data: applications = [], refetch: refetchApplications } = api.hacker.getHackathonApplications.useQuery();
+    
+    // Track pending state for each event ID
+    const [pendingEventIds, setPendingEventIds] = useState<number[]>([]);
+    
+    const applyMutation = api.hacker.applyToHackathon.useMutation({
+        onSuccess: async () => {
+            toast.success("Successfully applied to hackathon!");
+            // Refetch applications to update the UI
+            await refetchApplications();
+        },
+        onError: (error) => {
+            toast.error(error.message || "Failed to apply. Please try again.");
+        },
+    });
+
+    const handleHackathonRegistration = useCallback(async (eventId: number) => {
+        try {
+            if (!hackerProfile) {
+                toast.error("Please complete your profile before registering.");
+                return;
+            }
+
+            // Add this event ID to pending list
+            setPendingEventIds(prev => [...prev, eventId]);
+            
+            await applyMutation.mutateAsync({ eventId });
+        } catch (error) {
+            console.error('Failed to register:', error);
+        } finally {
+            // Remove this event ID from pending list
+            setPendingEventIds(prev => prev.filter(id => id !== eventId));
+        }
+    }, [hackerProfile, applyMutation]);
+
+    if (eventsLoading) return <div>Loading...</div>;
+    if (!events) return <div>No events found</div>;
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-10">
@@ -13,14 +56,19 @@ export default async function Events() {
                 const startTime = new Date(event.starttime);
                 const endTime = new Date(event.endtime);
                 
-                // Define an image map with index signature
                 const imageMap: Record<string, string> = {
                     "Knight Hacks VIII": "/images/knighthacks.png",
                     "Bitcamp": "/images/bitcamp.png",
                     "ShellHacks": "/images/shellhacks.png"
                 };
 
-                const imageSrc = imageMap[event.name] ?? "/images/kmodoL.svg"; // Default fallback
+                const imageSrc = imageMap[event.name] ?? "/images/kmodoL.svg";
+                
+                // Check if user has already applied to this specific event
+                const hasApplied = applications.some(app => app.event_id === event.id);
+                
+                // Check if this specific event is pending
+                const isPending = pendingEventIds.includes(event.id);
 
                 return (
                     <Card key={event.id} className="bg-destructive text-destructive-foreground">
@@ -68,10 +116,14 @@ export default async function Events() {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="flex mb-10 ">
+                                <div className="flex mb-10">
                                     <div className="flex justify-center w-full">
-                                        <Button className="mt-11 bg-accent text-destructive-foreground hover:bg-destructive-foreground hover:text-accent">
-                                            Register
+                                        <Button 
+                                            onClick={() => handleHackathonRegistration(event.id)}
+                                            disabled={hasApplied ?? isPending}
+                                            className="mt-11 bg-accent text-destructive-foreground hover:bg-destructive-foreground hover:text-accent"
+                                        >
+                                            {hasApplied ? 'Applied' : isPending ? 'Applying...' : 'Register'}
                                         </Button>
                                     </div>
                                 </div>

@@ -10,7 +10,7 @@ export function MobileHeader() {
         <Image src="/images/kmodoL.svg" width={120} height={120} alt="kmodo" className="w-auto h-12" />
         <button
           onClick={() => {
-            const sidebar = document.getElementById('sidebar'); //thanks dylan stole ur code
+            const sidebar = document.getElementById('sidebar'); 
             sidebar?.classList.toggle('-translate-x-full');
           }}
           className="text-white p-2"

@@ -1,21 +1,24 @@
-"use client";
-
+// ✅ SERVER COMPONENT — no "use client"
 import { Sidebar } from "~/components/sidebar";
-import { api } from "~/trpc/react";
+import { api } from "~/trpc/server";
 
 interface SidebarWrapperProps {
   userName: string;
   userImage: string | null;
 }
 
-export default function SidebarWrapper({ userName, userImage }: SidebarWrapperProps) {
-  const { data: isOrganizer } = api.hacker.isOrganizer.useQuery();
+export default async function SidebarWrapper({
+  userName,
+  userImage,
+}: SidebarWrapperProps) {
+    
+  const isOrganizer = await api.organizer.isOrganizer(); 
 
   return (
     <Sidebar
       userName={userName}
       userImage={userImage}
-      isOrganizer={isOrganizer ?? false}
+      isOrganizer={isOrganizer}
     />
   );
 }

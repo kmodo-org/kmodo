@@ -15,16 +15,23 @@ interface PageProps {
 export default async function Home({ searchParams }: PageProps) {
   const params = await searchParams;
   const session = await auth();
+  const userId = session?.user?.id;
+  const isHacker = await api.hacker.getHacker();
 
   if (!session) {
     redirect("/");
   }
 
+  if (isHacker == false) {
+    redirect("/hacker/application");
+  }
+  
+
   if (session?.user) {
     void api.post.getLatest.prefetch();
   }
 
-  // TEMP fake hackathon check — replace with real DB logic later
+  
   const hasHackathon = params.test === "with-hackathon";
 
   const currentEvent = hasHackathon

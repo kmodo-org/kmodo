@@ -7,7 +7,6 @@ import { Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/ui/footer";
 import { auth } from "~/server/auth";
 import { redirect } from "next/navigation";
-import { allowedUserIds } from "~/consts/goat";
 
 export default async function EventsPage() {
 
@@ -17,10 +16,8 @@ export default async function EventsPage() {
   if (session == null) { // if the user is not logged in, redirect to the landing page
     redirect("/");
   }
-
-  // if user is not an organizer redirect to the landing page
   
-  if (!userId || !allowedUserIds.has(userId)) { // if user isnt a goat they are not allowed
+  if (!userId ) { 
     redirect("/");
   }
 
@@ -46,7 +43,7 @@ export default async function EventsPage() {
                   placeholder="Search hackathons..."
                   className="w-full max-w-2xl mx-auto rounded-full px-6 py-5 bg-destructive text-black"
                 />
-                <Events />
+                <Events /> {/* This component will fetch and display events from the database */}
               </CardContent>
             </div>
           </Card>
