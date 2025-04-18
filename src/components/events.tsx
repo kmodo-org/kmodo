@@ -1,70 +1,86 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
-import { api } from "~/trpc/server";
+// import { api } from "~/trpc/server";
 import Image from "next/image";
 
-export default async function Events() {
-    const events = await api.hacker.getEvents();
+interface HackathonCardProps {
+    title: string;
+    desc: string;
+    date: string;
+    starttime: Date;
+    endtime: Date;
+    school: string;
+    location: string;
+
+}
+
+// Define an image map with index signature
+const imageMap: Record<string, string> = {
+    "Knight Hacks VIII": "/images/knighthacks.png",
+    "Bitcamp": "/images/bitcamp.png",
+    "ShellHacks": "/images/shellhacks.png"
+};
+
+
+const Events: React.FC<HackathonCardProps> = (props) => {
+
+    const imageSrc = imageMap[props.title] ?? "/images/kmodoL.svg"; 
+    // const events = await api.hacker.getEvents();
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-10">
-            {events.map((event) => {
-                const date = new Date(event.date);
-                const startTime = new Date(event.starttime);
-                const endTime = new Date(event.endtime);
+        // <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-10">
+        //     {events.map((event) => {
+                // const date = new Date(event.date);
+                // const startTime = new Date(event.starttime);
+                // const endTime = new Date(event.endtime);
                 
-                // Define an image map with index signature
-                const imageMap: Record<string, string> = {
-                    "Knight Hacks VIII": "/images/knighthacks.png",
-                    "Bitcamp": "/images/bitcamp.png",
-                    "ShellHacks": "/images/shellhacks.png"
-                };
-
-                const imageSrc = imageMap[event.name] ?? "/images/kmodoL.svg"; // Default fallback
-
-                return (
-                    <Card key={event.id} className="bg-destructive text-destructive-foreground">
+                    <Card className="bg-destructive text-destructive-foreground hover:scale-[1.01]">
                         <div className="p-6">
                             <CardHeader>
                                 <CardTitle className="mb-2 font-extrabold text-4xl sm:text-2xl md:text-2xl lg:text-3xl xl:text-4xl break-words">
-                                    {event.name}
+                                    {props.title}
                                 </CardTitle>
                                 <CardDescription>
                                     <div className="flex flex-col text-lg font-semibold">
-                                        <span>{event.school}</span>
-                                        <span>{event.location}</span>
+                                        <span>{props.school}</span>
+                                        <span>{props.location}</span>
                                     </div>
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <div className="flex justify-center">
+                                    
                                     <Image
                                         src={imageSrc}
                                         width={200}
                                         height={100}
-                                        alt={event.name}
-                                        className="mb-4 object-fill h-[200px]" // Fixed height for the image
+                                        alt={props.title}
+                                        className="mb-4 object-fill h-[200px] rounded-2xl" // Fixed height for the image
                                     />
                                 </div>
                                 <p className="text-sm text-destructive-foreground mb-2 mt-4">
-                                    {event.description}
+                                    {props.desc}
                                 </p>
                                 <div className="flex gap-4 text-sm">
                                     <div>
                                         <p className="font-medium">Date</p>
-                                        <p>{date.toLocaleDateString()}</p>
+                                        <p>{props.date}</p>
                                     </div>
                                     <div>
                                         <p className="font-medium">Time</p>
                                         <p>
-                                            {startTime.toLocaleTimeString([], {
+                                        {props.starttime ? props.starttime.toLocaleTimeString([], {
                                                 hour: "2-digit",
                                                 minute: "2-digit",
-                                            })} - {" "}
-                                            {endTime.toLocaleTimeString([], {
-                                                hour: "2-digit",
-                                                minute: "2-digit",
-                                            })}
+                                                })
+                                        : "N/A"}{" "}
+                                        -{" "}
+                                        {props.endtime
+                                            ? props.endtime.toLocaleTimeString([], {
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                            })
+                                        : "N/A"}
                                         </p>
                                     </div>
                                 </div>
@@ -79,7 +95,7 @@ export default async function Events() {
                         </div>
                     </Card>
                 );
-            })}
-        </div>
-    );
-}
+ }
+        
+    
+ export { Events };

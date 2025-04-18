@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { UserManagement } from "~/components/admin/UserManagement";
 import { EventManagement } from "~/components/admin/EventManagement";
+import { OrganizerApplicationsManagement } from "~/components/admin/OrganizerApplicationsManagement";
 import { Button } from "~/components/ui/button";
 
 export function AdminDashboard() {
@@ -65,9 +66,10 @@ export function AdminDashboard() {
       </div>
 
       <Tabs defaultValue="users" className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-2 mb-8 bg-[#2D2647]">
+        <TabsList className="grid w-full grid-cols-3 mb-8 bg-[#2D2647]">
           <TabsTrigger value="users" className="data-[state=active]:bg-[#4264AC] data-[state=active]:text-white">Users</TabsTrigger>
           <TabsTrigger value="events" className="data-[state=active]:bg-[#4264AC] data-[state=active]:text-white">Events</TabsTrigger>
+          <TabsTrigger value="applications" className="data-[state=active]:bg-[#4264AC] data-[state=active]:text-white">Applications</TabsTrigger>
         </TabsList>
         
         <TabsContent value="users">
@@ -76,6 +78,10 @@ export function AdminDashboard() {
         
         <TabsContent value="events">
           <EventManagement />
+        </TabsContent>
+        
+        <TabsContent value="applications">
+          <OrganizerApplicationsManagement />
         </TabsContent>
       </Tabs>
     </div>

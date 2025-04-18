@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
-import { users, hackers, events, organizers, eventOrganizers } from "~/server/db/schema";
+import { users, hackers, events, organizers, eventOrganizers, organizerApplications } from "~/server/db/schema";
 import { eq, and, type SQL } from "drizzle-orm";
 import { allowedUserIds } from "~/consts/goat";
 import { sql } from "drizzle-orm";
@@ -95,30 +95,19 @@ export const adminRouter = createTRPCRouter({
             sql`DELETE FROM "kmodo_organizer_application" WHERE "event_id" = ${id}`
           );
 
-          // Find organizers for this event first to handle the relationship
-          const eventOrgs = await tx
+          // Find organizers for this event in the event_organizers junction table
+          const eventOrganizerEntries = await tx
             .select()
-            .from(organizers)
-            .where(eq(organizers.event_id, id));
+            .from(eventOrganizers)
+            .where(eq(eventOrganizers.event_id, id));
 
-          // Delete organizer records for this event
-          if (eventOrgs.length > 0) {
-            for (const org of eventOrgs) {
-              // Delete from eventOrganizers junction table
-              await tx
-                .delete(eventOrganizers)
-                .where(
-                  and(
-                    eq(eventOrganizers.event_id, id),
-                    eq(eventOrganizers.organizer_id, org.id)
-                  )
-                );
-
-              // Then delete the organizer record
-              await tx
-                .delete(organizers)
-                .where(eq(organizers.id, org.id));
-            }
+          // Delete entries from event_organizers junction table
+          if (eventOrganizerEntries.length > 0) {
+            await tx
+              .delete(eventOrganizers)
+              .where(eq(eventOrganizers.event_id, id));
+            
+            console.log(`Removed ${eventOrganizerEntries.length} entries from event_organizers table`);
           }
 
           // Finally delete the event itself
@@ -147,55 +136,50 @@ export const adminRouter = createTRPCRouter({
       const { hackerId, eventId } = input;
       
       // Check if organizer already exists
-      const existingOrganizers = await db
+      const existingOrganizer = await db
         .select()
         .from(organizers)
-        .where(
-          and(
-            eq(organizers.hacker_id, hackerId),
-            eq(organizers.event_id, eventId)
-          )
-        );
+        .where(eq(organizers.hacker_id, hackerId))
+        .then(res => res[0]);
         
-      if (existingOrganizers.length > 0) {
-        throw new Error("Organizer already exists for this event");
-      }
-      
-      // Create new organizer
-      const newOrganizerResult = await db
-        .insert(organizers)
-        .values({
-          hacker_id: hackerId,
-          event_id: eventId,
-        })
-        .returning();
-      
-      if (!newOrganizerResult || newOrganizerResult.length === 0) {
-        throw new Error("Failed to create organizer");
-      }
-      
-      // Safely access the first item
-      const newOrganizer = newOrganizerResult[0];
-      
-      if (!newOrganizer?.id) {
-        throw new Error("Failed to get organizer ID");
+      // Create new organizer if doesn't exist
+      let organizerId: number;
+        
+      if (!existingOrganizer) {
+        // Create new organizer
+        const newOrganizerResult = await db
+          .insert(organizers)
+          .values({
+            hacker_id: hackerId,
+          })
+          .returning();
+        
+        if (!newOrganizerResult || newOrganizerResult.length === 0 || !newOrganizerResult[0]?.id) {
+          throw new Error("Failed to create organizer");
+        }
+        
+        // Safely access the first item
+        organizerId = newOrganizerResult[0].id;
+      } else {
+        organizerId = existingOrganizer.id;
       }
         
-      // Add to event organizers
+      // Add to event organizers regardless
       await db
         .insert(eventOrganizers)
         .values({
           event_id: eventId,
-          organizer_id: newOrganizer.id,
-        });
+          organizer_id: organizerId,
+        })
+        .onConflictDoNothing(); // In case this relationship already exists
         
-      return { success: true, organizer: newOrganizer };
+      return { success: true };
     }),
     
   // Remove an organizer from an event
   removeOrganizer: protectedProcedure
     .input(z.object({ 
-      hackerId: z.number(),
+      organizerId: z.number(),
       eventId: z.number()
     }))
     .mutation(async ({ ctx, input }) => {
@@ -204,28 +188,7 @@ export const adminRouter = createTRPCRouter({
         throw new Error("Unauthorized: Only admins can access this resource");
       }
 
-      const { hackerId, eventId } = input;
-      
-      // Find the organizer
-      const organizers_found = await db
-        .select()
-        .from(organizers)
-        .where(
-          and(
-            eq(organizers.hacker_id, hackerId),
-            eq(organizers.event_id, eventId)
-          )
-        );
-        
-      if (!organizers_found || organizers_found.length === 0) {
-        throw new Error("Organizer not found for this event");
-      }
-      
-      const organizer = organizers_found[0];
-      
-      if (!organizer?.id) {
-        throw new Error("Invalid organizer record");
-      }
+      const { organizerId, eventId } = input;
       
       // Remove from event organizers
       await db
@@ -233,14 +196,9 @@ export const adminRouter = createTRPCRouter({
         .where(
           and(
             eq(eventOrganizers.event_id, eventId),
-            eq(eventOrganizers.organizer_id, organizer.id)
+            eq(eventOrganizers.organizer_id, organizerId)
           )
         );
-        
-      // Delete the organizer
-      await db
-        .delete(organizers)
-        .where(eq(organizers.id, organizer.id));
         
       return { success: true };
     }),
@@ -260,5 +218,160 @@ export const adminRouter = createTRPCRouter({
       await db.delete(users).where(eq(users.id, userId));
         
       return { success: true };
+    }),
+
+  // Get all organizer applications
+  getAllOrganizerApplications: protectedProcedure
+    .input(z.object({ 
+      status: z.enum(["pending", "approved", "rejected"]).optional(),
+      eventId: z.number().optional(),
+      search: z.string().optional()
+    }))
+    .query(async ({ ctx, input }) => {
+      // Check if user is admin
+      if (!isAdmin(ctx.session.user.id)) {
+        throw new Error("Unauthorized: Only admins can access this resource");
+      }
+
+      // Build conditions array first
+      const conditions: SQL[] = [];
+      
+      if (input.status) {
+        conditions.push(eq(organizerApplications.status, input.status));
+      }
+      
+      if (input.eventId) {
+        conditions.push(eq(organizerApplications.event_id, input.eventId));
+      }
+      
+      // Build the query with all conditions at once
+      const query = db.select({
+        application: organizerApplications,
+        hacker: hackers,
+        event: events,
+      })
+      .from(organizerApplications)
+      .leftJoin(hackers, eq(organizerApplications.hacker_id, hackers.id))
+      .leftJoin(events, eq(organizerApplications.event_id, events.id));
+      
+      // Apply conditions if there are any
+      const results = conditions.length > 0
+        ? await query.where(and(...conditions))
+        : await query;
+      
+      return results;
+    }),
+
+  // Update an organizer application (approve/reject)
+  updateOrganizerApplication: protectedProcedure
+    .input(z.object({ 
+      applicationId: z.number(),
+      status: z.enum(["approved", "rejected"]),
+      adminNotes: z.string().optional()
+    }))
+    .mutation(async ({ ctx, input }) => {
+      // Check if user is admin
+      if (!isAdmin(ctx.session.user.id)) {
+        throw new Error("Unauthorized: Only admins can access this resource");
+      }
+
+      const { applicationId, status, adminNotes } = input;
+      
+      // Get the application
+      const application = await db
+        .select()
+        .from(organizerApplications)
+        .where(eq(organizerApplications.id, applicationId))
+        .then(res => res[0]);
+        
+      if (!application) {
+        throw new Error("Application not found");
+      }
+      
+      console.log("Processing application:", JSON.stringify(application));
+      
+      try {
+        // First, update the application status
+        await db
+          .update(organizerApplications)
+          .set({ 
+            status, 
+            admin_notes: adminNotes,
+            updatedAt: new Date()
+          })
+          .where(eq(organizerApplications.id, applicationId));
+        
+        console.log("Updated application status to:", status);
+        
+        // If approved, create organizer record
+        if (status === "approved") {
+          // Check if organizer already exists
+          const existingOrganizer = await db
+            .select()
+            .from(organizers)
+            .where(eq(organizers.hacker_id, application.hacker_id))
+            .then(res => res[0]);
+          
+          if (!existingOrganizer) {
+            console.log("Creating organizer for hacker_id:", application.hacker_id);
+            
+            // Create new organizer without event_id
+            const result = await db
+              .insert(organizers)
+              .values({
+                hacker_id: application.hacker_id
+              })
+              .returning();
+            
+            console.log("Organizer creation result:", JSON.stringify(result));
+            
+            // No longer need to handle event_organizer relationship here
+          } else {
+            console.log("Organizer already exists with id:", existingOrganizer.id);
+          }
+        }
+        
+        return { success: true };
+      } catch (error) {
+        console.error("Error in updateOrganizerApplication:", error);
+        throw error;
+      }
+    }),
+
+  // Delete an organizer application
+  deleteOrganizerApplication: protectedProcedure
+    .input(z.object({ 
+      applicationId: z.number()
+    }))
+    .mutation(async ({ ctx, input }) => {
+      // Check if user is admin
+      if (!isAdmin(ctx.session.user.id)) {
+        throw new Error("Unauthorized: Only admins can access this resource");
+      }
+
+      const { applicationId } = input;
+      
+      try {
+        // Check if application exists
+        const application = await db
+          .select()
+          .from(organizerApplications)
+          .where(eq(organizerApplications.id, applicationId))
+          .then(res => res[0]);
+          
+        if (!application) {
+          throw new Error("Application not found");
+        }
+        
+        // Delete the application
+        await db
+          .delete(organizerApplications)
+          .where(eq(organizerApplications.id, applicationId));
+        
+        return { success: true };
+      } catch (error) {
+        console.error("Error deleting organizer application:", error);
+        throw error;
+      }
     }),
 }); 

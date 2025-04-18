@@ -10,11 +10,11 @@ import {
 } from "~/components/ui/resizable";
 import { SignOutButton } from "./sign-out-button";
 import { 
-  LayoutDashboard, 
-  Trophy, 
+  LayoutDashboard,  
   Users, 
   Calendar, 
   Settings, 
+  Gem,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -22,11 +22,11 @@ interface SidebarProps {
   userImage: string | null;
 }
 
-export function Sidebar({ userName, userImage }: SidebarProps) {
+export function OrganizerSidebar({ userName, userImage }: SidebarProps) {
   const pathname = usePathname();
 
   const isActive = (path: string) => {
-    if (path === '/dashboard') {
+    if (path === '/organizer') {
       return pathname === path;
     }
     return pathname.startsWith(path);
@@ -68,9 +68,9 @@ export function Sidebar({ userName, userImage }: SidebarProps) {
               <ul className="space-y-1">
                 <li>
                   <Link 
-                    href="/dashboard" 
+                    href="/organizer" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/dashboard') 
+                      isActive('/organizer') 
                         ? 'text-[#59BC89] bg-white/5' 
                         : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
                     }`}
@@ -81,54 +81,41 @@ export function Sidebar({ userName, userImage }: SidebarProps) {
                 </li>
                 <li>
                   <Link 
-                    href="/find-team" 
+                    href="/eventpage" 
                     className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/find-team') 
-                        ? 'text-[#59BC89] bg-white/5' 
-                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
-                    }`}
-                  >
-                    <Users className="w-5 h-5 mr-3" />
-                    TEAM FINDER
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    href="/ranked" 
-                    className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/ranked') 
-                        ? 'text-[#59BC89] bg-white/5' 
-                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
-                    }`}
-                  >
-                    <Trophy className="w-5 h-5 mr-3" />
-                    RANKED
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    href="/resources" 
-                    className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/resources') 
-                        ? 'text-[#59BC89] bg-white/5' 
-                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
-                    }`}
-                  >
-                    <LayoutDashboard className="w-5 h-5 mr-3" />
-                    RESOURCES
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    href="/events" 
-                    className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
-                      isActive('/events') 
+                      isActive('/eventpage') 
                         ? 'text-[#59BC89] bg-white/5' 
                         : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
                     }`}
                   >
                     <Calendar className="w-5 h-5 mr-3" />
-                    EVENTS
+                    EVENT
+                  </Link>   
+                </li>
+                <li>
+                  <Link 
+                    href="/members" 
+                    className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
+                      isActive('/members') 
+                        ? 'text-[#59BC89] bg-white/5' 
+                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
+                    }`}
+                  >
+                    <Users className="w-5 h-5 mr-3" />
+                    MEMBERS
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/sponsors" 
+                    className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
+                      isActive('/sponsors') 
+                        ? 'text-[#59BC89] bg-white/5' 
+                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
+                    }`}
+                  >
+                    <Gem className="w-5 h-5 mr-3" />
+                    SPONSORS
                   </Link>
                 </li>
                 <li>

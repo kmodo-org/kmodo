@@ -3,4 +3,5 @@ onlyBuiltDependencies:
   - sharp
 
 packages:
-  - '.'
+  - 'apps/*'
+  - 'packages/*'
