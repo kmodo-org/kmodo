@@ -9,7 +9,7 @@ import { signIn, useSession } from "next-auth/react";
 
 const routes: { title: string; href: string }[] = [
   { title: "EVENTS", href: "/events" },
-  { title: "RESOURCES", href: "/resources" }
+  { title: "RESOURCES", href: "/resources" },
 ];
 
 const Navbar: React.FC = () => {
