@@ -99,6 +99,7 @@ const HackathonSearch: React.FC = () => {
                 endtime={event.endtime}
                 school={event.school ?? "Unknown School"}
                 location={event.location}
+                id={event.id}
               />
             )
           );

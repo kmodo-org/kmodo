@@ -1,10 +1,12 @@
 import { db } from "~/server/db";
 import { hackers, events, InsertHackerSchema, InsertEventSchema} from "~/server/db/schema";
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, and } from "drizzle-orm";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 import { organizerApplications } from "~/server/db/schema";
 import { InsertOrganizerApplicationSchema } from "~/server/db/schema";
 import { organizers } from "~/server/db/schema";
+import { hackathonApplications } from "~/server/db/schema";
+import { z } from "zod";
 
 
 export const hackerRouter = createTRPCRouter({
@@ -181,4 +183,187 @@ export const hackerRouter = createTRPCRouter({
       
     return !!application;
   }),
+
+  applyToHackathon: protectedProcedure
+    .input(z.object({
+      eventId: z.number(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+
+      // Get the hacker profile
+      const hacker = await db
+        .select()
+        .from(hackers)
+        .where(eq(hackers.user_Id, userId))
+        .then((res) => res[0]);
+
+      if (!hacker) throw new Error("Hacker profile not found");
+
+      // Check if already applied
+      const existingApplications = await db
+        .select()
+        .from(hackathonApplications)
+        .where(
+          and(
+            eq(hackathonApplications.hacker_id, hacker.id),
+            eq(hackathonApplications.event_id, input.eventId)
+          )
+        );
+      
+      if (existingApplications.length > 0) throw new Error("Already applied to this hackathon");
+
+      // Create the application
+      await db.insert(hackathonApplications).values({
+        hacker_id: hacker.id,
+        event_id: input.eventId,
+        status: "pending",
+      });
+
+      return { success: true };
+    }),
+
+  hasAppliedToHackathon: protectedProcedure
+    .input(z.object({
+      eventId: z.number().optional(),
+    }))
+    .query(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      
+      const hacker = await db
+        .select()
+        .from(hackers)
+        .where(eq(hackers.user_Id, userId))
+        .then((res) => res[0]);
+        
+      if (!hacker) return false;
+      
+      let query = db
+        .select()
+        .from(hackathonApplications)
+        .where(eq(hackathonApplications.hacker_id, hacker.id));
+
+      if (input.eventId) {
+        query = db
+          .select()
+          .from(hackathonApplications)
+          .where(
+            and(
+              eq(hackathonApplications.hacker_id, hacker.id),
+              eq(hackathonApplications.event_id, input.eventId)
+            )
+          );
+      }
+      
+      const applications = await query;
+      return applications.length > 0;
+    }),
+
+  getHackathonApplications: protectedProcedure
+    .query(async ({ ctx }) => {
+      const userId = ctx.session.user.id;
+      
+      const hacker = await db
+        .select()
+        .from(hackers)
+        .where(eq(hackers.user_Id, userId))
+        .then((res) => res[0]);
+        
+      if (!hacker) return [];
+      
+      const applications = await db
+        .select()
+        .from(hackathonApplications)
+        .where(eq(hackathonApplications.hacker_id, hacker.id));
+      
+      return applications;
+    }),
+
+  // Add a new procedure to get all hackathon applications (for organizers)
+  getAllHackathonApplications: protectedProcedure
+    .query(async ({ ctx }) => {
+      // Check if the user is an organizer
+      const userId = ctx.session.user.id;
+      
+      const hacker = await db
+        .select()
+        .from(hackers)
+        .where(eq(hackers.user_Id, userId))
+        .then((res) => res[0]);
+        
+      if (!hacker) return [];
+      
+      const organizer = await db
+        .select()
+        .from(organizers)
+        .where(eq(organizers.hacker_id, hacker.id))
+        .then((res) => res[0]);
+        
+      if (!organizer) throw new Error("You must be an organizer to view all applications");
+      
+      // Get all applications with hacker and event details
+      const applications = await db
+        .select({
+          id: hackathonApplications.id,
+          status: hackathonApplications.status,
+          createdAt: hackathonApplications.createdAt,
+          hacker: {
+            id: hackers.id,
+            firstname: hackers.firstname,
+            lastname: hackers.lastname,
+            eduemail: hackers.eduemail,
+            university: hackers.university,
+          },
+          event: {
+            id: events.id,
+            name: events.name,
+            date: events.date,
+            school: events.school,
+          }
+        })
+        .from(hackathonApplications)
+        .leftJoin(hackers, eq(hackathonApplications.hacker_id, hackers.id))
+        .leftJoin(events, eq(hackathonApplications.event_id, events.id))
+        .orderBy(asc(hackathonApplications.createdAt));
+      
+      return applications;
+    }),
+
+  // Add a mutation to update application status
+  updateHackathonApplicationStatus: protectedProcedure
+    .input(z.object({
+      applicationId: z.number(),
+      status: z.enum(["pending", "accepted", "rejected"]),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      // Check if the user is an organizer
+      const userId = ctx.session.user.id;
+      
+      const hacker = await db
+        .select()
+        .from(hackers)
+        .where(eq(hackers.user_Id, userId))
+        .then((res) => res[0]);
+        
+      if (!hacker) throw new Error("Hacker profile not found");
+      
+      const organizer = await db
+        .select()
+        .from(organizers)
+        .where(eq(organizers.hacker_id, hacker.id))
+        .then((res) => res[0]);
+        
+      if (!organizer) throw new Error("You must be an organizer to update application status");
+      
+      // Update the application status
+      await db
+        .update(hackathonApplications)
+        .set({ 
+          status: input.status,
+          updatedAt: new Date(),
+        })
+        .where(eq(hackathonApplications.id, input.applicationId));
+      
+      return { success: true };
+    }),
 });

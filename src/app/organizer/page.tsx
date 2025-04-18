@@ -10,6 +10,7 @@ import { ProjectsCard } from "~/components/projects";
 import { MobileHeader } from "../../components/mobile-header";
 import { OrganizerSidebar } from "~/components/organizersidebar";
 import { OrganizerDashboardClient } from "~/components/organizer/OrganizerDashboardClient";
+import { PendingHackerApps } from "~/components/organizer/pendingHackerApps";
 
 export default async function OrganizerDashboard() {
   /* ----- gate checks ----- */
@@ -47,10 +48,11 @@ export default async function OrganizerDashboard() {
                 />
               </div>
               <div className="lg:col-span-3">
-                <div className="grid gap-6 lg:grid-cols-2">
+                <div className="grid gap-6 lg:grid-cols-2 pb-14">
                   <AttendeesCard />
                   <ProjectsCard />
                 </div>
+                <PendingHackerApps />
               </div>
             </div>
           </div>
