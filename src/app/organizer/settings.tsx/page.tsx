@@ -1,8 +1,7 @@
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import { redirect } from "next/navigation";
-
-import { MobileHeader } from "../../components/mobile-header";
+import { MobileHeader } from "../../../components/mobile-header";
 import { OrganizerSidebar } from "~/components/organizersidebar";
 import { OrganizerDashboardClient } from "~/components/organizer/OrganizerDashboardClient";
 
@@ -29,7 +28,7 @@ export default async function OrganizerDashboard() {
             <div className="lg:hidden">
               <MobileHeader />
             </div>
-            {/* dashboard body goes here */}
+            <main>Hello this is settings</main>
           </div>
         </div>
       </OrganizerDashboardClient>

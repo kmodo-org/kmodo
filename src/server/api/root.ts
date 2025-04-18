@@ -3,6 +3,7 @@
   import { hackerRouter } from "./routers/hacker";
   import { assetRouter } from "./routers/assets";
   import { adminRouter } from "./routers/admin";
+  import { organizerRouter } from "./routers/organizer";
 
   /**
    * This is the primary router for your server.
@@ -12,6 +13,7 @@
   export const appRouter = createTRPCRouter({
     post: postRouter,
     hacker: hackerRouter,
+    organizer: organizerRouter,
     asset: assetRouter,
     admin: adminRouter,
   });
