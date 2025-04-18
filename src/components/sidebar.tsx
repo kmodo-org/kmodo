@@ -14,6 +14,7 @@ import {
   Trophy,
   Users,
   Settings,
+  CircleHelp
 } from "lucide-react";
 
 interface SidebarProps {
@@ -98,6 +99,19 @@ export function Sidebar({ userName, userImage, isOrganizer }: SidebarProps) {
                   >
                     <Trophy className="w-5 h-5 mr-3" />
                     RANKED
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/hacker/support"
+                    className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
+                      isActive('/hacker/support')
+                        ? 'text-[#59BC89] bg-white/5'
+                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#59BC89]'
+                    }`}
+                  >
+                    <CircleHelp className="w-5 h-5 mr-3" />
+                    SUPPORT
                   </Link>
                 </li>
                 <li>

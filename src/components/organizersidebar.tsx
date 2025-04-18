@@ -15,6 +15,7 @@ import {
   Calendar, 
   Settings, 
   Gem,
+  CircleHelp,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -117,6 +118,19 @@ export function OrganizerSidebar({ userName, userImage, isOrganizer }: SidebarPr
                   >
                     <Gem className="w-5 h-5 mr-3" />
                     SPONSORS
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/organizer/support"
+                    className={`flex items-center py-2 px-4 rounded-lg text-sm transition-colors ${
+                      isActive('/organizer/support')
+                        ? 'text-[#a72828] bg-white/5'
+                        : 'text-[#D9DBF1] hover:bg-white/5 hover:text-[#a72828]'
+                    }`}
+                  >
+                    <CircleHelp className="w-5 h-5 mr-3" />
+                    SUPPORT
                   </Link>
                 </li>
                 <li>

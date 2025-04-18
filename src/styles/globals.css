@@ -6,7 +6,7 @@
   /* Global :root variables for colors */
   :root {
     --background: linear-gradient(0, hsl(240, 33%, 6%), hsl(240, 22%, 25%)); /* bg color */
-    --foreground: hsl(0, 0%, 100%); /* text color */
+    --foreground: 0, 0%, 100%; /* text color */
     --card: var(--background); /* card bg color */
     --card-foreground: var(--foreground); /* card text color */
     --accent: 149, 42%, 54%; /* kmodo green */
@@ -15,7 +15,7 @@
     --destructive-foreground: 240, 22%, 25%; /* card bg color off-black */
     
     --custom-tertiary-text: #9E9BA8;
-    --custom-secondary-text: #D9DBF1;
+    --custom-secondary-text: ;
     --custom-primary-text: #59BC89;
     --custom-bg: #2D2647;
 

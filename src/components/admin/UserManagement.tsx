@@ -6,7 +6,7 @@ import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
-import { Badge } from "../../components/ui/badge";
+import { Badge } from "../ui/badge";
 import { toast } from "sonner";
 import { allowedUserIds } from "~/consts/goat";
 import { Search } from "lucide-react";

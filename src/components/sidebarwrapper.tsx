@@ -1,4 +1,3 @@
-// ✅ SERVER COMPONENT — no "use client"
 import { Sidebar } from "~/components/sidebar";
 import { api } from "~/trpc/server";
 
