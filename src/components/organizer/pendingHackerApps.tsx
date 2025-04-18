@@ -71,7 +71,7 @@ export function PendingHackerApps() {
           {pendingApplications.length === 0 ? (
             <p className="opacity-70 text-sm">No pending applications</p>
           ) : (
-            <ScrollArea className="h-[300px] rounded-md border p-4 ">
+            <ScrollArea className="h-[300px] rounded-md p-4">
               <div className="space-y-4">
                 {pendingApplications.map((app) => (
                   <ApplicationCard 
@@ -94,7 +94,7 @@ export function PendingHackerApps() {
           {acceptedApplications.length === 0 ? (
             <p className="opacity-70 text-sm">No accepted applications</p>
           ) : (
-            <ScrollArea className="h-[300px] rounded-md border p-4">
+            <ScrollArea className="h-[300px] rounded-md p-4">
               <div className="space-y-4">
                 {acceptedApplications.map((app) => (
                   <ApplicationCard 
@@ -119,7 +119,7 @@ export function PendingHackerApps() {
           {rejectedApplications.length === 0 ? (
             <p className="opacity-70 text-sm">No rejected applications</p>
           ) : (
-            <ScrollArea className="h-[300px] rounded-md border p-4">
+            <ScrollArea className="h-[300px] rounded-md p-4">
               <div className="space-y-4">
                 {rejectedApplications.map((app) => (
                   <ApplicationCard 
