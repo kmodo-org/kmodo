@@ -167,7 +167,7 @@ export default async function AboutUs() {
                 <div className="sm:py-0 py-16 sm:mr-36 sm:ml-36 mr-4 ml-4 text-white lg:text-xl md:text-lg sm:text-base text-base font-['Open Sans'] font-light">
                     Choose us for a seamless, all-in-one platform that enhances collaboration...
                 </div>
-                <div className="flex flex-wrap justify-center sm:p-5 p-0 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-center sm:p-5 p-0 gap-5">
                     {featureBoxList.map((featurebox: FeatureBoxItem, index: number) => (
                         <div key={index} className="flex flex-col justify-center items-center w-full sm:w-auto">
                             <FeatureBox title={featurebox.title} desc={featurebox.desc} image={featurebox.image} />
